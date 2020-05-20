@@ -1,0 +1,303 @@
+<section class="content">
+  <div class="block-header">
+    <div class="row">
+      <div class="col-lg-7 col-md-6 col-sm-12">
+        <h2>Pacientes
+          
+        </h2>
+      </div>
+      <div class="col-lg-5 col-md-6 col-sm-12">
+        <ul class="breadcrumb float-md-right">
+          <li class="breadcrumb-item"><a routerLink="/dashboard/main"><i class="zmdi zmdi-home"></i> </a></li>
+          <li class="breadcrumb-item"><a href="javascript:void(0);">pacientes</a></li>
+           <li class="breadcrumb-item active">listar</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+<!--  
+  <input type="date" #myDate [value]="fechaklp | date:'yyyy-MM-dd'" (input)="fechaklp.date=parseDate($event.target.value)" />
+{{fechaklp}}
+-->
+<input id="procedencia" placeholder="procedencia" type="text" (input)="filtro_procedencia($event)" >
+                       
+  <div class="container-fluid">
+    <!-- Basic Examples -->
+    <div class="row clearfix">
+      <div class="col-lg-12">
+        <div class="card">
+          <div class="header">
+            
+              <button data-type="success" type="button" routerLink="/pacientes/registrar" class="btn btn-raised btn-primary btn-round waves-effect">Registrar</button>
+            <ul class="header-dropdown">
+              <li class="dropdown"> <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"> <i class="zmdi zmdi-more"></i> </a>
+                <ul class="dropdown-menu dropdown-menu-right slideUp float-right">
+                  <li><a href="javascript:void(0);">Action</a></li>
+                  <li><a href="javascript:void(0);">Another action</a></li>
+                  <li><a href="javascript:void(0);">Something else</a></li>
+                </ul>
+              </li>
+              <li class="remove">
+                <a role="button" class="boxs-close"><i class="zmdi zmdi-close"></i></a>
+              </li>
+            </ul>
+          </div>
+          <div class="body">
+          
+ 
+  <!-- 
+  <input type="text" [formControl]="control">
+-->
+
+            
+           <!-- <input   placeholder="procedencia" [(ngModel)]="procedencia" name="procedencia" type="text" (input)="filtro_procedencia($event.target.value)" >
+          -->
+             <p-table  #dd [responsive]="true" [value]="pacientes" [columns]="cols" [paginator]="true" [rows]="10" [pageLinks]="2" [rowsPerPageOptions]="[5,10,20]"  >
+              
+              <ng-template pTemplate="caption">
+                <div class="ui-helper-clearfix" style="text-align: left">
+                 <!--- 
+                  <button type="button" pButton icon="pi pi-file-o" iconPos="left" label="DOCX" (click)="exportdoc()" style="margin-right: 0.5em;"></button>
+                  <button type="button" pButton icon="pi pi-file-pdf" iconPos="left" label="PDF" (click)="exportPdf()" class="btn btn-warning"></button>
+                -->
+                <button type="button" pButton icon="pi pi-file" iconPos="left" label="PDF" (click)="exportPdf()" class="btn btn-warning"></button>
+               
+                  </div>
+            </ng-template>
+              <ng-template pTemplate="header" let-solicitud="rowData">
+                  <tr><th style="width:45px">#</th>
+                      <th *ngFor="let col of cols" >
+                          {{col.header}}
+                      </th>
+                      
+                      <th style="width:100px">Historial Clinico</th>
+                      <th style="width:100px">Editar</th>
+                      
+                  </tr>
+                  <tr>
+                    <th></th>
+                      <th   *ngFor="let col of cols" [ngSwitch]="col.field">
+                        <input *ngSwitchCase="'cedula'" pInputText type="text" (input)="dd.filter($event.target.value, col.field, col.filterMatchMode)">
+                         
+                          <input *ngSwitchCase="'nombres'" pInputText type="text" (input)="dd.filter($event.target.value, col.field, col.filterMatchMode)">
+                          <input  *ngSwitchCase="'edad'" pInputText type="text" (input)="dd.filter($event.target.value, col.field, col.filterMatchMode)">
+                        
+                          <!--  <input  *ngSwitchCase="'procedencia'" pInputText type="text" (input)="filtro_procedencia()" (input)="dd.filter($event.target.value, col.field, col.filterMatchMode)">
+                        -->
+                        <input id="procedencia" [(ngModel)]="procedencia" name="procedencia" [formControl]="control" *ngSwitchCase="'procedencia'" pInputText type="text"  >
+                       
+                         <!--  <p-dropdown *ngSwitchCase="'sexo'" [(ngModel)]="sexo" name="sexo" [options]="brands"  (onChange)="dd.filter($event.value, col.field, 'equals')"></p-dropdown>
+                      -->
+                      <!--<input *ngSwitchCase="'sexo'" [(ngModel)]="sexo" name="sexo"   (input)="filtro_completo($event.target.value)">
+                      -->
+                      <ng-select  *ngSwitchCase="'sexo'" placeholder="Selecciona un sexo"   [(ngModel)]="sexo" class="" (ngModelChange)="filtro_completo()"   name="sexo" required>
+                        <ng-option  *ngFor=" let rol of brands" [value]="rol.value" >{{rol.label}}</ng-option>
+                       
+                       </ng-select>
+                      </th>
+                     
+                      <th></th>
+                      
+                      <th></th>
+                  </tr>
+              </ng-template>
+              <ng-template pTemplate="body"   let-i="rowIndex" let-paciente>
+                  <tr>
+                    <td>
+                            {{i+1}}
+                    
+                    </td>
+                      <td *ngFor="let col of cols; index as i" >
+                          {{paciente[col.field]}}
+                      </td>
+                     
+                         <td  class="text-center">
+                            <a (click)="verhistorialclinico(paciente)" routerLink="/pacientes/ver-historial-clinico" class=" waves-effect waves-float waves-green"><i class="zmdi zmdi-edit"></i></a>
+                        
+                        </td>
+                        <td  class="text-center">
+                          <a (click)="actualizar(paciente)" routerLink="/pacientes/modificar" class=" waves-effect waves-float waves-green"><i class="zmdi zmdi-edit"></i></a>
+                      
+                      </td>
+                  </tr>
+              </ng-template>
+                
+                
+            </p-table>
+
+
+        
+       
+      
+<!--<p-table [value]="cars">
+    <ng-template pTemplate="header">
+        <tr>
+            <th *ngFor="let col of cols">
+                {{col.header}}
+            </th>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-car>
+        <tr>
+            <td *ngFor="let col of cols">
+                    {{car[col.field]}}
+            </td>
+        </tr>
+    </ng-template>
+</p-table
+
+-->
+
+
+<div></div> 
+<!--
+<p-dataTable id="table1" #dt styleClass="table table-hover" [value]="pacientes" [paginator]="true" [rows]="5" [pageLinks]="2" [rowsPerPageOptions]="[5,10,20]" exportFilename="reporte"     csvSeparator=";"> 
+  <p-header>
+  <div class="ui-helper-clearfix"  style="text-align: left">
+
+  <button type="button" pButton icon="pi pi-file" iconPos="left" label="CSV" (click)="dt.exportCSV()" style="margin-right: 0.5em;"></button>
+  <button type="button" pButton icon="pi pi-file" iconPos="left" label="PDF" (click)="exportPdf()" class="btn btn-warning"></button>
+ 
+  </div>
+</p-header>
+  
+ 
+  <p-column header = "#">
+    <ng-template  let-i="rowIndex" pTemplate="body">
+      {{i+1}}
+    </ng-template>
+  
+</p-column>    
+  <p-column field="cedula" header="Cedula" [filter]="true" [sortable]="true">
+  </p-column>
+  <p-column field="persona.nombre" header="Nombre" [filter]="true" [sortable]="true">
+  </p-column>
+  <p-column field="persona.apellidos" header="Apellidos" [filter]="true" [sortable]="true">
+    </p-column>
+  <p-column field="edad" header="Edad" [filter]="true" [sortable]="true">
+          
+  </p-column>
+          <p-column field="sexo" header="Sexo" [filter]="true" [sortable]="true">
+          
+          </p-column>
+          <p-column field="procedencia" header="Procedencia" [filter]="true" [sortable]="true"></p-column>
+          <p-column header = "Edit">
+              <ng-template  let-paciente="rowData" pTemplate="body">
+                <a (click)="mostrarformparamodificar(paciente)" routerLink="/pacientes/modificar" class=" waves-effect waves-float waves-green"><i class="zmdi zmdi-edit"></i></a>
+              </ng-template>
+            
+          </p-column>
+         
+      </p-dataTable>
+    -->
+<!-- 
+  <ng-template let-paciente="rowData" pTemplate="body">
+            <a (click)="mostrarformparamodificar(paciente)" routerLink="/pacientes/modificar" class=" waves-effect waves-float waves-green"><i class="zmdi zmdi-edit"></i></a>
+            </ng-template>
+-->
+
+
+
+<!---
+<table id="table" class="table table-bordered table-striped table-hover">
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>First name</th>
+        <th>Last name</th>
+        <th>Email</th>
+        <th>Country</th>
+        <th>IP-address</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td>1</td>
+        <td>Donna</td>
+        <td>Moore</td>
+        <td>dmoore0@furl.net</td>
+        <td>China</td>
+        <td>211.56.242.221</td>
+    </tr>
+    <tr>
+        <td>2</td>
+        <td>Janice</td>
+        <td>Henry</td>
+        <td>jhenry1@theatlantic.com</td>
+        <td>Ukraine</td>
+        <td>38.36.7.199</td>
+    </tr>
+    </tbody>
+</table>
+-->
+<!---
+              <table datatable   class="table table-bordered table-striped table-hover">
+                  <thead>
+                      <tr>
+                          <th>#</th>
+                          <th>CEDULA</th>
+                          <th>PACIENTE</th>
+                          <th>PROCEDENCIA</th>
+                          <th>SEXO</th>
+                          <TH>EDAD</TH>
+                          <TH>MODIFICAR</TH>
+                      </tr>
+                    </thead>
+                  
+                    <tbody>
+                      <tr *ngFor="let paciente of pacientes; index as i">
+                        <th scope="row">{{i+1}}</th>
+                        <TD>{{paciente.cedula}}</TD>
+                        <td>{{paciente.persona.nombre}} {{paciente.persona.ap}} {{paciente.persona.am}}</td>
+                        <td>{{paciente.procedencia}}</td>
+                          <td>{{paciente.sexo}}</td>
+                          <td>{{ paciente.edad }}</td>
+                          <td><a (click)="mostrarformparamodificar(paciente)" routerLink="/pacientes/modificar" class=" waves-effect waves-float waves-green"><i class="zmdi zmdi-edit"></i></a>
+                          </td>
+                      </tr>
+                     
+                  </tbody>
+                </table>
+
+            <div class="table-responsive">
+              <table class="table table-bordered table-striped table-hover js-basic-example dataTable">
+                <thead>
+                  <tr>
+                      <th>#</th>
+                      <th>CEDULA</th>
+                      <th>PACIENTE</th>
+                      <th>PROCEDENCIA</th>
+                      <th>SEXO</th>
+                      <TH>EDAD</TH>
+                      <TH>MODIFICAR</TH>
+                  </tr>
+                </thead>
+              
+                <tbody>
+                  <tr *ngFor="let paciente of pacientes; index as i">
+                    <th scope="row">{{i+1}}</th>
+                    <TD>{{paciente.cedula}}</TD>
+                    <td>{{paciente.persona.nombre}} {{paciente.persona.ap}} {{paciente.persona.am}}</td>
+                    <td>{{paciente.procedencia}}</td>
+                      <td>{{paciente.sexo}}</td>
+                      <td>{{ paciente.edad }}</td>
+                      <td><a (click)="mostrarformparamodificar(paciente)" routerLink="/pacientes/modificar" class=" waves-effect waves-float waves-green"><i class="zmdi zmdi-edit"></i></a>
+                      </td>
+                  </tr>
+                 
+              </tbody>
+              </table>
+          
+              
+            </div>
+          -->
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- #END# Basic Examples -->
+    <!-- Exportable Table -->
+    
+    <!-- #END# Exportable Table -->
+  </div>
+</section>

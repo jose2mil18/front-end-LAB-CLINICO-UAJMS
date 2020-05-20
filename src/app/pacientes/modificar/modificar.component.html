@@ -1,0 +1,148 @@
+<section class="content">
+  <div class="block-header">
+    <div class="row">
+      <div class="col-lg-7 col-md-6 col-sm-12">
+        <h2>Pacientes
+        </h2>
+      </div>
+      <div class="col-lg-5 col-md-6 col-sm-12">
+        <ul class="breadcrumb float-md-right">
+          <li class="breadcrumb-item"><a routerLink="/dashboard/main"><i class="zmdi zmdi-home"></i> </a></li>
+          <li class="breadcrumb-item"><a href="javascript:void(0);">pacientes</a></li>
+          <li class="breadcrumb-item active">modificar</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="container-fluid">
+ 
+    <!-- Horizontal Layout -->
+    <div class="row clearfix">
+      <div class="col-lg-12 col-md-12 col-sm-12">
+        <div class="card">
+          <div class="header">
+            <h2><strong>Modificar</strong> Paciente</h2>
+            <ul class="header-dropdown">
+              <li class="dropdown"> <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"> <i class="zmdi zmdi-more"></i> </a>
+                <ul class="dropdown-menu dropdown-menu-right">
+                  <li><a href="javascript:void(0);">Action</a></li>
+                  <li><a href="javascript:void(0);">Another action</a></li>
+                  <li><a href="javascript:void(0);">Something else</a></li>
+                </ul>
+              </li>
+              <li class="remove">
+                <a role="button" class="boxs-close"><i class="zmdi zmdi-close"></i></a>
+              </li>
+            </ul>
+          </div>
+          <div class="body">
+
+            
+            <form class="needs-validation" ngNativeValidate  #formpaciente="ngForm">
+             
+
+              
+
+
+              <div class="row clearfix">
+                <div class="col-lg-2 col-md-2 col-sm-4 form-control-label">
+                  <label for="nombre">Nombre</label>
+                </div>
+                <div class="col-lg-10 col-md-10 col-sm-8">
+                  <div class="form-group">
+                    <input  type="text" id="nombre" [(ngModel)]="form.persona.nombre" name="nombre" [value]="form.nombre" class="form-control primeraletramayuscula" placeholder="Entra tu nombre" required>
+                  </div>
+                </div>
+              </div>
+
+<div class="row clearfix">
+  <div class="col-lg-2 col-md-2 col-sm-4 form-control-label">
+    <label for="ap">Apellido Paterno</label>
+  </div>
+  <div class="col-lg-10 col-md-10 col-sm-8">
+    <div class="form-group">
+      <input [(ngModel)]="form.persona.ap" name="ap" class="form-control primeraletramayuscula" placeholder="Entra tu apellido paterno" required>
+    </div>
+  </div>
+</div>
+
+<div class="row clearfix">
+  <div class="col-lg-2 col-md-2 col-sm-4 form-control-label">
+    <label for="am">Apellido Materno</label>
+  </div>
+  <div class="col-lg-10 col-md-10 col-sm-8">
+    <div class="form-group">
+      <input [(ngModel)]="form.persona.am"  type="text" id="am" name="am" class="form-control primeraletramayuscula" placeholder="Entra tu apellido materno">
+    </div>
+  </div>
+</div>
+
+<div class="row clearfix">
+  <div class="col-lg-2 col-md-2 col-sm-4 form-control-label">
+    <label for="login">Procedencia</label>
+  </div>
+  <div class="col-lg-10 col-md-10 col-sm-8">
+    <div class="form-group">
+      <input [(ngModel)]="form.procedencia" name="procedencia" type="text" id="procedencia" class="form-control primeraletramayuscula" placeholder="Entra tu procedencia" required>
+    </div>
+  </div>
+</div>
+
+
+
+<div class="row clearfix">
+  <div class="col-lg-2 col-md-2 col-sm-4 form-control-label">
+    <label for="password">Genero</label>
+  </div>
+  <div class="col-lg-10 col-md-10 col-sm-8">
+    <div class="form-group">
+      <input type = "radio" value = "M" name = "sexo"  [(ngModel)] = "form.sexo" required> Masculino
+      <input type = "radio" value = "F" name = "sexo"  [(ngModel)] = "form.sexo" required> Femenino</div>
+   
+    </div>
+</div>
+
+  <div class="row clearfix">
+      <div class="col-lg-2 col-md-2 col-sm-4 form-control-label">
+        <label for="fnac"> Fecha Nacimiento </label>
+      </div>
+      <div class="col-lg-10 col-md-10 col-sm-8">
+        <div class="form-group">
+          
+            <input type="date" [(ngModel)]="cadena" name="fnac" id="fnac" class="form-control" placeholder="MM/DD/YYYY"  size="12" required/>
+            
+           
+        </div>
+      </div>
+    </div>
+    <div class="row clearfix">
+      <div class="col-lg-2 col-md-2 col-sm-4 form-control-label">
+        <label for="fnac"> Correo Electronico </label>
+      </div>
+      <div class="col-lg-10 col-md-10 col-sm-8">
+        <div class="input-group">
+          
+          <input  [(ngModel)]="form.correo_electronico" name="correo_electronico" id="correo_electronico" #fnac="ngModel" type="email" class="form-control" placeholder="Entra correo electronico" >
+         </div>
+       
+      </div>
+    </div>
+
+              
+<div class="row clearfix js-sweetalert">
+  <div class="col-sm-8 offset-sm-2">
+    
+  </div>
+  <div class="col-sm-8 offset-sm-2">
+    <button type="submit" (click)="guardar(formpaciente)" class="btn btn-raised btn-primary btn-round waves-effect"   >Guardar</button>
+  </div>
+</div>
+
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+ 
+  </div>
+</section>

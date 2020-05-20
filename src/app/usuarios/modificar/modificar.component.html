@@ -1,0 +1,267 @@
+<section class="content ">
+  <div class="block-header m_img_btn">
+    <div class="row">
+      <div class="col-lg-7 col-md-6 col-sm-12">
+        <h2>Modificar Usuario
+          <small></small>
+        </h2>
+      </div>
+      <div class="col-lg-5 col-md-6 col-sm-12">
+        <ul class="breadcrumb float-md-right">
+          <li class="breadcrumb-item"><a routerLink="/dashboard/main"><i class="zmdi zmdi-home"></i> Oreo</a></li>
+          <li class="breadcrumb-item"><a href="javascript:void(0);">usuarios</a></li>
+          <li class="breadcrumb-item active">modificar</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="container-fluid">
+ 
+    <!-- Horizontal Layout -->
+    <div class="row clearfix">
+      <div class="col-lg-12 col-md-12 col-sm-12">
+        <div class="card">
+          <div class="header">
+            <h2><strong></strong> </h2>
+            <ul class="header-dropdown">
+              <li class="dropdown"> <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"> <i class="zmdi zmdi-more"></i> </a>
+                <ul class="dropdown-menu dropdown-menu-right">
+                  <li><a href="javascript:void(0);">Action</a></li>
+                  <li><a href="javascript:void(0);">Another action</a></li>
+                  <li><a href="javascript:void(0);">Something else</a></li>
+                </ul>
+              </li>
+              <li class="remove">
+                <a role="button" class="boxs-close"><i class="zmdi zmdi-close"></i></a>
+              </li>
+            </ul>
+          </div>
+          <div class="body">    <form class="needs-validation" ngNativeValidate  #formulario=ngForm>
+
+            <div class="row clearfix">
+              <div class="col-lg-2 col-md-2 col-sm-4 form-control-label">
+                <label for="cedula">Cedula</label>
+              </div>
+              <div class="col-lg-10 col-md-10 col-sm-8">
+                <div class="form-group">
+                  <input  type="text" id="cedula" [(ngModel)]="form.cedula" name="cedula"  class="form-control" placeholder="Entra tu cedula"required>
+                
+                
+                </div>
+                
+
+              </div>
+            </div>
+
+            <div class="row clearfix">
+              <div class="col-lg-2 col-md-2 col-sm-4 form-control-label">
+                <label for="nombre">Nombre</label>
+              </div>
+              <div class="col-lg-10 col-md-10 col-sm-8">
+                <div class="form-group">
+                  <input  type="text" id="nombre" [(ngModel)]="form.personal_laboratorio.persona.nombre" name="nombre" #nombre="ngModel"  class="form-control titulo" placeholder="Entra tu nombre" required>
+                </div>
+
+              
+              </div>
+            </div>
+
+<div class="row clearfix">
+<div class="col-lg-2 col-md-2 col-sm-4 form-control-label">
+  <label for="ap">Apellido Paterno</label>
+</div>
+<div class="col-lg-10 col-md-10 col-sm-8">
+  <div class="form-group">
+    <input [(ngModel)]="form.personal_laboratorio.persona.ap" name="ap" #ap="ngModel" class="form-control titulo" placeholder="Entra tu apellido paterno" required>
+  </div>
+ 
+</div>
+</div>
+
+<div class="row clearfix">
+<div class="col-lg-2 col-md-2 col-sm-4 form-control-label">
+  <label for="ap">Apellido Materno </label>
+</div>
+<div class="col-lg-10 col-md-10 col-sm-8">
+  <div class="form-group">
+    <input [(ngModel)]="form.personal_laboratorio.persona.am" name="am" #am="ngModel" class="form-control titulo" placeholder="Entra tu apellido materno" >
+  </div>
+
+</div>
+</div>
+
+<div class="row clearfix">
+<div class="col-lg-2 col-md-2 col-sm-4 form-control-label">
+  <label for="ap">Profesion </label>
+</div>
+<div class="col-lg-10 col-md-10 col-sm-8">
+  <div class="form-group">
+    <input [(ngModel)]="form.personal_laboratorio.profesion" name="profesion" #profesion="ngModel" class="titulo form-control" placeholder="Entra tu apellido materno" required >
+  </div>
+ 
+</div>
+</div>
+
+
+<div class="row clearfix">
+<div class="col-lg-2 col-md-2 col-sm-4">
+  <label for="estado">Rol </label>
+</div>
+<div class="col-lg-10 col-md-10 col-sm-8">
+
+    <select id=rol placeholder="selecciona"  [(ngModel)]="form.roles[0].cod_rol"  class="form-control" (ngModelChange)="rolseleccionar($event.target)"   name="rol" required>
+      <option selected disabled value="Selecciona">Choose...</option>
+      <option  *ngFor=" let rol of roles" [value]="rol.cod_rol" >{{rol.nombre}}</option>
+     
+     </select>
+
+</div>
+</div>
+   
+  
+    <br>
+    
+<div class="row clearfix">
+  <div class="col-lg-2 col-md-2 col-sm-4 form-control-label">
+    <label for="estado">Estado </label>
+  </div>
+  <div class="col-lg-10 col-md-10 col-sm-8">
+    
+      <select  [(ngModel)]="form.estado" class="form-control"  (ngModelChange)="setestado($event)"   name="estado" required>
+        <option  [value]="e" *ngFor=" let e of ['habilitado', 'deshabilitado']">{{e}}</option>
+       
+       </select>
+    
+    
+  </div>
+</div>
+
+<br>
+
+
+<div class="row clearfix">
+  <div class="col-lg-2 col-md-2 col-sm-4 form-control-label">
+    <label for="estado">Foto </label>
+  </div>
+  <div class="col-lg-2 col-md-10 col-sm-8 card-img text-center p-2">
+  
+    <img [src]="form.personal_laboratorio.foto"  style="width:250px;height:145px; border-radius: 50%"  >
+    
+    <input type="file" #Image accept="image/*" (change)="handleFileInput($event.target.files)">
+ 
+    
+    
+  </div>
+</div>
+<!--
+<div class="row clearfix">
+  <div class="col-lg-2 col-md-2 col-sm-4 form-control-label">
+    <label for="login">Usuario</label>
+  </div>
+  <div class="col-lg-10 col-md-10 col-sm-8">
+    <div class="form-group">
+      <input type="password" [(ngModel)]="form.login" name="login" id="login" #login="ngModel" class="form-control" placeholder="Entra nombre de usuario con el que se autentificara al iniciar sesion" required>
+    </div>
+    <div *ngIf="login.invalid && (login.dirty || login.touched)" class="alert alert-danger">
+                  
+      <div *ngIf="login.errors.required">
+     username  es requerido.
+      </div>
+                          </div>
+  </div>
+</div>
+
+<div class="row clearfix">
+  <div class="col-lg-2 col-md-2 col-sm-4 form-control-label">
+    <label for="ap">contraseña Antigua</label>
+  </div>
+  <div class="col-lg-10 col-md-10 col-sm-8">
+    <div class="form-group">
+      <input [(ngModel)]="form3.password" name="password"  type="password" #password="ngModel" class="form-control" placeholder="Entra tu apellido paterno" required>
+    </div>
+    <div *ngIf="password.invalid && (password.dirty || password.touched)" class="alert alert-danger">
+                  
+      <div *ngIf="password.errors.required">
+contraseña es requerido.
+     
+                   </div>       </div>
+                          
+                          
+  </div>
+</div>
+<div class="row clearfix">
+  <div class="col-lg-2 col-md-2 col-sm-4 form-control-label">
+    <label for="ap">Contraseña Nueva</label>
+  </div>
+  <div class="col-lg-10 col-md-10 col-sm-8">
+    <div class="form-group">
+      <input [(ngModel)]="form.password" type="password" name="password" #password="ngModel" class="form-control" placeholder="Entra tu apellido paterno" required>
+    </div>
+    <div *ngIf="password.invalid && (password.dirty || password.touched)" class="alert alert-danger">
+                  
+      <div *ngIf="password.errors.required">
+      contraseña es requerido.
+      </div>
+                          </div>
+  </div>
+</div>
+
+<div class="row clearfix">
+  <div class="col-lg-2 col-md-2 col-sm-4 form-control-label">
+    <label for="ap">repetir contraseña</label>
+  </div>
+  <div class="col-lg-10 col-md-10 col-sm-8">
+    <div class="form-group">
+      <input [(ngModel)]="form2.pass" name="pass" type="password" #pass="ngModel" class="form-control" placeholder="Entra tu apellido paterno" required>
+    </div>
+    <div *ngIf="pass.invalid && (pass.dirty || pass.touched)" class="alert alert-danger">
+                  
+      <div *ngIf="pass.errors.required">
+      contraseña es requerido.
+      </div>
+                          </div>
+                          <div *ngIf="form2.pass!=form.password && pass.valid" class="alert alert-danger">
+                            no coinciden passwords. 
+                            </div>
+  </div>
+</div>
+
+-->
+              
+<div class="row clearfix">
+  <div class="col-sm-8 offset-sm-2">
+    
+  </div>
+  <div class="col-sm-8 offset-sm-2">
+    <button   data-type="autoclose-timer" type="submit" (click)="guardar_modificacion(formulario, Image)"  class="btn btn-raised btn-primary btn-round waves-effect"   >Guardar</button>
+  </div>
+</div>
+
+            </form>
+            <form  form ngNativeValidate id="sign_up" method="post" action="/auth/identity/register">
+              <h1>Password check</h1>
+              <div class="field">
+                  <input id="name" class="username" type="text" placeholder="Full name" name="name" required>
+              </div>
+              <div class="field">
+                  <input id="email" class="username" type="email" placeholder="Email address" name="email" required>
+              </div>
+              <div class="field">
+                  <input id="password" class="username" type="password" placeholder="Password" name="password" required>
+              </div>
+              <div class="field">
+                  <input id="password_confirmation" class="username" type="password" placeholder="Password confirmation" name="password_confirmation" required>
+              </div>
+              <div class="field">
+                  <input class="btn btn-primary" type="submit" value="Sign up" (click)="validatePassword()" name="commit">
+              </div>
+          </form>
+
+
+          </div>
+        </div>
+      </div>
+    </div>
+ 
+  </div>
+</section>

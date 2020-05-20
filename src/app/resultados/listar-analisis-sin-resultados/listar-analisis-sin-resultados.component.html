@@ -1,0 +1,194 @@
+<section class="content">
+  <div class="block-header">
+    <div class="row">
+      <div class="col-lg-7 col-md-6 col-sm-12">
+        <h2>Resultados
+          
+        </h2>
+      </div>
+      <div class="col-lg-5 col-md-6 col-sm-12">
+        <ul class="breadcrumb float-md-right">
+          <li class="breadcrumb-item"><a routerLink="/dashboard/main"><i class="zmdi zmdi-home"></i> </a></li>
+          <li class="breadcrumb-item"><a href="javascript:void(0);">resultados</a></li>
+           <li class="breadcrumb-item active">listar-analisis-sin-resultados</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="container-fluid">
+    <!-- Basic Examples -->
+    <div class="row clearfix">
+      <div class="col-lg-12">
+        <div class="card">
+          <div class="header">
+             <ul class="header-dropdown">
+              <li class="dropdown"> <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"> <i class="zmdi zmdi-more"></i> </a>
+                <ul class="dropdown-menu dropdown-menu-right slideUp float-right">
+                  <li><a href="javascript:void(0);">Action</a></li>
+                  <li><a href="javascript:void(0);">Another action</a></li>
+                  <li><a href="javascript:void(0);">Something else</a></li>
+                </ul>
+              </li>
+              <li class="remove">
+                <a role="button" class="boxs-close"><i class="zmdi zmdi-close"></i></a>
+              </li>
+            </ul>
+          </div>
+          
+          <div class="body">
+       <!---  
+<p-dataTable #dt styleClass="table table-hover" [value]="analisisSinResultados" [paginator]="true" [rows]="5" [pageLinks]="2" [rowsPerPageOptions]="[5,10,20]" >
+          
+
+  <p-column field="paciente.persona.nombre" header="Paciente" [filter]="true" [sortable]="true">
+  </p-column>
+  <p-column field="estado" header="Estado" [filter]="true" [sortable]="true">
+          
+  </p-column>
+
+  <p-column header = "Analisis">
+    <ng-template  let-analisisSinResultados="rowData" pTemplate="body">
+      <ng-select  placeholder="mostrar analisis">
+        <ng-option *ngFor="let e of analisisSinResultados.examenes_solicitados" [value]="e"  >{{e.precio_examen.examen.nombre}}</ng-option>
+      
+      </ng-select>
+     </ng-template>
+  
+</p-column>
+          <p-column field="fecha" header="Fecha" [filter]="true" [sortable]="true">
+          
+          </p-column>
+          <p-column header = "Edit">
+              <ng-template  let-analisisSinResultados="rowData" pTemplate="body">
+                <a (click)="registrar(analisisSinResultados)" routerLink="/resultadoss/registrar" class=" waves-effect waves-float waves-green"><i class="zmdi zmdi-edit"></i></a>
+              </ng-template>
+            
+          </p-column>
+         
+      </p-dataTable>
+    -->
+    <datalist id="valores_paciente">
+      <option *ngFor="let p of pacientes" [value]="p.nombres" ></option>
+    </datalist> 
+    <p-table id="table" #dd [value]="solicitudes" [columns]="cols" [paginator]="true" [rows]="10" [pageLinks]="2" [rowsPerPageOptions]="[5,10,20]"  selectionMode="multiple">
+  
+      <ng-template pTemplate="caption">
+          
+        <div class="ui-helper-clearfix" style="text-align: left">
+         
+          <button type="button" pButton icon="pi pi-file-o" iconPos="left" label="CSV" (click)="dd.exportCSV()" style="margin-right: 0.5em;"></button>
+          <button type="button" pButton icon="pi pi-file-pdf" iconPos="left" label="PDF" (click)="exportPdf()" class="btn btn-warning"></button>
+           
+          </div>
+    </ng-template>
+      <ng-template pTemplate="header" let-solicitud="rowData">
+          <tr><th style="width:44px">#</th>
+              <th *ngFor="let col of cols" >
+                  {{col.header}}
+              </th>
+              <th>Fecha</th>
+              <th  >Analisis</th>
+              
+              <th style="width:100px">Editar</th>
+          </tr>
+          <tr>
+            <th></th>
+              <th  style="width:auto" *ngFor="let col of cols" [ngSwitch]="col.field">
+                <ng-container  *ngSwitchCase="'nombres_paciente'">
+                  <input  [(ngModel)]="form.caracter_nombre" list="valores_paciente" (input)="busca_pacientes()" name="caracter_nombre" type="text"  placeholder="">
+                
+                 </ng-container>
+                
+               
+    
+               
+              </th>
+              <th>   <ng-container >
+                <input  [(ngModel)]="form.fech" (ngModelChange)="filtro_completo(formulario)" name="fech" type="date"  placeholder="fecha_inicio">
+              
+                <a   data-toggle="modal" data-target="#addevent"  class=" waves-effect waves-float waves-green"><i class="zmdi zmdi-edit"></i></a> 
+              </ng-container></th>
+          
+              <th></th>
+              
+              <th></th>
+          </tr>
+      </ng-template>
+      <ng-template pTemplate="body"   let-i="rowIndex" let-solicitud>
+          <tr>
+            <td>
+                    {{i+1}}
+            
+            </td>
+              <td *ngFor="let col of cols; index as i" [style]="{'width':'100%'}">
+                  {{solicitud[col.field]}}
+              </td>
+             <td>{{solicitud.fecha | date: 'dd-MM-yyyy'}}</td>
+              <td>  
+                  <ng-select  placeholder="mostrar analisis">
+                    <ng-option *ngFor="let e of solicitud.examenes_solicitados" [value]="e"  >{{e.precio_examen.examen.nombre}}</ng-option>
+                  
+                  </ng-select>
+                  
+                 </td>
+                 <td  class="text-center">
+                   <ng-container *ngIf="solicitud.estado=='Sin Registrar'">
+                    <a (click)="registrar(solicitud)" routerLink="/resultadoss/registrar" class=" waves-effect waves-float waves-green"><i class="zmdi zmdi-edit"></i></a>
+                  </ng-container>
+                </td>
+          </tr>
+      </ng-template>
+        
+        
+    </p-table>
+           
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- #END# Basic Examples
+        <a (click)="registrar(solicitud)" routerLink="/resultadoss/registrar"  -->
+    <!-- Exportable Table -->
+    
+    <!-- #END# Exportable Table -->
+  </div>
+</section>
+
+
+<div class="modal fade" id="addevent" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="title" id="defaultModalLabel" >{{nombreexamen}}</h4>
+      </div>
+      <div class="modal-body">
+           <form  ngNativeValidate  #formulario="ngForm">
+          <div class=" row clearfix">
+            
+  <div class="col-lg-4">
+            <label for="fecha_inicio">Desde:</label>
+            </div>
+            
+  <div class="col-lg-8">
+            <input id="fecha_inicio" [(ngModel)]="form.fecha_inicio" name="fecha_inicio" type="date" placeholder="fecha_inicio" required max="form.fecha_fin">
+        
+                  </div>
+
+                  <div class="col-lg-4">
+                      <label for="fecha_fin">Hasta:</label>
+                      </div>
+                      
+            <div class="col-lg-8">
+                      <input id="fecha_fin" [(ngModel)]="form.fecha_fin"  name="fecha_fin" type="date"  placeholder="fecha_final" required>
+                  
+                            </div>
+              </div>
+      <div class="modal-footer">
+        <button type="submit" (click)="filtro_completo(formulario)" id="a" class="btn btn-primary btn-round waves-effect" >Guardar</button>
+        <button type="button" class="btn btn-simple btn-round waves-effect" data-dismiss="modal">Salir</button>
+      </div>
+      </form>
+    </div>
+  </div>
+</div>
+</div>

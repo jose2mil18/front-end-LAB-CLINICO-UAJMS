@@ -1,0 +1,711 @@
+
+<section class="content ">
+  <div class="block-header m_img_btn">
+    <div class="row">
+      <div class="col-lg-7 col-md-6 col-sm-12">
+        <h2>Modificar examen
+          <small></small>
+        </h2>
+      </div>
+      <div class="col-lg-5 col-md-6 col-sm-12">
+        <ul class="breadcrumb float-md-right">
+          <li class="breadcrumb-item"><a routerLink="/dashboard/main"><i class="zmdi zmdi-home"></i> </a></li>
+          <li class="breadcrumb-item"><a href="javascript:void(0);">examenes</a></li>
+          <li class="breadcrumb-item active">modificar</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="container-fluid">
+ 
+    <!-- Horizontal Layout -->
+    <div class="row clearfix">
+      <div class="col-lg-12 col-md-12 col-sm-12">
+        <div class="card">
+          <div class="header">
+            <h2><strong>Modificar</strong> Examen</h2>
+            <ul class="header-dropdown">
+              <li class="dropdown"> <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"> <i class="zmdi zmdi-more"></i> </a>
+                <ul class="dropdown-menu dropdown-menu-right">
+                  <li><a href="javascript:void(0);">Action</a></li>
+                  <li><a href="javascript:void(0);">Another action</a></li>
+                  <li><a href="javascript:void(0);">Something else</a></li>
+                </ul>
+              </li>
+              <li class="remove">
+                <a role="button" class="boxs-close"><i class="zmdi zmdi-close"></i></a>
+              </li>
+            </ul>
+          </div>
+          <div class="body">
+            <!--  
+            <form id="bigForm">
+              <table>
+                <tr class='row'>
+                    <th class='col'>Name</th>
+                    <th class='col'>Job</th>
+                </tr>
+                <tr class='row' *ngFor="let person of personas; let i = index" (click)="selectPerson(person)" >
+                  <td class='col'>
+                    <input [(ngModel)]="person.nombre" [name]="'persona'+i"/>
+                    - {{person.nombre}}
+                  </td>
+                  <td class='col'>{{person.valor}}</td>
+                </tr>
+              </table>
+            </form>
+          -->
+          <datalist id="valores_examen">
+            <option *ngFor="let s of subexamenes" [value]="s.nombre" ></option>
+          </datalist> 
+            <form  ngNativeValidate   class="needs-validation" #form="ngForm">  
+              <div class="row clearfix">
+              <div class="col-lg-2 col-md-2 col-sm-4 form-control-label">
+                <label for="nombre">Nombre</label>
+              </div>
+              <div class="col-lg-10 col-md-10 col-sm-8">
+                <div class="form-group">
+                    <input  type="text" id="nombre"   name="nombre" [(ngModel)]="examen.nombre" class="form-control" placeholder="Entra  nombre" required>
+             
+                    <!--- <input  type="text" id="nombre" [(ngModel)]="form.persona.nombre" name="nombre" #nombre="ngModel"  class="form-control" placeholder="Entra tu nombre" required>
+                </div>
+
+                <div *ngIf="nombre.invalid && (nombre.dirty || nombre.touched)" class="alert alert-danger">
+                
+                  <div *ngIf="nombre.errors.required">
+                  nombre es requerido.
+                  </div>
+                                      </div>
+                                    -->
+              </div>
+            </div>
+            </div>
+
+          
+              <div class="row clearfix">
+                <div class="col-lg-2 col-md-2 col-sm-4 form-control-label">
+                  <label for="ap">Area</label>
+                </div>
+                <div class="col-lg-10 col-md-10 col-sm-8">
+                  <div >
+                    <select  class="" placeholder="seleccione el area" [(ngModel)]="examen.cod_area"  class="form-control"  (input)="asignarcod_area($event)"  name="cod_area" required>
+                   
+                      <option *ngFor="let area of areas" [value]="area.cod_area"  >{{area.nombre}}</option>
+                    
+                    </select>
+                    <!--
+                    <input [(ngModel)]="form.persona.ap" name="ap" #ap="ngModel" class="form-control" placeholder="Entra tu apellido paterno" required>
+                  </div>
+              
+                  <div *ngIf="ap.invalid && (ap.dirty || ap.touched)" class="alert alert-danger">
+                                
+                    <div *ngIf="ap.errors.required">
+                    apellido paterno  es requerido.
+                    </div>
+                                        </div>
+                                      -->
+                </div>
+              </div>
+              </div>
+<br>
+              <div class="row clearfix">
+                <div class="col-lg-2 col-md-2 col-sm-4 form-control-label">
+                  <label for="ap">Unidades </label>
+                </div>
+                <div class="col-lg-10 col-md-10 col-sm-8">
+                  <div class="form-group">
+                      <input type="text" [(ngModel)]="examen.unidades" name="unidades"  class="form-control" placeholder="Entra unidades" >
+              
+                    <!--
+                    <input [(ngModel)]="form.persona.am" name="am" #am="ngModel" class="form-control" placeholder="Entra tu apellido materno" >
+                  </div>
+                  <div *ngIf="am.invalid && (am.dirty || am.touched)" class="alert alert-danger">
+                                
+                    <div *ngIf="am.errors.required">
+                    apellido materno  es requerido.
+                    </div>
+                                        </div>
+                                      -->
+                </div>
+              </div>
+              </div>
+
+              <div class="row clearfix">
+                <div class="col-md-2">
+                  <div class="row clearfix" style="padding-top: 3px;">
+                    <div class="col-sm-8">
+                      <div class="form-group"><label for="ap">Valores Referencia </label>
+                      </div>
+                    </div>
+                    <div class="col-sm-2" style="padding-top:3px">
+                      <div class="form-group">  <a class="link" (click)="agregarValoresReferencia()">
+                      
+                        <i class="material-icons col-purple">add_circle</i> <span class="icon-name"></span>
+                      </a>
+                      </div>
+                    </div>
+                    <div class="col-sm-2"  >
+                      <ng-container *ngFor="let p of examen.valores_referencia; let i = index;" >
+                      <ng-container *ngIf="p.estado">
+                    <div class="form-group" style="padding-top:3px"> 
+                        <a class="link" (click)="removerValoresReferencia(i)">
+                      
+                          <i class="material-icons col-purple">clear</i> <span class="icon-name"></span>
+                        </a>
+                        </div>
+                        </ng-container>
+                        </ng-container>
+                    </div>
+
+                  </div>
+                </div>
+        
+                <div class="col-md-10">
+                  <ng-container  *ngFor="let v of examen.valores_referencia; let i = index;">
+      
+                    <ng-container *ngIf="v.estado" >  
+                  <div class="row clearfix"  >
+                  
+                    <div class="col-sm-4" >
+                      <div class="form-group">
+                        <input type="text"  [(ngModel)]="examen.valores_referencia[i].valor_inicial" [name]="'valor_incial' +i" class="form-control" placeholder="valor inicial"  required/>
+                      </div>
+                    </div>
+                    <div class="col-sm-4">
+                      <div class="form-group">
+                        <input type="text"   [(ngModel)]="examen.valores_referencia[i].valor_final" [name]="'valor_final' + i" class="form-control" placeholder="valor final"  required/>
+                      </div>
+                    </div>
+                    <div class="col-sm-4">
+                      <div >
+                        <ng-select  [(ngModel)]="examen.valores_referencia[i].tipo_persona" [name]="'tipo_persona' + i"   >
+                          <ng-option  [value]="e.valor" *ngFor=" let e of personas">{{e.nombre}}</ng-option>
+                         
+                         </ng-select>
+                      </div>
+                    </div>
+                  </div>
+                   
+              </ng-container>
+            </ng-container>
+                  </div>
+                
+                </div> 
+              
+                  
+                
+              <!--
+                (ngModelChange)="setestado($event)"
+            <ng-select>
+                     <ng-option [value]="e" *ngFor=" let e of personas">{{e}}</ng-option> 
+                    </ng-select>
+                  --> 
+          
+
+<!--prefcio-->
+
+            <div class="row clearfix">
+              <div class="col-md-2" >
+               
+            
+                <div class="row clearfix" style="padding-top:2px" >
+                  <div class="col-sm-8">
+                    <div class="form-group"  ><label for="ap">Precio </label>
+                    </div>
+                  </div>
+                  <div class="col-sm-2">
+                    <div class="form-group"  >  <a  (click)="agregarPrecio()" class="link">
+                   
+                      <i class="material-icons col-purple">add_circle</i> <span class="icon-name"></span>
+                    </a>
+                    </div>
+                  </div>
+              
+
+                  <div class="col-sm-2" >
+                    <ng-container *ngFor="let p of examen.precios; let i = index;" >
+                      <ng-container *ngIf="p.estado">
+                    <div class="form-group" style="padding-top:2px;"  > 
+                      <a  class="link" (click)="removerPrecio(i)"> 
+                    
+                        <i class="material-icons col-purple">clear</i> <span class="icon-name"></span>
+                      </a>
+                      </div>
+                    </ng-container>
+                  </ng-container>
+                  </div>
+               
+            
+               
+                </div>
+              </div>
+            
+              
+              <div class="col-md-10" >
+            <!--inputs-->
+            <ng-container  *ngFor="let p of examen.precios; let i = index;">
+              <ng-container *ngIf="p.estado">
+                <div class="row clearfix">
+                
+                
+                  <div class="col-sm-6">
+                    <div class="form-group">
+                      <input type="text" [(ngModel)]="examen.precios[i].costo" [name]="'costo' + i"  class="form-control"   placeholder="costo" required/>
+                    </div>
+                  </div>
+                  <div class="col-sm-6">
+                    <div >
+                      <select  class="form-control" [(ngModel)]="examen.precios[i].cod_institucion" [name]="'cod_institucion' + i"   required>
+                        <option  [value]="i.cod_institucion"  *ngFor=" let i of instituciones">{{i.nombre}}</option>
+                       
+                       </select>
+                    </div>
+                  </div>
+                </div>
+                </ng-container>
+                </ng-container>
+             <!--fin de inputs-->
+                </div>
+                
+                  
+                     
+               
+                <div *ngIf="examen.precios==0 && form.valid" class="alert alert-danger"> Agregue precio al examen</div>
+            </div>
+            <!--fin-->
+            
+            <div style="display:none"  class="row clearfix">
+            <div class="col-lg-2 col-md-2 col-sm-4 form-control-label">
+             
+            
+              <div class="row clearfix">
+                <div class="col-sm-8">
+                  <div class="form-group"><label for="ap">Resultados por defecto </label>
+                  </div>
+                </div>
+                <div class="col-sm-2">
+                  <div class="form-group">   <a  (click)="agregarResultados()" class="link">
+                   
+                    <i class="material-icons col-purple">add_circle</i> <span class="icon-name"></span>
+                  </a>
+                  </div>
+                </div>
+                <div class="col-sm-2" *ngIf="examen.resultados_por_defecto.length>0">
+                  <div class="form-group"> 
+                    <a class="link" (click)="removerResultados(0)">
+                  
+                      <i class="material-icons col-purple">clear</i> <span class="icon-name"></span>
+                    </a>
+                    </div>
+                </div>
+              </div>
+            </div>
+            
+              <ng-container *ngFor="let direccion of examen.resultados_por_defecto; let i = index;">
+                <ng-container *ngIf="i==0">
+            <div class="col-lg-10 col-md-10 col-sm-8"  >
+            
+              <div class="row clearfix" >
+              
+              
+                <div class="col-sm-12">
+                  <div class="form-group">
+                    <input type="text"  [(ngModel)]="examen.resultados_por_defecto[i].valor"  [name]="'valor' + i"  class="form-control"   placeholder="resultados por defecto"  required/>
+                  </div>
+                </div>
+              
+              </div>
+            
+            </div>
+            </ng-container>
+            
+            <ng-container *ngIf="i!=0">
+              <div class="col-lg-2 col-md-2 col-sm-4 form-control-label">
+             
+            
+                <div class="row clearfix">
+                  <div class="col-sm-8">
+                  
+                  </div>
+                  <div class="col-sm-2">
+                    <div class="form-group">   
+                    </div>
+                  </div>
+                  <div class="col-sm-2" *ngIf="examen.resultados_por_defecto.length>0">
+                    <div class="form-group"> 
+                      <a class="link" (click)="removerResultados(i)">
+                    
+                        <i class="material-icons col-purple">clear</i> <span class="icon-name"></span>
+                      </a>
+                      </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-10 col-md-10 col-sm-8"  >
+            
+                <div class="row clearfix"  >
+                
+                
+                  <div class="col-sm-12">
+                    <div class="form-group">
+                      <input type="text"  [(ngModel)]="examen.resultados_por_defecto[i].valor"  [name]="'valor' + i"  class="form-control"   placeholder="resultados por defecto"  required/>
+                    </div>
+                  </div>
+                
+                </div>
+             
+              </div>
+            </ng-container>
+            </ng-container>
+            </div>
+            <!-- subexamen-->
+            <div class="row clearfix" *ngIf="examen.area.cod_area!=0">
+              <div class="col-lg-2 col-md-2 col-sm-4 form-control-label">
+               
+              
+                <div class="row clearfix">
+                  <div class="col-sm-8">
+                    <div class="form-group"><label for="ap">Incluir examenes</label>
+                    </div>
+                  </div>
+                  <div class="col-sm-4">
+                    <div class="form-group" style="padding-top:3px">  <a  (click)="agregarsubexamen()" class="link">
+                   
+                      <i class="material-icons col-purple">add_circle</i> <span class="icon-name"></span>
+                    </a>
+                    </div>
+                  </div>
+                 
+                </div>
+              </div>
+    
+                <div class="col-lg-10 col-md-10 col-sm-8"  >
+                  <ng-container  *ngFor="let subexamen of examen.subexamenes; let i = index;">
+                    <ng-container *ngIf="subexamen.estado">
+                    <div class="row clearfix"  >
+                      <div class="card" style="border: blue solid 1px">
+                        <div class="header">
+                          <h2><strong>Examen </strong> <small></small> </h2>
+                          <ul class="header-dropdown">
+                           
+                            <li >
+                              <a class="link" (click)="removersubexamen(i)">
+                          
+                                <i class="material-icons col-purple">clear</i> <span class="icon-name"></span>
+                              </a>
+                            </li>
+                          </ul>
+                        </div>
+                        <div class="body">
+                          <div class="row clearfix">
+                            <div class="col-md-2">
+                              <label for="nombre">Nombre:</label>
+                            </div>
+                            <div class="col-md-10">
+                              <div class="form-group">
+                                <input type="text"  [(ngModel)]="subexamen.nombre"  [name]="'nombre' + i" class="form-control"  list="valores_examen" (input)="cambio($event,i)" placeholder="" required/>
+                              </div>
+                            </div>
+                          </div>
+                  
+                          <div class="row clearfix">
+                              <div class="col-md-2">
+                                <label for="nombre">Unidades:</label>
+                              </div>
+                              <div class="col-md-10">
+                                <div class="form-group">
+                                  <input type="text"  [(ngModel)]="subexamen.unidades"  [name]="'unidades' + i" class="form-control"   placeholder=""/>
+                                </div>
+                              </div>
+                            </div>
+                  
+    
+    
+                            <!--  valor de referencia de subexamen-->
+                            <div class="row clearfix">
+                                <div class="col-md-2">
+                                  <div class="row clearfix" style="padding-top:3px">
+                                    <div class="col-sm-6">
+                                      <div class="form-group"><label for="ap">Valor de referencia </label>
+                                      </div>
+                                    </div>
+                                    <div class="col-sm-3">
+                                     
+                                      <div class="form-group" style="padding-top:3px"> 
+                                         <a (click)="agregarValoresReferencia_de_subexamen(i)" class="link">
+                       
+                                        <i class="material-icons col-purple">add_circle</i> <span class="icon-name"></span>
+                                      </a>
+                                        </div>
+                                        
+                                    </div>
+                                    <div class="col-sm-3"  >
+                                      <ng-container *ngFor="let v of subexamen.valores_referencia; let in = index;">
+                                  
+                                        <ng-container *ngIf="v.estado">
+                                      <div class="form-group" style="padding-top:2px"> 
+
+                                        <a (click)="removerValoresReferencia_de_subexamen(i,in)" class="link">
+                       
+                                        <i class="material-icons col-purple">clear</i> <span class="icon-name"></span>
+                                      </a>
+                                        </div>
+                                        </ng-container>
+                                      </ng-container>
+                                    </div>
+                                  </div>
+                                </div>
+                             
+                                    <div class="col-md-10"   >
+                                      <ng-container *ngFor="let v of subexamen.valores_referencia; let in = index;">
+                                  
+                                      <ng-container *ngIf="v.estado">
+                                         <!-- valor referencia de subexamen-->
+                                         <div class="row clearfix"  >
+                                             <div class="col-sm-4" >
+                                               <div class="form-group">
+                                                 <input type="text"    [(ngModel)]="subexamen.valores_referencia[in].valor_inicial"  [name]="'valor_inicial' + in+'de subexamen'+i"  class="form-control" placeholder="" required />
+                                               </div>
+                                             </div>
+                                             <div class="col-sm-4">
+                                               <div class="form-group">
+                                                 <input type="text" [(ngModel)]="subexamen.valores_referencia[in].valor_final"  [name]="'valor_final' + in+'de subexamen'+i" class="form-control" placeholder="" required/>
+                                               </div>
+                                             </div>
+                                             <div class="col-sm-4">
+                                               <div class="form-group">
+                                                 <ng-select [(ngModel)]="subexamen.valores_referencia[in].tipo_persona"  [name]="'tipo_persona' + in+'de subexamen'+i"  >
+                                                   <ng-option  [value]="e.valor" *ngFor=" let e of personas">{{e.nombre}}</ng-option>
+                                                  
+                                                  </ng-select>
+                                               </div>
+                                             </div>
+                                           </div>
+                                           </ng-container>
+                                         </ng-container>
+                                         <!--fin-->
+                                      
+                                     </div>
+                              
+                                 
+                           
+                              </div>
+                              <!---  fin de valor de referenci de subexamen-->
+    
+                              <!-- subexamende subexamen-->
+                              <div class="row clearfix">
+                                <div class="col-md-2">
+                                  <div class="row clearfix">
+                                    <div class="col-sm-6">
+                                      <div class="form-group"><label for="ap">Examen </label>
+                                      </div>
+                                    </div>
+                                    <div class="col-sm-3">
+                                      <div class="form-group">  <a (click)="agregarsubexamenalsubexamen(i)" class="link">
+                       
+                                        <i class="material-icons col-purple">add_circle</i> <span class="icon-name"></span>
+                                      </a>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-3" >
+                                      <div class="form-group">  
+                                        </div>
+                                    </div>
+                                  </div>
+                                </div>
+                               
+                                    <div class="col-md-10" >
+                                      <ng-container *ngFor="let subexamen2 of subexamen.subexamenes; let ii = index;">
+                           <ng-container *ngIf="subexamen2.estado">
+                                        <div class="row clearfix"  >
+                                          <div class="card" style="border: blue solid 1px">
+                                            <div class="header">
+                                              <h2><strong>Examen </strong> <small></small> </h2>
+                                              <ul class="header-dropdown">
+                                               
+                                                <li >
+                                                  <a class="link" (click)="removersubexamendelsubexamen(i,ii)">
+                                              
+                                                    <i class="material-icons col-purple">clear</i> <span class="icon-name"></span>
+                                                  </a>
+                                                </li>
+                                              </ul>
+                                            </div>
+                                            <div class="body">
+                                              <div class="row clearfix">
+                                                <div class="col-md-2">
+                                                  <label for="nombre">Nombre:</label>
+                                                </div>
+                                                <div class="col-md-10">
+                                                  <div class="form-group">
+                                                    <input type="text"  [(ngModel)]="subexamen2.nombre"  [name]="'nombre' + ii+'subexamen2'+i" class="form-control"  (input)="cambio2($event,i,ii)" list="valores_examen" placeholder="" required/>
+                                                  </div>
+                                                </div>
+                                              </div>
+                                      
+                                              <div class="row clearfix">
+                                                  <div class="col-md-2">
+                                                    <label for="nombre">Unidades:</label>
+                                                  </div>
+                                                  <div class="col-md-10">
+                                                    <div class="form-group">
+                                                      <input type="text"  [(ngModel)]="subexamen2.unidades"  [name]="'unidades' + ii+'subexamen2'+i" class="form-control"   placeholder=""/>
+                                                    </div>
+                                                  </div>
+                                                </div>
+                                      
+                        
+                        
+                                                <!--  valor de referencia de subexamen de subexamen-->
+                                                <div class="row clearfix">
+                                                    <div class="col-md-2">
+                                                      <div class="row clearfix" style="padding-top:3px">
+                                                        <div class="col-sm-6">
+                                                          <div class="form-group"><label for="ap">Valor de referencia </label>
+                                                          </div>
+                                                        </div>
+                                                        <div class="col-sm-3">
+                                                          <div class="form-group" style="padding-top:4px">  <a (click)="agregarValoresReferencia_de_subexamen_de_subexamen(i,ii)" class="link">
+                                           
+                                                            <i class="material-icons col-purple">add_circle</i> <span class="icon-name"></span>
+                                                          </a>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-sm-3" >
+                                                          
+                                                          <ng-container *ngFor="let v2 of subexamen2.valores_referencia; let inin = index;">
+                                                     
+                                                            <ng-container *ngIf="v2.estado">
+                                                          <div class="form-group" style="padding-top:3px"> 
+                                                             <a (click)="removerValoresReferencia_de_subexamen_de_subexamen(i,ii,inin)" class="link">
+                                           
+                                                            <i class="material-icons col-purple">clear</i> <span class="icon-name"></span>
+                                                          </a>
+                                                            </div>
+                                                            </ng-container>
+                                                            </ng-container>
+                                                        </div>
+                                                      </div>
+                                                    </div>
+                                                   
+                                                        <div class="col-md-10"   >
+                                                          <ng-container *ngFor="let v2 of subexamen2.valores_referencia; let inin = index;">
+                                                     
+                                                          <ng-container *ngIf="v2.estado">
+                                                             <!-- valor referencia de subexamen desubexamen-->
+                                                             <div class="row clearfix"  >
+                                                                 <div class="col-sm-4" >
+                                                                   <div class="form-group">
+                                                                     <input type="text"    [(ngModel)]="subexamen2.valores_referencia[inin].valor_inicial"  [name]="'valor_inicial' + inin+'de subexamen2'+ii+'de subexamen'+i"  class="form-control" placeholder="" required />
+                                                                   </div>
+                                                                 </div>
+                                                                 <div class="col-sm-4">
+                                                                   <div class="form-group">
+                                                                     <input type="text" [(ngModel)]="subexamen2.valores_referencia[inin].valor_final"  [name]="'valor_final' + inin+'de subexamen2'+ii+'de subexamen'+i" class="form-control" placeholder="" required/>
+                                                                   </div>
+                                                                 </div>
+                                                                 <div class="col-sm-4">
+                                                                   <div class="form-group">
+                                                                     <ng-select [(ngModel)]="subexamen2.valores_referencia[inin].tipo_persona"  [name]="'tipo_persona' + inin+'de subexamen2'+ii+'de subexamen'+i"  >
+                                                                       <ng-option  [value]="e.valor" *ngFor=" let e of personas">{{e.nombre}}</ng-option>
+                                                                      
+                                                                      </ng-select>
+                                                                   </div>
+                                                                 </div>
+                                                               </div>
+                                                             </ng-container>
+                                                             </ng-container>
+                                                             <!--fin-->
+                                                          
+                                                         </div>
+                                                  
+                                               
+                                                  </div>
+                                                  <!---  fin de valor de referenci de subexamen-->
+                                            </div>
+                                          </div>
+                                        <!---
+                                          <div class="col-sm-12">
+                                            <div class="form-group">
+                                              <input type="text"  [(ngModel)]="subexamen.nombre"  name="'nombre_subexamen' + i" class="form-control"  [attr.id]="'nombre_subexamen' + i" formControlName="nombre_subexamen" placeholder="'nombre_subexamen' + i" />
+                                            </div>
+                                          </div>
+                                        -->
+                                        </div>
+                                      </ng-container>
+                                      </ng-container>
+                                        </div>
+                                
+                            
+                           
+                              </div>
+                              <!-- fin de subexmen de subexame-->
+                        </div>
+                      </div>
+                    <!---
+                      <div class="col-sm-12">
+                        <div class="form-group">
+                          <input type="text"  [(ngModel)]="subexamen.nombre"  name="'nombre_subexamen' + i" class="form-control"  [attr.id]="'nombre_subexamen' + i" formControlName="nombre_subexamen" placeholder="'nombre_subexamen' + i" />
+                        </div>
+                      </div>
+                    -->
+                    </div>
+                  </ng-container>
+                </ng-container>
+                    </div>
+              
+          
+              </div>
+
+              <div class="row clearfix">
+                <div class="col-sm-8 offset-sm-2">
+                  
+                </div>
+                <div class="col-sm-8 offset-sm-2">
+                  <button   data-type="autoclose-timer" type="submit" (click)="onSubmit(form)" [disabled]="examen.precios==0" class="btn btn-raised btn-primary btn-round waves-effect"   >Guardar</button>
+                </div>
+              </div>
+
+
+            </form>
+
+
+
+            {{form.valid}}{{examen.valores_referencia.length}}
+         <!--   
+
+            <form [formGroup]="formGroup" (ngSubmit)="onSubmit()">
+  
+              <label for="name"> Nombre: </label>
+              <input id="name" type="text" formControlName="nombre">
+              <br/>    
+            
+              <label for="description"> Descripcion: </label>
+              <textarea id="description" type="textarea" formControlName="description" rows="3" cols="20"></textarea>
+          
+              <br/>
+            
+              <label for="year"> Año: </label>
+              <input id="year" type="number" formControlName="year">
+              <br/>
+              
+              <label for="price"> Precio: </label>
+              <input id="price" type="number" formControlName="price">
+              <br/>
+          
+              <button type="submit" [disabled]="productForm.invalid" >Submit</button>
+            
+            </form>
+          -->
+
+
+
+
+          </div>
+        </div>
+      </div>
+    </div>
+ 
+  </div>
+  
+</section>

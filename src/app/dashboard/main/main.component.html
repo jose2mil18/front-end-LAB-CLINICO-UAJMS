@@ -1,0 +1,174 @@
+
+
+<section class="content">
+    <div class="block-header">
+      <div class="row">
+        <div class="col-lg-7 col-md-6 col-sm-12">
+            <h2>Bienvenido al laboratorio clinico
+                <small>{{currentUser.personal_laboratorio.persona.nombre}} {{currentUser.personal_laboratorio.persona.ap}} {{currentUser.personal_laboratorio.persona.am}}</small>
+              </h2>
+        </div>
+        <div class="col-lg-5 col-md-6 col-sm-12">
+        
+          <ul class="breadcrumb float-md-right">
+            <li class="breadcrumb-item"><a routerLink="/dashboard/main"><i class="zmdi zmdi-home"></i> </a></li>
+            <li class="breadcrumb-item active">pagina</li>
+            <li class="breadcrumb-item active">principal</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div  class="container-fluid">
+ 
+    
+      <div class="row clearfix">
+        <div class="col-sm-12 col-md-6 col-lg-3">
+          <div class="card social_widget2">
+            <div class="body data text-center">
+              <ul class="list-unstyled m-b-0">
+                <li class="m-b-30">
+                  <i class="zmdi zmdi-accounts col-blue"></i>
+                  <h4 class="m-t-0 m-b-0">{{num_pacientes}}</h4>
+                  <span>Pacientes</span>
+                </li>
+            
+              </ul>
+            </div>
+            <div class="name facebook">
+              <ul class="list-unstyled m-b-30">
+                <li class="m-b-25">
+                
+                </li>
+                <li class="m-b-25">
+                
+                </li>
+                <li class="m-b-25">
+                  <div class="progress-container">
+                    <span class="progress-badge">Pacientes</span>
+                    <div class="progress">
+                      <div class="progress-bar" role="progressbar" aria-valuenow="35" aria-valuemin="0" aria-valuemax="100" style="width: 35%;">
+                        <span class="progress-value">{{num_pacientes}}</span>
+                      </div>
+                    </div>
+                  </div>
+                </li>
+              </ul>
+              <h5><i class="zmdi zmdi-edit m-r-10"></i> <span>Registrados</span></h5>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-12 col-md-6 col-lg-3">
+          <div class="card social_widget2">
+            <div class="body data text-center">
+              <ul class="list-unstyled m-b-0">
+                <li class="m-b-30">
+                  <i class="zmdi zmdi-accounts col-amber"></i>
+                  <h4 class="m-t-0 m-b-0">{{num_doctores}}</h4>
+                  <span>Doctores</span>
+                </li>
+              
+              </ul>
+            </div>
+            <div class="name dribbble">
+              <ul class="list-unstyled m-b-30">
+                <li class="m-b-25">
+              
+                </li>
+                <li class="m-b-25">
+                
+                </li>
+                <li class="m-b-25">
+                  <div class="progress-container">
+                    <span class="progress-badge">Doctores</span>
+                    <div class="progress">
+                      <div class="progress-bar" role="progressbar" aria-valuenow="35" aria-valuemin="0" aria-valuemax="100" style="width: 35%;">
+                        <span class="progress-value">{{num_doctores}}</span>
+                      </div>
+                    </div>
+                  </div>
+                </li>
+              </ul>
+              <h5><i class="zmdi zmdi-edit m-r-10"></i> <span>Registrados</span></h5>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-12 col-md-6 col-lg-3">
+          <div class="card social_widget2">
+            <div class="body data text-center">
+              <ul class="list-unstyled m-b-0">
+                <li class="m-b-30">
+                  <i class="zmdi zmdi-file-text col-blue"></i>
+                  <h4 class="m-t-0 m-b-0 m-b-5 ">{{num_solicitudes}}</h4>
+                  <span>Solicitudes </span>
+                </li>
+              
+              </ul>
+            </div>
+            <div class="name twitter">
+              <ul class="list-unstyled m-b-30">
+                <li class="m-b-25">
+                 
+                </li>
+                <li class="m-b-25">
+               
+                </li>
+                <li class="m-b-25">
+                  <div class="progress-container">
+                    <span class="progress-badge">Solicitudes</span>
+                    <div class="progress">
+                      <div class="progress-bar" role="progressbar" aria-valuenow="35" aria-valuemin="0" aria-valuemax="100" style="width: 35%;">
+                        <span class="progress-value">{{num_solicitudes}}</span>
+                      </div>
+                    </div>
+                  </div>
+                </li>
+              </ul>
+              <h5><i class="zmdi zmdi-sign-in m-r-10"></i> <span>Recibidas</span></h5>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-12 col-md-6 col-lg-3">
+          <div class="card social_widget2">
+            <div class="body data text-center">
+              <ul class="list-unstyled m-b-0">
+                <li class="m-b-30">
+                  <i class="zmdi zmdi-eye col-amber"></i>
+                  <h4 class="m-t-0 m-b-0">{{num_solicitudes_pendientes}}</h4>
+                  <span>Solicitudes</span>
+                </li>
+         
+              </ul>
+            </div>
+            <div class="name youtube">
+              <ul class="list-unstyled m-b-30">
+                <li class="m-b-25">
+                  
+                </li>
+                <li class="m-b-25">
+              
+                </li>
+                <li class="m-b-25">
+                  <div class="progress-container">
+                    <span class="progress-badge">Solicitudes</span>
+                    <div class="progress">
+                      <div class="progress-bar" role="progressbar" aria-valuenow="35" aria-valuemin="0" aria-valuemax="100" style="width: 35%;">
+                        <span class="progress-value">{{num_solicitudes_pendientes}}</span>
+                      </div>
+                    </div>
+                  </div>
+                </li>
+              </ul>
+              <h5><i class="zmdi zmdi-eye m-r-10"></i> <span>Pendientes</span></h5>
+            </div>
+          </div>
+        </div>
+      </div>
+     
+     
+     
+     
+    </div>
+
+
+  </section>
+  

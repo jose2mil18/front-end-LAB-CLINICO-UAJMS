@@ -1,0 +1,297 @@
+<section class="content">
+  <div class="block-header">
+    <div class="row">
+      <div class="col-lg-7 col-md-6 col-sm-12">
+        <h2>Registrar Resultados
+           
+        </h2>
+      </div>
+      <div class="col-lg-5 col-md-6 col-sm-12">
+        <ul class="breadcrumb float-md-right">
+          <li class="breadcrumb-item"><a routerLink="/dashboard/main"><i class="zmdi zmdi-home"></i> </a></li>
+          <li class="breadcrumb-item"><a href="javascript:void(0);">resultados</a></li>
+          <li class="breadcrumb-item active">registrar</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="container-fluid">
+ 
+    <!-- Horizontal Layout -->
+    <div class="row clearfix">
+      <div class="col-lg-12 col-md-12 col-sm-12">
+        <div class="card">
+          <div class="header">
+            <ul class="header-dropdown">
+              <li class="dropdown"> <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"> <i class="zmdi zmdi-more"></i> </a>
+                <ul class="dropdown-menu dropdown-menu-right">
+                  <li><a href="javascript:void(0);">Action</a></li>
+                  <li><a href="javascript:void(0);">Another action</a></li>
+                  <li><a href="javascript:void(0);">Something else</a></li>
+                </ul>
+              </li>
+              <li class="remove">
+                <a role="button" class="boxs-close"><i class="zmdi zmdi-close"></i></a>
+              </li>
+            </ul>
+          </div>
+          <div class="body">
+            <form  class="needs-validation" ngNativeValidate  #form="ngForm">
+    
+<div class="row clearfix">
+  <div class="col-lg-2 col-md-2 col-sm-2 form-control-label">
+    <label for="login">Examenes</label>
+  </div>
+    <div class="col-lg-4 col-md-4 col-sm-4">
+   
+
+        <ng-select  class=""    placeholder="Selecciona "  [(ngModel)]="indice" (ngModelChange)="listarsubexamenes()"  name="cod_examen"  >
+  <ng-container *ngFor="let s of solicitudSinResultado.examenes_solicitados; index as in" >
+    <ng-container>
+      <ng-option id="cod_examen" [value]="in">{{s.precio_examen.examen.nombre}}   
+      </ng-option>
+    </ng-container>
+  </ng-container>
+      
+         </ng-select>
+         
+
+
+        <br>
+<div></div>
+      
+  </div>
+</div>
+
+
+<div class="body">
+    <div class="table-responsive">
+<table class="table table-bordered table-striped table-hover js-basic-example dataTable" >
+                      <thead>
+                        <tr>
+                            <th>PRUEBA</th>
+                            
+                            <th>RESULTADO</th>
+                            <th>UNIDADES</th>
+                            <th>VALOR DE REFERENCIA</th>
+                          
+                        </tr>
+                      </thead>
+                    
+                      <tbody>
+
+                          <ng-container *ngIf="solicitudSinResultado.examenes_solicitados[indice].precio_examen.examen.num_subexamenes == 0">    
+                              <tr>                 
+                                <td >{{solicitudSinResultado.examenes_solicitados[indice].precio_examen.examen.nombre}} </td>
+                                <td>                   
+                                    <div class="row clearfix">                
+                                        <div class="col-lg-10 col-md-10 col-sm-8">
+                                          <div class="form-group">
+                                             <!--
+                                                <input type="text"  list="valores_examen" [(ngModel)]="solicitudSinResultado.examenes_solicitados[indice].resultados_examen.valores[0]" name="resultado" [ngClass]="borde" class="form-control" (ngModelChange)="kambio_valor(solicitudSinResultado.examenes_solicitados[indice].precio_examen.examen.cod_examen, solicitudSinResultado.examenes_solicitados[indice].resultados_examen.valores[0].valor)">
+  
+     
+      <datalist id="valores_examen">
+        <option *ngFor="let c of examenesfiltradosporcaracter" [value]="c" >{{c.valor}}</option>
+      </datalist>
+                                                <p-autoComplete (ngModelChange)="k(s.cod_examen, i)" [(ngModel)]="form.resultados[i]" name="resultados[i]" class="form-control" [suggestions]="filteredCountriesSingle" (completeMethod)="buscaValorExamen($event, s.cod_examen, i)" field="valor" [size]="30" placeholder="Countries" [minLength]="1"></p-autoComplete>-->
+      <input type="text"  list="valores_examen" [(ngModel)]="solicitudSinResultado.examenes_solicitados[indice].resultados_examen.valores[0].valor" name="resultado" [ngClass]="borde" class="form-control" (ngModelChange)="kambio_valor(solicitudSinResultado.examenes_solicitados[indice].precio_examen.examen.cod_examen, solicitudSinResultado.examenes_solicitados[indice].resultados_examen.valores[0].valor)" required>
+  
+      {{solicitudSinResultado.examenes_solicitados[indice].resultados_examen.valores[0].valor}}
+      <datalist id="valores_examen">
+        <option *ngFor="let c of examenesfiltradosporcaracter" [value]="c.valor" ></option>
+      </datalist>                
+                                          </div>
+                                        </div>
+                                      </div>
+                                </td>
+                                  <td class="text-center">{{solicitudSinResultado.examenes_solicitados[indice].precio_examen.examen.unidades}}
+                                   </td>
+                             <td class="text-center">   
+                               
+                              <a  (click)="registrar(s)" data-toggle="modal" data-target="#addevent"  class=" waves-effect waves-float waves-green"><i class="zmdi zmdi-edit"></i></a> 
+                                   <span *ngFor="let v of solicitudSinResultado.examenes_solicitados[indice].precio_examen.examen.valores_referencia">
+                                  {{v.tipo_persona}} {{v.valor_inicial}}-{{v.valor_final}} .
+                                </span>
+                                </td>
+      
+                                    </tr>
+                              </ng-container>
+       <ng-container *ngIf="solicitudSinResultado.examenes_solicitados[indice].precio_examen.examen.num_subexamenes !=0">                    
+   <ng-container *ngFor="let s of subexamenes; index as i">
+                            
+                          <ng-container *ngIf="s.num_subexamenes == 0">    
+                        <tr>                 
+                          <td >{{s.nombre}}</td>
+                          <td>                   
+                              <div class="row clearfix">                
+                                 <div class="col-lg-10 col-md-10 col-sm-8">
+                                    <div class="form-group">
+                                       <!-- <p-autoComplete (ngModelChange)="k(s.cod_examen, i)" [(ngModel)]="form.resultados[i]" name="resultados[i]" class="form-control" [suggestions]="filteredCountriesSingle" (completeMethod)="buscaValorExamen($event, s.cod_examen, i)" field="valor" [size]="30" placeholder="Countries" [minLength]="1"></p-autoComplete>-->
+<input *ngIf="s.nombre !='Otros'"  type="text"  list="valores_examen" [(ngModel)]="solicitudSinResultado.examenes_solicitados[indice].resultados_examen.resultados_examenes[i].valores[0].valor" name="s.nombre" [ngClass]="borde" class="form-control" (ngModelChange)="kambio_valores(s.cod_examen, solicitudSinResultado.examenes_solicitados[indice].resultados_examen.resultados_examenes[i].valores[0].valor,i)" required>
+
+<input *ngIf="s.nombre =='Otros'"  type="text"  list="valores_examen" [(ngModel)]="solicitudSinResultado.examenes_solicitados[indice].resultados_examen.resultados_examenes[i].valores[0].valor" name="s.nombre" [ngClass]="borde" class="form-control" (ngModelChange)="kambio_valores(s.cod_examen, solicitudSinResultado.examenes_solicitados[indice].resultados_examen.resultados_examenes[i].valores[0].valor,i)" > 
+{{solicitudSinResultado.examenes_solicitados[indice].resultados_examen.resultados_examenes[i].valores[0].valor}}
+ 
+<datalist id="valores_examen">
+  <option *ngFor="let c of examenesfiltradosporcaracter" [value]="c.valor" ></option>
+</datalist>                
+                                    </div>
+                                  </div>
+                                </div>
+                          </td>
+                            <td class="text-center">{{s.unidades}}
+                             </td>
+                       <td class="text-center">   
+                         
+                        <a  (click)="registrar(s)" data-toggle="modal" data-target="#addevent"  class=" waves-effect waves-float waves-green"><i class="zmdi zmdi-edit"></i></a> 
+                             <span *ngFor="let v of s.valores_referencia">
+                            {{v.tipo_persona}} {{v.valor_inicial}}-{{v.valor_final}} .
+                          </span>
+                          </td>
+
+                              </tr>
+                        </ng-container>
+         <ng-container  *ngIf="s.num_subexamenes != 0">
+           <tr>
+             <td><strong>{{s.nombre}}  </strong></td>
+             <td>
+              <input *ngIf="s.nombre !='Otros'" style="display:none" type="text"  list="valores_examen" [(ngModel)]="array[i]" name="s.nombre" [ngClass]="borde" class="form-control" (ngModelChange)="kambio_valor(s.cod_examen, i)">
+            
+             </td>
+             <td></td>
+             <td></td>
+           </tr>
+                             <ng-container *ngFor="let s of s.subexamenes; index as in">
+                                <tr>                 
+                                    <td >{{s.nombre}} </td>
+                                    <td>                   
+                                        <div class="row clearfix">                
+                                            <div class="col-lg-10 col-md-10 col-sm-8">
+                                              <div class="form-group">
+                                                 <!-- <p-autoComplete (ngModelChange)="k(s.cod_examen, i)" [(ngModel)]="form.resultados[i]" name="resultados[i]" class="form-control" [suggestions]="filteredCountriesSingle" (completeMethod)="buscaValorExamen($event, s.cod_examen, i)" field="valor" [size]="30" placeholder="Countries" [minLength]="1"></p-autoComplete>-->
+          <input  type="text"  list="valores_examen" [(ngModel)]="solicitudSinResultado.examenes_solicitados[indice].resultados_examen.resultados_examenes[i].resultados_examenes[in].valores[0].valor" name="s.nombre" [ngClass]="borde" class="form-control" (ngModelChange)="kambio_valor(s.cod_examen, solicitudSinResultado.examenes_solicitados[indice].resultados_examen.resultados_examenes[i].resultados_examenes[in].valores[0].valor)" required>
+        
+      
+          <datalist id="valores_examen">
+            <option *ngFor="let c of examenesfiltradosporcaracter" [value]="c.valor" ></option>
+          </datalist>                
+                                              </div>
+                                            </div>
+                                          </div>
+                                    </td>
+                                      <td class="text-center">{{s.unidades}}
+                                       </td>
+                                 <td class="text-center">   
+                                   
+                                  <a  (click)="registrar(s)" data-toggle="modal" data-target="#addevent"  class=" waves-effect waves-float waves-green"><i class="zmdi zmdi-edit"></i></a> 
+                                       <span *ngFor="let v of s.valores_referencia">
+                                      {{v.tipo_persona}} {{v.valor_inicial}}-{{v.valor_final}} .
+                                    </span>
+                                    </td>
+          
+                                        </tr>
+                             </ng-container>
+  
+                    
+         </ng-container>
+  </ng-container>
+</ng-container>  
+                    </tbody>
+                    </table>
+
+
+
+
+
+
+                  
+                </div>
+              </div>
+              
+
+              
+
+
+
+
+
+            
+
+
+             {{ solicitudSinResultado.examenes_solicitados[indice].estado}}{{form.valid}}
+      <div style="margin:20px" class="row">    
+<div class="row clearfix col-md-3">
+  <div class="col-sm-8 offset-sm-2">
+    
+  </div>
+  <div class="action">
+      <button type="button"  id="guarda" (click)="salir()"  class="btn btn-raised btn-secondary btn-round waves-effect"   >Salir</button>
+ 
+    <button type="submit"  id="guardas" (click)="guardarresultados(form)" class="btn btn-raised btn-primary btn-round waves-effect"   >Guardar</button>
+  
+  </div>
+</div>
+
+</div>
+
+            </form>
+
+
+
+
+            
+          </div>
+        </div>
+      </div>
+    </div>
+ 
+  </div>
+</section>
+<!-- Horizontal Layout -
+<div class="doNotPrint">
+  Header is here.
+</div>
+
+<div>
+  all my beautiful print-related material is here.
+</div>
+ 
+  my footer is here.
+  <button (click)="onPrint()">Print</button>
+</div>
+-->
+<div class="modal fade" id="addevent" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="title" id="defaultModalLabel" >{{nombreexamen}}</h4>
+        </div>
+        <div class="modal-body">
+             
+            <div class="input-group input-lg">
+                    <input type="text" placeholder="valor inicial"  id="valor" class="form-control" required>
+                    <span class="input-group-addon">
+                        <i class="zmdi zmdi-edit"></i>
+                    </span>
+                </div>
+                <div class="input-group input-lg">
+                  <input type="text" placeholder="valor final"  id="valor" class="form-control" required>
+                  <span class="input-group-addon">
+                      <i class="zmdi zmdi-edit"></i>
+                  </span>
+              </div>
+              <div class="input-group input-lg">
+                <input type="text" placeholder="tipo de persona"  id="valor" class="form-control" required>
+                <span class="input-group-addon">
+                    <i class="zmdi zmdi-edit"></i>
+                </span>
+            </div>
+        <div class="modal-footer">
+          <button type="button" (click)="guardarvalorreferencia()" id="a" class="btn btn-primary btn-round waves-effect" data-dismiss="modal">Guardar</button>
+          <button type="button" class="btn btn-simple btn-round waves-effect" data-dismiss="modal">Salir</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  </div>

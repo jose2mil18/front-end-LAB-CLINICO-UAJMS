@@ -1,0 +1,32 @@
+.col-md-4{
+    padding: 2px;
+    border: 2px
+}
+.container{
+    font-size:11px
+}
+table {    
+    width:100%;   height: 15%; 
+    border-left:0px;
+  border-top: 1px solid black; 
+  border-bottom: 1px solid black;
+  border-left:0px;
+  border-right:0px}
+
+th {      width:50%; font-weight: normal;       
+  border: 1px solid black; color: #039; }
+  tr{
+      border-left:0px;
+      border-right:0px
+  }
+
+td {    padding: 3px; height: 5px; 
+    
+  border-top: 1px solid black; 
+  border-bottom: 1px solid black;
+     
+width:auto}
+#contentToConvert{
+    font-size: 9px;
+    height: 160mm
+    }

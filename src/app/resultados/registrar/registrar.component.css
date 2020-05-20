@@ -1,0 +1,12 @@
+@media print{
+    .doNotPrint{display:none !important;}
+  }
+  .ng-autocomplete {
+    width:100%;
+    max-width: 600px;
+    display: table;
+    margin: 0 auto;
+  }
+.rojo{
+  background-color:red
+}

@@ -1,0 +1,187 @@
+<section class="content">
+  <div class="block-header">
+    <div class="row">
+      <div class="col-lg-7 col-md-6 col-sm-12">
+        <h2>Pacientes
+        </h2>
+      </div>
+      <div class="col-lg-5 col-md-6 col-sm-12">
+        <ul class="breadcrumb float-md-right">
+          <li class="breadcrumb-item"><a routerLink="/dashboard/main"><i class="zmdi zmdi-home"></i> </a></li>
+          <li class="breadcrumb-item"><a href="javascript:void(0);">pacientes</a></li>
+          <li class="breadcrumb-item active">registrar</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="container-fluid">
+ 
+    <!-- Horizontal Layout -->
+    <div class="row clearfix">
+      <div class="col-lg-12 col-md-12 col-sm-12">
+        <div class="card">
+          <div class="header">
+            <h2><strong>Registrar</strong> Paciente</h2>
+            <ul class="header-dropdown">
+              <li class="dropdown"> <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"> <i class="zmdi zmdi-more"></i> </a>
+                <ul class="dropdown-menu dropdown-menu-right">
+                  <li><a href="javascript:void(0);">Action</a></li>
+                  <li><a href="javascript:void(0);">Another action</a></li>
+                  <li><a href="javascript:void(0);">Something else</a></li>
+                </ul>
+              </li>
+              <li class="remove">
+                <a role="button" class="boxs-close"><i class="zmdi zmdi-close"></i></a>
+              </li>
+            </ul>
+          </div>
+          <div class="body">
+         
+        <!-- 
+            <form ngNativeValidate>
+              <h2>Phone Number Validation</h2>
+              <label for="phonenum">Phone Number (format: xxxx-xxx-xxxx):</label><br />
+              <input id="phonenum" type="tel" pattern="^\d{4}-\d{3}-\d{4}$" required>
+              
+              <input type="email" value="" required>
+              
+              <input type="submit" value="Submit">
+              
+              </form>
+              <br>
+            -->
+         
+
+         
+
+            <form class="needs-validation"  ngNativeValidate [formGroup]="formulario">
+              <div class="row clearfix">
+                <div class="col-lg-2 col-md-2 col-sm-4 form-control-label">
+                  <label for="cedula">Cedula</label>
+                </div>
+                <div class="col-lg-10 col-md-10 col-sm-8">
+                  <div class="form-group">
+                    <input  type="text" id="cedula" [(ngModel)]="cedula.value" aria-describedby="inputGroupPrepend3" name="cedula" class="form-control" formControlName="cedula" placeholder="Entra tu cedula"required>
+                    
+                  </div>
+
+                </div>
+              </div>
+              
+<input type="text"[(ngModel)]="cedula_usuario.value" formControlName="cedula_usuario" style="display: none;">
+
+<ng-container formGroupName="persona">
+              <div class="row clearfix">
+                <div class="col-lg-2 col-md-2 col-sm-4 form-control-label">
+                  <label for="nombre">Nombre</label>
+                </div>
+                <div class="col-lg-10 col-md-10 col-sm-8">
+                  <div class="form-group">
+                    <input  type="text" id="nombre" [(ngModel)]="nombre.value"  name="nombre" formControlName="nombre" class="form-control titulo" placeholder="Entra tu nombre" required>
+                    
+                  </div>
+              
+                </div>
+              </div>
+
+<div class="row clearfix">
+  <div class="col-lg-2 col-md-2 col-sm-4 form-control-label">
+    <label for="ap">Apellido Paterno</label>
+  </div>
+  <div class="col-lg-10 col-md-10 col-sm-8">
+    <div class="form-group">
+      <input  name="ap" [(ngModel)]="ap.value" formControlName="ap"class="form-control titulo" placeholder="Entra tu apellido paterno" required>
+    
+    </div>
+  </div>
+</div>
+<div class="row clearfix">
+  <div class="col-lg-2 col-md-2 col-sm-4 form-control-label">
+    <label for="am">Apellido Materno</label>
+  </div>
+  <div class="col-lg-10 col-md-10 col-sm-8">
+    <div class="form-group">
+      <input [(ngModel)]="am.value"  type="text" id="am" name="am" formControlName="am" class="form-control titulo" placeholder="Entra tu apellido materno">
+      
+    </div>
+  </div>
+</div>
+</ng-container>
+
+<div class="row clearfix">
+  <div class="col-lg-2 col-md-2 col-sm-4 form-control-label">
+    <label for="login">Procedencia</label>
+  </div>
+  <div class="col-lg-10 col-md-10 col-sm-8">
+    <div class="form-group">
+      <input [(ngModel)]="procedencia.value" name="procedencia"  type="text" id="procedencia" formControlName="procedencia"class="form-control titulo" placeholder="Entra tu procedencia" required >
+      
+    </div>
+
+  </div>
+</div>
+
+<div class="row clearfix">
+  <div class="col-lg-2 col-md-2 col-sm-4 form-control-label">
+    <label for="password">Genero</label>
+  </div>
+  <div class="col-lg-10 col-md-10 col-sm-8">
+    <div class="form-group">
+      <input type = "radio" value = "M" name = "sexo" formControlName="sexo" [(ngModel)] = "form.sexo" required> Masculino
+      <input type = "radio" value = "F" name = "sexo" formControlName="sexo"  [(ngModel)] = "form.sexo" required> Femenino</div>
+   
+    </div>
+</div>
+
+{{fnac.value}}
+  <div class="row clearfix">
+      <div class="col-lg-2 col-md-2 col-sm-4 form-control-label">
+        <label for="fnac"> Fecha Nacimiento </label>
+      </div>
+      <div class="col-lg-10 col-md-10 col-sm-8">
+        <div class="form-group">
+            <input type="date" name="fnac" id=fnac   class="form-control" placeholder="Entra tu fecha de nacimiento"  size="12" required/>
+          
+        </div>
+       
+        <!--
+             <input [(ngModel)]="form.fnac" name="fnac" id="fecha_entrega" #fnac="ngModel" type="text" class="form-control fechaentregapicker titulo" placeholder="Entra tu fecha de nacimiento" >
+       
+        -->
+      </div>
+    </div>
+
+
+    <div class="row clearfix">
+      <div class="col-lg-2 col-md-2 col-sm-4 form-control-label">
+        <label for="fnac"> Correo Electronico </label>
+      </div>
+      <div class="col-lg-10 col-md-10 col-sm-8">
+        <div class="input-group">
+          
+          <input [(ngModel)]="correo_electronico.value" name="correo_electronico" formControlName="correo_electronico"  id="correo_electronico"  type="email" class="form-control" placeholder="Entra correo electronico" >
+        
+        </div>
+       
+      </div>
+    </div>
+
+
+              
+<div class="row clearfix js-sweetalert">
+  <div class="col-sm-8 offset-sm-2">
+    
+  </div>
+  <div class="col-sm-8 offset-sm-2">
+    <button type="submit" (click)="onSubmit()"  class="btn btn-raised btn-primary btn-round waves-effect"   >Guardar</button>
+  </div>
+</div>
+
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+ 
+  </div>
+</section>

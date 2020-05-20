@@ -1,0 +1,141 @@
+<section class="content">
+  <div class="block-header">
+    <div class="row">
+      <div class="col-lg-7 col-md-6 col-sm-12">
+        <h2>Usuarios
+          
+        </h2>
+      </div>
+      <div class="col-lg-5 col-md-6 col-sm-12">
+        <ul class="breadcrumb float-md-right">
+          <li class="breadcrumb-item"><a routerLink="/dashboard/main"><i class="zmdi zmdi-home"></i> oreo</a></li>
+          <li class="breadcrumb-item"><a href="javascript:void(0);">usuarios</a></li>
+           <li class="breadcrumb-item active">lista-usuarios</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="container-fluid">
+    <!-- Basic Examples -->
+    <div class="row clearfix">
+      <div class="col-lg-12">
+        <div class="card">
+          <div class="header">
+            
+              <button type="button" routerLink="/usuarios/registrar" class="btn btn-raised btn-primary btn-round waves-effect">Registrar</button>
+            <ul class="header-dropdown">
+              <li class="dropdown"> <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"> <i class="zmdi zmdi-more"></i> </a>
+                <ul class="dropdown-menu dropdown-menu-right slideUp float-right">
+                  <li><a href="javascript:void(0);">Action</a></li>
+                  <li><a href="javascript:void(0);">Another action</a></li>
+                  <li><a href="javascript:void(0);">Something else</a></li>
+                </ul>
+              </li>
+              <li class="remove">
+                <a role="button" class="boxs-close"><i class="zmdi zmdi-close"></i></a>
+              </li>
+            </ul>
+          </div>
+          <div class="body">
+              <input type="button" (click)="c()" value="oboo">
+              <input type="text" [(ngModel)]="numero">
+              <a href="http://localhost:8080/jasperserver/rest_v2/reports/reports/areas.pdf">External</a>
+            <p-table  #dd [value]="usuarios" [paginator]="true" [rows]="10" [pageLinks]="2" [rowsPerPageOptions]="[5,10,20]" selectionMode="multiple" [columns]="cols">
+              <ng-template pTemplate="caption">
+                <div class="ui-helper-clearfix" style="text-align: left">
+                 
+                  <button type="button" pButton icon="pi pi-file-o" iconPos="left" label="CSV" (click)="dd.exportCSV()" style="margin-right: 0.5em;"></button>
+                  <button type="button" pButton icon="pi pi-file-pdf" iconPos="left" label="PDF" (click)="exportPdf()" class="btn btn-warning"></button>
+                   
+                  </div>
+            </ng-template>
+              <ng-template pTemplate="header" let-solicitud="rowData">
+                  <tr><th style="width:30px">#</th>
+                      <th *ngFor="let col of cols" >
+                          {{col.header}}
+                      </th>
+                      
+                      <th>Rol</th>
+                      <th style="width:100px">Editar</th>
+                  </tr>
+                  <tr>
+                    <th></th>
+                      <th  style="width:auto" *ngFor="let col of cols" [ngSwitch]="col.field">
+                        
+                          <input *ngSwitchCase="'cedula'" pInputText type="text" (input)="dd.filter($event.target.value, col.field, col.filterMatchMode)">
+                          <input  *ngSwitchCase="'nombres'" pInputText type="text" (input)="dd.filter($event.target.value, col.field, col.filterMatchMode)">
+                        
+                          <p-dropdown *ngSwitchCase="'estado'" [options]="brands"  (onChange)="dd.filter($event.value, col.field, 'equals')"></p-dropdown>
+                          
+                      </th>
+                     
+                      <th></th>
+                      <th></th>
+                  </tr>
+              </ng-template>
+              <ng-template pTemplate="body"   let-i="rowIndex" let-usuario>
+                  <tr>
+                    <td>
+                            {{i+1}}
+                    
+                    </td>
+                      <td *ngFor="let col of cols; index as i" [style]="{'width':'100%'}">
+                          {{usuario[col.field]}}
+                      </td>
+                      <td>
+                      {{usuario.roles[0].nombre}}
+                      </td>
+                     
+                         <td  class="text-center">
+                            <a (click)="actualizar(usuario)" routerLink="/usuarios/modificar" class=" waves-effect waves-float waves-green"><i class="zmdi zmdi-edit"></i></a>
+                        
+                        </td>
+                  </tr>
+              </ng-template>
+                
+                
+            </p-table>
+
+<!--
+            <div class="table-responsive">
+              <table class="table table-bordered table-striped table-hover js-basic-example dataTable">
+                <thead>
+                  <tr>
+                      <th>#</th>
+                      <th>USUARIO</th>
+                    <th>ROL</th>
+                      <th>ESTADO</th>
+                      <TH>MODIFICAR</TH>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let user of usuarios  | paginate: {itemsPerPage: 5, currentPage: pageActual}; index as i">
+                    <th scope="row">{{i+1}}</th>
+                    <td>     {{user.personal_laboratorio.persona.nombre}} {{user.personal_laboratorio.persona.ap}} {{user.personal_laboratorio.persona.am}}
+                      <td>
+                        <ng-select   placeholder="Selecciona un rol" [closeOnSelect]="false"  [(ngModel)]="user.roles[0].cod_rol" class="" (ngModelChange)="rolseleccionar($event)" multiple  name="rol" required>
+                          <ng-option  *ngFor=" let rol of user.roles" [value]="rol.cod_rol" >{{rol.nombre}}</ng-option>
+                         
+                         </ng-select>
+                 </td>
+                      <td>{{user.estado}}</td>
+                      <td><a routerLink="/usuarios/modificar" (click)="modificarUsuario(user)" class=" waves-effect waves-float waves-green"><i class="zmdi zmdi-edit"></i></a>
+                      </td>
+                  </tr>
+         </tbody>
+              </table>
+              <pagination-controls (pageChange)="pageActual = $event"   previousLabel="Atras" nextLabel="Siguiente"></pagination-controls>
+        
+
+            </div>
+          -->
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- #END# Basic Examples -->
+    <!-- Exportable Table -->
+    
+    <!-- #END# Exportable Table -->
+  </div>
+</section>

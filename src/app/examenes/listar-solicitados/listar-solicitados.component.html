@@ -1,0 +1,427 @@
+<section class="content">
+    <div class="block-header">
+      <div class="row">
+        <div class="col-lg-7 col-md-6 col-sm-12">
+          <h2>Solicitudes
+            
+          </h2>
+        </div>
+        <div class="col-lg-5 col-md-6 col-sm-12">
+          <ul class="breadcrumb float-md-right">
+            <li class="breadcrumb-item"><a routerLink="/dashboard/main"><i class="zmdi zmdi-home"></i> </a></li>
+            <li class="breadcrumb-item"><a href="javascript:void(0);">solicitudes</a></li>
+             <li class="breadcrumb-item active">listar</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="container-fluid">
+      <!-- Basic Examples -->
+      <div class="row clearfix">
+        <div class="col-lg-12">
+          <div class="card">
+            <div class="header">
+              
+                <button data-type="success" type="button" routerLink="/solicitudes/registrar" class="btn btn-raised btn-primary btn-round waves-effect">Registrar</button>
+              <ul class="header-dropdown">
+                <li class="dropdown"> <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"> <i class="zmdi zmdi-more"></i> </a>
+                  <ul class="dropdown-menu dropdown-menu-right slideUp float-right">
+                    <li><a href="javascript:void(0);">Action</a></li>
+                    <li><a href="javascript:void(0);">Another action</a></li>
+                    <li><a href="javascript:void(0);">Something else</a></li>
+                  </ul>
+                </li>
+                <li class="remove">
+                  <a role="button" class="boxs-close"><i class="zmdi zmdi-close"></i></a>
+                </li>
+              </ul>
+            </div>
+            <div class="body">
+            
+               
+              
+      <!---          
+  <div class="row">
+                <div class="col-md-3">
+                    <div class="input-group search">
+                      <input id="pac" type="text" class="form-control" placeholder="buscar por nombre de paciente" (input)="buscaPaciente($event)">
+                      <span class="input-group-addon">
+                                            <i class="zmdi zmdi-search"></i>
+                                        </span>
+                    </div>
+    
+                    
+                  </div>
+                  <div class="col-md-3">
+                      <div class="input-group">
+                                          <span class="input-group-addon">
+                                              <i class="zmdi zmdi-calendar"></i>
+                                          </span>
+                        <input   [(ngModel)]="form.fech" (input)="buscar_por_fecha($event)" name="fech" id="fech" type="text" class=" dtp-btn-ok form-control fechapicker" placeholder="buscar por fecha">
+                        <span class="input-group-addon" >
+                            <i class="zmdi zmdi-search" (click)="buscar_por_fecha()"></i>
+                        </span>
+                      </div>
+                    
+                    </div>
+  
+  </div>
+  -->
+  <!--
+  <p-dataTable #dt styleClass="table table-hover" [value]="solicitudes" [paginator]="true" [rows]="5" [pageLinks]="2" [rowsPerPageOptions]="[5,10,20]" >
+      <p-column header = "#"  >
+          <ng-template  let-i="rowIndex" pTemplate="body">
+            {{i+1}}
+          </ng-template>
+        
+      </p-column>  
+  
+    <p-column field="nombres_paciente" header="Paciente" [filter]="true" [sortable]="true">
+      
+    </p-column>
+    <p-column field="estado" header="Estado"  [sortable]="true" [filter]="true">
+       
+    </p-column>
+  
+    <p-column header = "Analisis" >
+      <ng-template  let-solicitud="rowData" pTemplate="body">
+        <ng-select  placeholder="mostrar analisis">
+          <ng-option *ngFor="let e of solicitud.examenes_solicitados" [value]="e"  >{{e.precio_examen.examen.nombre}}</ng-option>
+        
+        </ng-select>
+       </ng-template>
+    
+  </p-column>
+            <p-column field="fecha" header="Fecha" [filter]="true" [sortable]="true">
+            
+            </p-column>
+            <p-column header = "Edit">
+                <ng-template  let-solicitud="rowData" pTemplate="body">
+                  <a (click)="actualizar(solicitud)" routerLink="/solicitudes/modificar" class=" waves-effect waves-float waves-green"><i class="zmdi zmdi-edit"></i></a>
+                </ng-template>
+              
+            </p-column>
+           
+        </p-dataTable>
+      --> 
+      <!--
+        select s.cod_solicitud, s.fecha, s.fecha_entrega, s.cedula_paciente, s.cedula_usuario, s.estado, s.cod_institucion, s.gestion, s.cod_doctor_solicitante, s.estado_solicitud 
+  from solicitud s, pacientes pa, persona pe where s.cedula_paciente=pa.cedula and pe.cod_persona=pa.cod_persona and (pe.nombre ilike '%sanch%' or pe.ap ilike '%sanch%' or pe.am ilike '%sanch%');
+  
+      -->
+  
+  
+  
+  
+    <!--  
+  <p-table id="table" #dd [value]="solicitudes" [columns]="cols" [paginator]="true" [rows]="5" [pageLinks]="2" [rowsPerPageOptions]="[5,10,20]"  selectionMode="multiple">
+    
+    <ng-template pTemplate="caption">
+        
+      <div class="ui-helper-clearfix" style="text-align: left">
+       
+        <button type="button" pButton icon="pi pi-file-o" iconPos="left" label="CSV" (click)="dd.exportCSV()" style="margin-right: 0.5em;"></button>
+        <button type="button" pButton icon="pi pi-file-pdf" iconPos="left" label="PDF" (click)="captureScreen()" class="btn btn-warning"></button>
+         
+        </div>
+  </ng-template>
+    <ng-template pTemplate="header" let-solicitud="rowData">
+        <tr><th style="width:30px">#</th>
+          <th style="width:260px">Examen</th>
+          <th style="width:150px">Area</th>
+            <th *ngFor="let col of cols" >
+                {{col.header}}
+            </th>
+        </tr>
+        <tr>
+          <th></th>
+          
+          <th></th>
+          <th>
+            <ng-select   placeholder="Selecciona un area"   [(ngModel)]="area" class="" (ngModelChange)="filtro_por_area()"   name="area" required>
+             <ng-container >
+              <ng-option  *ngFor=" let a of areas" [value]="a" >{{a.nombre}}</ng-option>
+            </ng-container>
+             </ng-select> </th>
+            <th  *ngFor="let col of cols" [ngSwitch]="col.field">
+              
+                <ng-select  *ngSwitchCase="'estado_solicitud'" placeholder="Selecciona un estado"   class="" (ngModelChange)="filtro_completo()"   name="estado" required>
+                    <ng-option  *ngFor=" let rol of brands" [value]="rol.value" >{{rol.label}}</ng-option>
+                   
+                   </ng-select>
+                      <ng-container  *ngSwitchCase="'fecha'">
+                <input  [(ngModel)]="form.fech" (ngModelChange)="buscar_por_fecha($event)" name="fech" type="date" (click)="buscar_por_fecha($event)" placeholder="fecha_inicio">
+              
+                <a  (click)="registrar(s)" data-toggle="modal" data-target="#addevent"  class=" waves-effect waves-float waves-green"><i class="zmdi zmdi-edit"></i></a> 
+              </ng-container>
+            </th>
+         
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="body"   let-i="rowIndex" let-solicitud>
+        <tr>
+          <td>
+                  {{i+1}}
+          
+          </td>
+          <td>  
+            
+            <ng-select  placeholder="mostrar analisis">
+              <ng-option *ngFor="let e of solicitud.examenes_solicitados" [value]="e"  >{{e.precio_examen.examen.nombre}}</ng-option>
+            
+            </ng-select>
+            
+          -->
+          
+          <!--   
+          <tr *ngFor="let e of solicitud.examenes_solicitados" >
+            <td >{{e.precio_examen.examen.nombre}}</td>
+          </tr>
+           </td>
+           <td> <tr *ngFor="let e of solicitud.examenes_solicitados" >
+            
+              <td>{{e.precio_examen.examen.area.nombre}}</td>
+            </tr> </td>
+  
+            <td *ngFor="let col of cols; index as i" >
+                {{solicitud[col.field]}}
+            </td>
+  
+          -->
+           <!--  
+            <td>  
+                <ng-select  placeholder="mostrar analisis">
+                  <ng-option *ngFor="let e of solicitud.examenes_solicitados" [value]="e"  >{{e.precio_examen.examen.nombre}}</ng-option>
+                
+                </ng-select>
+                
+               </td>
+               <td  class="text-center">
+                 <ng-container *ngIf="solicitud.estado=='Sin Registrar'">
+                  <a (click)="actualizar(solicitud)" routerLink="/solicitudes/modificar" class=" waves-effect waves-float waves-green"><i class="zmdi zmdi-edit"></i></a>
+                </ng-container>
+              </td>
+            
+        </tr>
+    </ng-template>
+      
+      
+  </p-table>
+  -->
+  <!-- -------------------------------------------------------------------------------------------------------------------->
+  
+  
+  <p-table id="table" #dd [value]="examenes_solicitados" [columns]="cols" [paginator]="true" [rows]="10" [pageLinks]="2" [rowsPerPageOptions]="[5,10,20]"  selectionMode="multiple">
+    
+    <ng-template pTemplate="caption">
+        
+      <div class="ui-helper-clearfix" style="text-align: left">
+       
+   
+        <button type="button" pButton icon="pi pi-file-pdf" iconPos="left" label="PDF" (click)="exportPdf()" class="btn btn-warning"></button>
+        <ng-select   placeholder="Agrupar" [(ngModel)]="form.prueba" name=klp style="margin-right: 0.5em; width: 120px; float : left;"  (ngModelChange)="klp()"   >
+           
+          <ng-option   [value]="Examen" >Examen</ng-option>
+       
+         </ng-select>
+        </div>
+  </ng-template>
+    <ng-template pTemplate="header" let-examen_solicitado="rowData">
+        <tr><th style="width:44px">#</th>
+          
+          <th style="width:260px">Paciente</th>
+          <th style="width:260px">Examen</th>
+          <th style="width:150px">Area</th>
+            <th >
+               Fecha
+            </th>
+            <th>Estado</th>
+        </tr>
+        <tr>
+          <th></th>
+          <th></th>
+          <th>   <input  [(ngModel)]="form.caracter_nombre_examen" name="caracter_nombre_examen" type="text" (input)="filtro_completo(formulario)" placeholder="">
+          </th>
+          <th>
+            <ng-select   placeholder="Selecciona un area"   [(ngModel)]="form.nombre_area" class="" (ngModelChange)="filtro_completo(formulario)"   name="area" required>
+           
+              <ng-option  *ngFor=" let a of areas" [value]="a.nombre" >{{a.nombre}}</ng-option>
+           
+             </ng-select> 
+            </th>
+            <th>
+              <ng-container  >
+                <input  [(ngModel)]="form.fech" (ngModelChange)="filtro_completo(formulario)" name="fech" type="date"  placeholder="fecha_inicio">
+              
+                <a  (click)="registrar(s)" data-toggle="modal" data-target="#addevent"  class=" waves-effect waves-float waves-green"><i class="zmdi zmdi-edit"></i></a> 
+              </ng-container>
+  
+            </th>
+            <th>
+              
+                <ng-select   placeholder="Selecciona un estado"  [(ngModel)]="this.form.estado_solicitud" class="" (ngModelChange)="filtro_completo(formulario)"   name="estado" required>
+                    <ng-option  *ngFor=" let rol of brands" [value]="rol.value" >{{rol.label}}</ng-option>
+                   
+                   </ng-select>
+                   <!--  
+                      <ng-container  *ngSwitchCase="'fecha'">
+                <input  [(ngModel)]="form.fech" (ngModelChange)="buscar_por_fecha($event)" name="fech" type="date" (click)="buscar_por_fecha($event)" placeholder="fecha_inicio">
+              
+                <a  (click)="registrar(s)" data-toggle="modal" data-target="#addevent"  class=" waves-effect waves-float waves-green"><i class="zmdi zmdi-edit"></i></a> 
+              </ng-container>
+            -->
+            </th>
+         
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="body"   let-rowIndex="rowIndex" let-examen_solicitado>
+        <tr>
+          <td>
+                  {{rowIndex+1}}  
+          
+          </td>
+          <td>
+            {{examen_solicitado.solicitud.paciente.persona.nombre}} {{examen_solicitado.solicitud.paciente.persona.ap}} {{examen_solicitado.solicitud.paciente.persona.am}}  
+    
+    </td>
+          <td>  
+            {{examen_solicitado.precio_examen.examen.nombre}}
+            <!--
+            <ng-select  placeholder="mostrar analisis">
+              <ng-option *ngFor="let e of solicitud.examenes_solicitados" [value]="e"  >{{e.precio_examen.examen.nombre}}</ng-option>
+            
+            </ng-select>
+            
+          -->
+          
+          
+           </td>
+           <td> 
+             
+            {{examen_solicitado.precio_examen.examen.area.nombre}}
+            </td>
+  
+            <td  >
+                {{examen_solicitado.solicitud.fecha | date: 'dd-MM-yyyy'}}
+            </td>
+           <!--  
+            <td>  
+                <ng-select  placeholder="mostrar analisis">
+                  <ng-option *ngFor="let e of solicitud.examenes_solicitados" [value]="e"  >{{e.precio_examen.examen.nombre}}</ng-option>
+                
+                </ng-select>
+                
+               </td>
+               <td  class="text-center">
+                 <ng-container *ngIf="solicitud.estado=='Sin Registrar'">
+                  <a (click)="actualizar(solicitud)" routerLink="/solicitudes/modificar" class=" waves-effect waves-float waves-green"><i class="zmdi zmdi-edit"></i></a>
+                </ng-container>
+              </td>
+            -->
+  
+            <td>
+                {{examen_solicitado.solicitud.estado_solicitud}}
+              </td>
+        
+    </ng-template>
+      
+      
+  </p-table>
+ 
+
+  
+  
+  
+  
+  <!--
+                <table class="table table-bordered table-striped table-hover js-basic-example dataTable">
+                  
+                  <thead>
+                    <tr>
+                        <th>#</th>
+                        
+                        <th>PACIENTE</th>
+                        <th>ANALISIS</th>
+                        <th>ESTADO</th>
+                        <TH>FECHA</TH>
+                        <TH>MODIFICAR</TH>
+                        
+                    </tr>
+                  </thead>
+                
+                  <tbody>
+                      <tr *ngFor="let s of solicitudes | paginate: {itemsPerPage: 5, currentPage: pageActual}; index as i">
+                          <th scope="row">{{i+1}}</th>
+                       
+                          <td>{{s.paciente.persona.nombre}} {{s.paciente.persona.ap}} {{s.paciente.persona.am}}</td>
+                          <td> 
+                            
+                            
+                                  <ng-select  placeholder="mostrar analisis ">
+                                   <ng-option *ngFor="let e of s.examenes_solicitados" [value]="e.precio_examen.examen.nombre"  >{{e.precio_examen.examen.nombre}}</ng-option>
+                                 
+                                 </ng-select>
+                              
+                          </td>
+                            <td>{{s.estado}}</td>
+                            <td>{{s.fecha}}</td>
+                            <td><a  *ngIf="s.estado==='Sin Registrar'" routerLink="/solicitudes/modificar" (click)="actualizar(s)"  class=" waves-effect waves-float waves-green"><i class="zmdi zmdi-edit"></i></a>
+                        
+                            </td>
+                        </tr>
+                    
+                   
+                </tbody>
+                </table>
+                <pagination-controls (pageChange)="pageActual = $event"   previousLabel="Atras" nextLabel="Siguiente"></pagination-controls>
+              -->
+        
+     
+            </div>
+  
+          </div>
+        </div>
+      </div>
+      <!-- #END# Basic Examples -->
+      <!-- Exportable Table -->
+      
+      <!-- #END# Exportable Table -->
+    </div>
+  </section>
+  <div class="modal fade" id="addevent" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="title" id="defaultModalLabel" >{{nombreexamen}}</h4>
+        </div>
+        <div class="modal-body">
+             <form  ngNativeValidate  #formulario="ngForm">
+            <div class=" row clearfix">
+              
+    <div class="col-lg-4">
+              <label for="fecha_inicio">Desde:</label>
+              </div>
+              
+    <div class="col-lg-8">
+              <input id="fecha_inicio" [(ngModel)]="form.fecha_inicio" name="fecha_inicio" type="date" placeholder="fecha_inicio" required max="form.fecha_fin">
+          
+                    </div>
+  
+                    <div class="col-lg-4">
+                        <label for="fecha_fin">Hasta:</label>
+                        </div>
+                        
+              <div class="col-lg-8">
+                        <input id="fecha_fin" [(ngModel)]="form.fecha_fin"  name="fecha_fin" type="date"  placeholder="fecha_final" required>
+                    
+                              </div>
+                </div>
+        <div class="modal-footer">
+          <button type="submit" (click)="filtro_completo(formulario)" id="a" class="btn btn-primary btn-round waves-effect" >Guardar</button>
+          <button type="button" class="btn btn-simple btn-round waves-effect" data-dismiss="modal">Salir</button>
+        </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  </div>
