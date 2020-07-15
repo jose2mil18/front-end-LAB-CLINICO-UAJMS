@@ -11,7 +11,7 @@ import { ModificarComponent } from './modificar/modificar.component';
 //import { Ng2SmartTableModule } from 'ng2-smart-table';
 
 import {TableModule} from 'primeng/table';
-//import { BrowserModule } from '@angular/platform-browser';
+//import { BrowserModule } from '@angular/platform-browser';@
 //import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 
 import {ButtonModule} from 'primeng/button';
@@ -23,8 +23,10 @@ import { HistorialClinicoComponent } from './historial-clinico/historial-clinico
 //import {CedulaUnicaDirective} from './validacion/cedula-unica.directive'
 import {InputTextModule} from 'primeng/inputtext';
 import {PaginatorModule} from 'primeng/paginator';
+import {DataViewModule} from 'primeng/dataview';
 @NgModule({
   imports: [
+    DataViewModule,
     PaginatorModule,
     InputTextModule,
     DropdownModule,

@@ -1,0 +1,124 @@
+<section class="content ">
+  <div class="block-header m_img_btn">
+    <div class="row">
+      <div class="col-lg-7 col-md-6 col-sm-12">
+        <h2>Dosificaciones
+          <small></small>
+        </h2>
+      </div>
+      <div class="col-lg-5 col-md-6 col-sm-12">
+        <ul class="breadcrumb float-md-right">
+          <li class="breadcrumb-item"><a routerLink="/dashboard/main"><i class="zmdi zmdi-home"></i> </a></li>
+          <li class="breadcrumb-item"><a href="javascript:void(0);">dosificaciones</a></li>
+          <li class="breadcrumb-item active">registrar</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="container-fluid">
+ 
+    <!-- Horizontal Layout -->
+    <div class="row clearfix">
+      <div class="col-lg-12 col-md-12 col-sm-12">
+        <div class="card">
+          <div class="header">
+            <h2><strong>Registrar</strong> Dosificacion</h2>
+            <ul class="header-dropdown">
+              <li class="dropdown"> <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"> <i class="zmdi zmdi-more"></i> </a>
+                <ul class="dropdown-menu dropdown-menu-right">
+                  <li><a href="javascript:void(0);">Action</a></li>
+                  <li><a href="javascript:void(0);">Another action</a></li>
+                  <li><a href="javascript:void(0);">Something else</a></li>
+                </ul>
+              </li>
+              <li class="remove">
+                <a role="button" class="boxs-close"><i class="zmdi zmdi-close"></i></a>
+              </li>
+            </ul>
+          </div>
+          <div class="body">
+
+          
+            <form class="needs-validation" ngNativeValidate  #formulario=ngForm>
+
+              <div class="row clearfix">
+                <div class="col-lg-2 col-md-2 col-sm-4 form-control-label">
+                  <label for="cedula">Llave</label>
+                </div>
+                <div class="col-lg-10 col-md-10 col-sm-8">
+                  <div class="form-group">
+                    <input  type="text" id="llave" [(ngModel)]="form.llave" name="llave"  class="form-control " placeholder="Ingresa la llave de dosificacion"required>
+                  
+                  
+                  </div>
+                  
+
+                </div>
+              </div>
+
+              <div class="row clearfix">
+                <div class="col-lg-2 col-md-2 col-sm-4 form-control-label">
+                  <label for="nombre">Autorizacion</label>
+                </div>
+                <div class="col-lg-10 col-md-10 col-sm-8">
+                  <div class="form-group">
+                    <input  type="text" id="autorizacion" [(ngModel)]="form.autorizacion" name="autorizacion" #nombre="ngModel"  class="form-control" placeholder="Ingresa el numero de autorizacion" required>
+                  </div>
+
+                
+                </div>
+              </div>
+
+
+
+<div class="row clearfix">
+  <div class="col-lg-2 col-md-2 col-sm-4 form-control-label">
+    <label for="ap">Fecha limite de emision </label>
+  </div>
+  <div class="col-lg-10 col-md-10 col-sm-8">
+    <div class="form-group">
+      <input  id="fecha" type="date" name="fecha_limite_emision"  class="titulo form-control" placeholder="" required >
+    </div>
+   
+  </div>
+</div>
+
+
+
+
+
+
+<div class="row clearfix">
+  <div class="col-lg-2 col-md-2 col-sm-4 form-control-label">
+    <label for="login">Leyenda</label>
+  </div>
+  <div class="col-lg-10 col-md-10 col-sm-8">
+    <div class="form-group">
+      <textarea [(ngModel)]="form.leyenda" name="leyenda" type="text" id="leyenda"  class="form-control" placeholder="Ingresa la leyenda" required></textarea>
+    </div>
+   
+  </div>
+</div>
+
+
+
+
+
+<div class="row clearfix">
+  <div class="col-sm-8 offset-sm-2">
+    
+  </div>
+  <div class="col-sm-8 offset-sm-2">
+    <button   data-type="autoclose-timer" type="submit" (click)="onSubmit(formulario)"  class="btn btn-raised btn-primary btn-round waves-effect"   >Guardar</button>
+  </div>
+</div>
+
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+ 
+  </div>
+  
+</section>

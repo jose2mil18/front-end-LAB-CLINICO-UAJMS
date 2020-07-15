@@ -1,3 +1,16 @@
 @import "../../../assets/plugins/jquery-datatable/dataTables.bootstrap4.min.css";
 @import "../../../assets/plugins/bootstrap-material-datetimepicker/css/bootstrap-material-datetimepicker.css";
 @import "../../../assets/plugins/bootstrap-select/css/bootstrap-select.css";
+input{
+    width:100%
+}
+.btn-pequeño{height:1.675rem;min-width:1.675rem;width:1.675rem;padding:0;
+    font-size:.9375rem;overflow:hidden;position:relative;line-height:normal}
+    .btn-light {
+        color: #212529;
+        background-color: #f8f9fa;
+        border-color: #f8f9fa;
+      }
+      input{
+          width: 100%;
+      }

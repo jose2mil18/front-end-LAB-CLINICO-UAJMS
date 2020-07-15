@@ -21,6 +21,7 @@
       <div class="col-lg-12">
         <div class="card">
           <div class="header">
+            <h2><strong>Ver</strong> Solicitudes Sin Resultados</h2>
              <ul class="header-dropdown">
               <li class="dropdown"> <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"> <i class="zmdi zmdi-more"></i> </a>
                 <ul class="dropdown-menu dropdown-menu-right slideUp float-right">
@@ -76,8 +77,7 @@
           
         <div class="ui-helper-clearfix" style="text-align: left">
          
-          <button type="button" pButton icon="pi pi-file-o" iconPos="left" label="CSV" (click)="dd.exportCSV()" style="margin-right: 0.5em;"></button>
-          <button type="button" pButton icon="pi pi-file-pdf" iconPos="left" label="PDF" (click)="exportPdf()" class="btn btn-warning"></button>
+         <button type="button" pButton icon="pi pi-file" iconPos="left" label="PDF" (click)="exportPdf()" class="btn btn-warning"></button>
            
           </div>
     </ng-template>
@@ -87,15 +87,15 @@
                   {{col.header}}
               </th>
               <th>Fecha</th>
-              <th  >Analisis</th>
+              <th  >Examenes</th>
               
-              <th style="width:100px">Editar</th>
+              <th style="width:100px">Acciones</th>
           </tr>
           <tr>
             <th></th>
-              <th  style="width:auto" *ngFor="let col of cols" [ngSwitch]="col.field">
+              <th  *ngFor="let col of cols" [ngSwitch]="col.field">
                 <ng-container  *ngSwitchCase="'nombres_paciente'">
-                  <input  [(ngModel)]="form.caracter_nombre" list="valores_paciente" (input)="busca_pacientes()" name="caracter_nombre" type="text"  placeholder="">
+                  <input pInputText  [(ngModel)]="form.caracter_nombre" list="valores_paciente" (input)="busca_pacientes()" name="caracter_nombre" type="text"  placeholder="">
                 
                  </ng-container>
                 
@@ -104,9 +104,12 @@
                
               </th>
               <th>   <ng-container >
-                <input  [(ngModel)]="form.fech" (ngModelChange)="filtro_completo(formulario)" name="fech" type="date"  placeholder="fecha_inicio">
-              
-                <a   data-toggle="modal" data-target="#addevent"  class=" waves-effect waves-float waves-green"><i class="zmdi zmdi-edit"></i></a> 
+                <div class="ui-inputgroup">
+                  <span style="width: 20%;" class="ui-inputgroup-addon"   data-toggle="modal" data-target="#addevent"><i class="pi pi-calendar" style="line-height: 1.25;"></i></span>
+                  <input style="width: 80%;" pInputText  [(ngModel)]="form.fech" (ngModelChange)="filtro_completo(formulario)" name="fech" type="date"   placeholder="fecha_inicio">         
+              </div>
+
+
               </ng-container></th>
           
               <th></th>
@@ -125,16 +128,38 @@
               </td>
              <td>{{solicitud.fecha | date: 'dd-MM-yyyy'}}</td>
               <td>  
-                  <ng-select  placeholder="mostrar analisis">
+                  <ng-select  placeholder="mostrar examenes">
                     <ng-option *ngFor="let e of solicitud.examenes_solicitados" [value]="e"  >{{e.precio_examen.examen.nombre}}</ng-option>
                   
                   </ng-select>
                   
                  </td>
                  <td  class="text-center">
-                   <ng-container *ngIf="solicitud.estado=='Sin Registrar'">
-                    <a (click)="registrar(solicitud)" routerLink="/resultadoss/registrar" class=" waves-effect waves-float waves-green"><i class="zmdi zmdi-edit"></i></a>
-                  </ng-container>
+                  <div class="row">
+                          
+                 
+              <div class="col-md-1">
+              </div>
+            
+              <div class="col-md-1">
+                
+                <button  rel="tooltip" data-placement="top" title="Registrar" (click)="registrar(solicitud)" routerLink="/resultadoss/registrar"  class="btn btn-warning btn-pequeño  btn-icon-mini btn-round">
+                  <i class="zmdi zmdi-edit col-white" style="color:white; font-size:17px"></i></button>
+              </div>
+              <div class="col-md-1">
+              </div>
+              <!--   
+              <div class="col-md-1">
+                <button rel="tooltip" data-placement="top" title="Ver historial clinico" (click)="verhistorialclinico(paciente)" routerLink="/pacientes/ver-historial-clinico" class="btn btn-secondary btn-pequeño  btn-icon-mini btn-round"><i class="zmdi zmdi-assignment col-white" style="color:white; font-size:17px"></i></button>
+                
+                </div>
+              -->
+              </div>
+
+
+
+
+                 
                 </td>
           </tr>
       </ng-template>

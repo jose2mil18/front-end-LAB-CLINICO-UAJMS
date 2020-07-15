@@ -6,7 +6,7 @@ export class Rol {
     nombre:String;
    menus:Menu[]
 constructor(){
-    this.nombre="Selecciona"
+    this.nombre=''
     this.cod_rol=0;
 }
 }

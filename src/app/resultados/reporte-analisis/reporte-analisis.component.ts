@@ -27,10 +27,10 @@ export class ReporteAnalisisComponent implements OnInit {
         var pageHeight = 160;    
         var pagewidth=237;
         var margins = {
-          bottom:2,
-          top:2,
-          left:2,
-          right:2
+          bottom:3,
+          top:3,
+          left:3,
+          right:3
      };
         var imgHeight = canvas.height * imgWidth / canvas.width;  
         var heightLeft = imgHeight;  
@@ -38,13 +38,14 @@ export class ReporteAnalisisComponent implements OnInit {
         const contentDataURL = canvas.toDataURL('image/png')  
         let pdf = new jspdf('l', 'mm', [237, 320]),margin = 10;
         var width = pdf.internal.pageSize.getWidth(); 
+   
+var height = pdf.internal.pageSize.getHeight();
       console.log(pdf.internal.pageSize.getHeight())
       
-        console.log("asfestewidth"+width+" " )
         console.log(pdf.internal.pageSize.getHeight())
-  pdf.text(45, 45, 'letter');
+
         var position = 0;  
-        pdf.addImage(contentDataURL, 'PNG', 0, position, imgWidth, imgHeight,pageHeight, margins, 'center')  
+        pdf.addImage(contentDataURL, 'JPEG', 0, position,width, height,'center')  
         pdf.save('MYPdf.pdf'); // Generated PDF   
       });  
     

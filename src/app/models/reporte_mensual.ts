@@ -10,6 +10,7 @@ reportes_examenes_mensual: Reporte_examen_mensual[];
 anio:number;
 mes:number;
 constructor(){
+    this.monto=0
     this.institucion=new Institucion();
     this.anio=(new Date()).getFullYear();
     this.mes=(new Date()).getMonth()+1;

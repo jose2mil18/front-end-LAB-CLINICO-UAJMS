@@ -90,7 +90,7 @@ else
   
         console.log('lafjkldfjasdkljf');
           this.router.navigate(['/authentication/sign-in']);
-          this.mensaje='username o password incorrectos'
+          this.mensaje='usuario/contraseña incorrectos'
        
       }
       
@@ -98,7 +98,7 @@ else
   error => {
     console.log('lpm');
       this.router.navigate(['/authentication/sign-in']);
-      this.mensaje='username o password incorrectos'
+      this.mensaje='usuario/contraseña incorrectos'
    
   }
 

@@ -97,7 +97,7 @@ console.log(this.solicitudes)
   }
   
  exportPdf() {
-  window.location.href = 'http://localhost:8080/jasperserver/rest_v2/reports/reports/examenes_de_pacientes2.html?am_usuario='+this.currentUser.personal_laboratorio.persona.am+'&cedula='+this.paciente.cedula+'&ap_usuario='+this.currentUser.personal_laboratorio.persona.ap+'&nombre_usuario='+this.currentUser.personal_laboratorio.persona.nombre+'&nombre_paciente='+this.paciente.persona.nombre+'&ap_paciente='+this.paciente.persona.ap+'&am_paciente='+this.paciente.persona.am+'&nombre_area='+this.form.nombre_area+'&fecha_inicio='+this.form.fecha_inicio+'&fecha_fin='+this.form.fecha_fin+'&j_username='+'jasperadmin'+'&j_password='+'jasperadmin';
+  window.location.href = 'http://localhost:8080/jasperserver/rest_v2/reports/reports/examenes_de_pacientes2.pdf?am_usuario='+this.currentUser.personal_laboratorio.persona.am+'&cedula='+this.paciente.cedula+'&ap_usuario='+this.currentUser.personal_laboratorio.persona.ap+'&nombre_usuario='+this.currentUser.personal_laboratorio.persona.nombre+'&nombre_paciente='+this.paciente.persona.nombre+'&ap_paciente='+this.paciente.persona.ap+'&am_paciente='+this.paciente.persona.am+'&nombre_area='+this.form.nombre_area+'&fecha_inicio='+this.form.fecha_inicio+'&fecha_fin='+this.form.fecha_fin+'&j_username='+'jasperadmin'+'&j_password='+'jasperadmin';
  }
 
 }

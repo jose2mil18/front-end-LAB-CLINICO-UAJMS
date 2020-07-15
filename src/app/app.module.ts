@@ -8,15 +8,18 @@ import { AppComponent } from './app.component';
 import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {ButtonModule} from 'primeng/button';
-import { FacturaComponent } from './factura/factura.component';
-
+import { NgSelectModule } from '@ng-select/ng-select';
 import {FormBuilder, FormGroup, Validators, FormsModule, ReactiveFormsModule } from '@angular/forms';
+
+import { CommonModule, DatePipe, TitleCasePipe} from '@angular/common';
+import { ServicioService } from './servicio.service';
+
 @NgModule({
   declarations: [
-    AppComponent,
-    FacturaComponent
+    AppComponent
   ],
   imports: [
+    NgSelectModule,
     FormsModule,
     ReactiveFormsModule,
     ButtonModule,
@@ -25,7 +28,7 @@ import {FormBuilder, FormGroup, Validators, FormsModule, ReactiveFormsModule } f
     HttpClientModule,
     BrowserAnimationsModule
   ],
-  providers: [],
+  providers: [TitleCasePipe, ServicioService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

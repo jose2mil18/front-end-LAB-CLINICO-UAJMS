@@ -1,16 +1,19 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 
-import {Paciente, Solicitud, Usuario,Posta, Institucion, Examen_solicitado} from '../../models'
+import {Paciente,Area, Solicitud, Usuario,Posta, Institucion, Examen_solicitado, Precio_examen} from '../../models'
 import {Examen} from '../../models/examen'
 import {PacientesService} from '../../pacientes/pacientes.service';
 import {Http} from '@angular/http'
 import {Router} from '@angular/router'
-import { DatePipe } from '@angular/common';
+import { DatePipe, TitleCasePipe } from '@angular/common';
 import {SolicitudesService} from '../solicitudes.service'
 
 import {FormControl, FormBuilder, FormGroup, Validators, NgForm } from '@angular/forms';
+import { ConvertActionBindingResult } from '@angular/compiler/src/compiler_util/expression_converter';
 declare const $: any;
 declare const noUiSlider: any;
+
+declare const Swal: any;
 @Component({
   selector: 'app-modificar',
   templateUrl: './modificar.component.html',
@@ -19,7 +22,19 @@ declare const noUiSlider: any;
   encapsulation: ViewEncapsulation.None
 })
 export class ModificarComponent implements OnInit {
-
+  name = 'Angular';
+  public objects;
+  Category="";
+  myBusinessList=[{
+    id:1,
+    name:'item 1'
+  },{
+    id:2,
+    name:'item 2'
+  },{
+    id:2,
+    name:'item 3'
+  }]
  
   public show:boolean = false;
   currentUser:Usuario;
@@ -27,7 +42,7 @@ export class ModificarComponent implements OnInit {
   areas=[];
   instituciones:Institucion[]=[];
   institucionesFaltantes: Institucion[];
-  examenes=[];
+  examenes:Precio_examen[]=[];
   cedula:String;
   pacientebuscado:Paciente;
   nombre_examenes:String[];
@@ -37,46 +52,152 @@ export class ModificarComponent implements OnInit {
 
   fecha:string=''
   fecha_entrega:string=''
+precio_examen:Precio_examen=new Precio_examen()
+area:Area=new Area();
+cod_area:number=null;
+cod_precio_examen:number=null;
+no_mostrar_examenes_ya_asignados(){
+  for(let i=0; i<this.examenes.length;i++){
+    console.log(this.examenes[i].cod_precio_examen)
+       for(let j=0; j<this.form.examenes_solicitados.length; j++){
+         console.log(this.examenes[i].cod_precio_examen)
+         console.log(this.form.examenes_solicitados[j].precio_examen.cod_precio_examen)
+         
+         if(this.examenes[i].cod_precio_examen==this.form.examenes_solicitados[j].precio_examen.cod_precio_examen )
+         {
+          this.examenes.splice(i, 1);
 
-listarExamenesdeArea(newValue) {
-  this.form.examenes_solicitados[this.i].precio_examen.cod_institucion=this.form.institucion.cod_institucion
+         }
+       }
+  }
+  console.log(this.examenes.length)
+}
+listarExamenesdeArea() {
+  this.cod_precio_examen=null
+  /*this.form.examenes_solicitados[this.i].precio_examen.cod_institucion=this.form.institucion.cod_institucion
   
-  if(this.form.institucion.cod_institucion_padre== 'SIS')
+  if(this.form.institucion.cod_institucion_padre== 'SIS'){
+    console.log("sis")
   this.form.examenes_solicitados[this.i].precio_examen.cod_institucion= this.form.institucion.cod_institucion_padre
-  this.solicitudesService.obtenerexamenesporarea(this.form.examenes_solicitados[this.i].precio_examen).subscribe(data1 => {
+  }
+  */
+ this.precio_examen.examen.area.cod_area=this.cod_area
+ console.log(this.precio_examen.cod_institucion)
+ console.log( this.precio_examen.examen.area.cod_area)
+  this.solicitudesService.obtenerexamenesporarea(this.precio_examen).subscribe(data1 => {
    
     this.examenes=data1;
+    console.log(this.examenes)
+    console.log(this.examenes.length)
+    console.log(this.form.examenes_solicitados.length)
+//compara si estos examenes ya estan asignados a la solicitud
+//this.no_mostrar_examenes_ya_asignados()
+
+    console.log(this.cod_precio_examen)
     console.log(data1)
+    if(this.contar_examenes_no_eliminados()==0){
+      this.cod_precio_examen=undefined
+
+    }
+
   });
+
 }
 cadena:String='';
 nombreexamen:String;
 i:number;
-examenseleccionar(newValue){
-  
-  console.log(this.form);
+estado:boolean=false
+examenseleccionar(){
+  this.estado=false;
+  console.log(this.cod_precio_examen);
+  console.log($('#cod_precio_examen').val)
+
+  this.solicitudesService.getByIdPrecio_examen(this.cod_precio_examen).subscribe(data=>{
+    this.precio_examen=data
+    console.log("precio examen"+this.precio_examen)
+
+     for(let j=0; j<this.form.examenes_solicitados.length; j++){
+     
+       console.log(this.form.examenes_solicitados[j].precio_examen.cod_precio_examen)
+       
+       if(this.cod_precio_examen==this.form.examenes_solicitados[j].precio_examen.cod_precio_examen )
+       {
+        this.estado=true
+
+       }
+     
+}
+console.log(this.estado)
+if(!this.estado)
+{
   this.i++;
+ console.log(data)
  
+ console.log(this.precio_examen)
   this.form.examenes_solicitados[this.i]=new Examen_solicitado();
- 
+  this.form.examenes_solicitados[this.i].precio_examen=data
+}
+
+
+  })
+  //this.form.examenes_solicitados[this.i].precio_examen=this.precio_examen
  // this.form.cod_examen='selecciona un examen'
 
-if(this.i!=0)
-{
-this.form.examenes_solicitados[this.i]=new Examen_solicitado();
-}
+
  this.bandera=false
 
 }
 bandera:boolean;
+contador:number;
+ contar_examenes_no_eliminados():number
+{
+  this.contador=0;
+  for(let e_so of this.form.examenes_solicitados)
+  {
+    if(e_so.estado!='Eliminado')
+    {
+this.contador++
+    }
+  }
+  return this.contador;
+}
+
 quitar_examen(cod_examen, i){
-  
+	Swal({
+    title: 'Esta seguro de eliminar este examen?',
+    text: 'Sera eliminado '+this.form.examenes_solicitados[i].precio_examen.examen.nombre+'!',
+    type: 'warning',
+    showCancelButton: true,
+    confirmButtonColor: '#d9534f',
+    confirmButtonText: 'Si',
+    cancelButtonText: 'No',
+    closeOnConfirm: false,
+    
+  }).then((result) => {
+    if (result.value) {
+      Swal.fire(
+      'Eliminado!',
+      'Examen eliminado',
+      'success'
+      )
+      console.log("elimnar examen")
+      console.log(this.form.examenes_solicitados.length)
+  this.form.examenes_solicitados[i].estado="Eliminado";
+  //this.precio_examen=new Precio_examen()
+ if(this.contar_examenes_no_eliminados()==0){
+   this.cod_precio_examen=null
+ }
+
+    }
+    });
+
   this.bandera=false;
    
-  if(this.form.examenes_solicitados.length>1){
-    
+  if(this.form.examenes_solicitados.length>0 ){
+ /*
     this.form.examenes_solicitados.splice(i, 1);
-  this.i--;
+  this.i--;*/
+  
   }
   else{
   this.bandera=true;
@@ -86,16 +207,25 @@ quitar_examen(cod_examen, i){
 
 
 
-  constructor(private datePipe: DatePipe,private pacientesService:PacientesService, private solicitudesService:SolicitudesService, private router:Router) { 
-    this.i=0;
+  constructor(private titleCasePipe: TitleCasePipe, private datePipe: DatePipe,private pacientesService:PacientesService, private solicitudesService:SolicitudesService, private router:Router) { 
+    console.log(this.precio_examen)
+  console.log(this.myBusinessList)
     this.form=JSON.parse(localStorage.getItem('solicitudamodificar'));
+    this.i=this.form.examenes_solicitados.length-1;
+    this.precio_examen.cod_institucion=this.form.institucion.cod_institucion
+ this.cod_precio_examen=null
+  //this.cod_area=this.form.examenes_solicitados[this.i].precio_examen.examen.cod_area
+ 
+  if(this.form.institucion.cod_institucion_padre== 'SIS'){
+    console.log("sis")
+  this.precio_examen.cod_institucion= this.form.institucion.cod_institucion_padre
+  }
   console.log(this.form)
      this.fecha=datePipe.transform(this.form.fecha, "yyyy-MM-dd")
      this.fecha_entrega=this.form.fecha_entrega
     this.currentUser = JSON.parse(localStorage.getItem('currentUser'));
- this.i=this.form.examenes_solicitados.length
+ 
    
- this.form.examenes_solicitados[this.i]=new Examen_solicitado();
  this.form.cedula_usuario=this.currentUser.cedula;
     solicitudesService.getAllAreas().subscribe(data => {
       this.areas=data;
@@ -103,10 +233,14 @@ quitar_examen(cod_examen, i){
 
     solicitudesService.getPostas().subscribe(data => {
       this.instituciones=data;
+      console.log(this.instituciones)
     });
     solicitudesService.getInstitucionesFaltantes().subscribe(data => {
       this.institucionesFaltantes=data;
+      console.log(this.institucionesFaltantes)
     });
+
+   // this.listarExamenesdeArea()
   }
 
  
@@ -203,7 +337,8 @@ quitar_examen(cod_examen, i){
 
   });
 
-    $('.selectpicker').selectpicker();
+  
+
     $(function () {
         $('.colorpicker').colorpicker();
 
@@ -315,6 +450,9 @@ modificar_solicitud(formsolicitud:NgForm){
   //this.form.fecha=$('#datepicker').val();
   
   //this.form.fecha_entrega=$('#datepicker2').val();
+  this.form.doctor_solicitante.nombre=this.titleCasePipe.transform(this.form.doctor_solicitante.nombre)
+  this.form.doctor_solicitante.ap=this.titleCasePipe.transform(this.form.doctor_solicitante.ap)
+  this.form.doctor_solicitante.am=this.titleCasePipe.transform(this.form.doctor_solicitante.am)
   console.log(this.form.fecha)
   this.form.cedula_usuario=this.currentUser.cedula,
  
@@ -322,9 +460,11 @@ this.form.fecha=$('#fecha').val();
 this.form.fecha_entrega=$('#fecha_entrega').val();
 this.form.fecha=this.datePipe.transform(this.form.fecha,'dd-MM-yyyy')
 this.form.fecha_entrega=this.datePipe.transform(this.form.fecha_entrega,'dd-MM-yyyy')
-  console.log(this.form.institucion)
-  console.log(this.form.examenes_solicitados.length)
-  if( formsolicitud.valid && this.form.examenes_solicitados.length>1){
+
+//this.form.examenes_solicitados.splice(this.form.examenes_solicitados.length-1, 1);
+  console.log(this.form)
+  console.log(this.form.examenes_solicitados[this.form.examenes_solicitados.length-1].estado)
+  if( formsolicitud.valid && this.contar_examenes_no_eliminados()>0){
     this.solicitudesService.modificar(this.form)
      .subscribe(data => {
      console.log(data)
@@ -337,18 +477,41 @@ this.form.fecha_entrega=this.datePipe.transform(this.form.fecha_entrega,'dd-MM-y
   
     });
  }
-if(this.form.examenes_solicitados.length<=1){
- this.bandera=true;
-} 
+ console.log(this.contar_examenes_no_eliminados())
+ if( this.contar_examenes_no_eliminados()==0){
+   this.bandera=true
+ }
+
+
+ 
 
 }
 institucionbuscar(cod_institucion){
+  this.cod_area=null;
+  this.cod_precio_examen=null;
   console.log(this.form.institucion.cod_institucion)
-     
- this.form.examenes_solicitados=[]
- this.i=0;
+
+  for(let j=0; j<this.form.examenes_solicitados.length; j++){
+    
+  this.form.examenes_solicitados[j].estado="Eliminado";
+  }
+ this.precio_examen=new Precio_examen()
+ this.solicitudesService.getInstitucion(this.form.institucion.cod_institucion).subscribe(insti=>{
+  this.form.institucion=insti;
+  console.log(insti)
+  if(this.form.institucion.cod_institucion_padre== 'SIS'){
+    console.log("sis")
+  this.precio_examen.cod_institucion= this.form.institucion.cod_institucion_padre
+  }
+})
+ console.log("cod insitucionpadre desolictud"+this.form.institucion.cod_institucion_padre)
  
- this.form.examenes_solicitados[this.i]=new Examen_solicitado();
+ console.log("nombreinsituc desolictud"+this.form.institucion.nombre)
+ this.precio_examen.cod_institucion=this.form.institucion.cod_institucion
+ //this.cod_precio_examen=this.form.examenes_solicitados[this.i].cod_precio_examen
+
+
+ 
 
 }
 imprimir(e){

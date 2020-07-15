@@ -65,7 +65,7 @@
               </div>
               <div class="col-lg-10 col-md-10 col-sm-8">
                 <div class="form-group">
-                    <input  type="text" id="nombre"   name="nombre" [(ngModel)]="examen.nombre" class="form-control" placeholder="Entra  nombre" required>
+                    <input  type="text" id="nombre"   name="nombre" [(ngModel)]="examen.nombre" class="form-control titulo" placeholder="Entra  nombre" required>
              
                     <!--- <input  type="text" id="nombre" [(ngModel)]="form.persona.nombre" name="nombre" #nombre="ngModel"  class="form-control" placeholder="Entra tu nombre" required>
                 </div>
@@ -178,10 +178,10 @@
                     </div>
                     <div class="col-sm-4">
                       <div >
-                        <ng-select  [(ngModel)]="examen.valores_referencia[i].tipo_persona" [name]="'tipo_persona' + i"   >
-                          <ng-option  [value]="e.valor" *ngFor=" let e of personas">{{e.nombre}}</ng-option>
+                        <select  class="form-control" [(ngModel)]="examen.valores_referencia[i].tipo_persona" [name]="'tipo_persona' + i"   >
+                          <option  [value]="e.valor" *ngFor=" let e of personas">{{e.nombre}}</option>
                          
-                         </ng-select>
+                         </select>
                       </div>
                     </div>
                   </div>
@@ -359,7 +359,7 @@
             </ng-container>
             </div>
             <!-- subexamen-->
-            <div class="row clearfix" *ngIf="examen.area.cod_area!=0">
+            <div class="row clearfix" style="display:block" *ngIf="examen.area.cod_area!=0">
               <div class="col-lg-2 col-md-2 col-sm-4 form-control-label">
                
               
@@ -403,7 +403,7 @@
                             </div>
                             <div class="col-md-10">
                               <div class="form-group">
-                                <input type="text"  [(ngModel)]="subexamen.nombre"  [name]="'nombre' + i" class="form-control"  list="valores_examen" (input)="cambio($event,i)" placeholder="" required/>
+                                <input type="text"  [(ngModel)]="subexamen.nombre"  [name]="'nombre' + i" class="form-control nombre"  list="valores_examen" (input)="cambio($event,i)" placeholder="" required/>
                               </div>
                             </div>
                           </div>
@@ -671,7 +671,6 @@
 
 
 
-            {{form.valid}}{{examen.valores_referencia.length}}
          <!--   
 
             <form [formGroup]="formGroup" (ngSubmit)="onSubmit()">

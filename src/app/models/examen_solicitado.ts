@@ -15,7 +15,10 @@ cedula_usuario:String;
    num_subexamenes:number;
    cod_precio_examen:number;
    precio_examen:Precio_examen
+   
 constructor(){
+    this.estado="Sin Registrar"
+    this.cod_sol_exam=0;
     this.precio_examen=new Precio_examen()
   
    this.cod_precio_examen=0;

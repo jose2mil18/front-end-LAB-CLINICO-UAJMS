@@ -21,6 +21,9 @@ num_pacientes:number;
 num_solicitudes:number;
 num_solicitudes_pendientes:number;
 num_doctores:number;
+cambiarRol() {
+    alert("klp")
+}
   constructor( private pacienteService : PacientesService, private solicitudesService: SolicitudesService, private usuariosService:UsuariosService) { 
     
 

@@ -24,3 +24,4 @@ export * from './reporte_mensual'
 export * from './reporte_anual';
 export * from './Reporte_examenes_solicitados';
 export * from './factura'
+export * from './dosificacion'

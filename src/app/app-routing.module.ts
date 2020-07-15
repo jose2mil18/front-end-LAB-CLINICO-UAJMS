@@ -3,16 +3,13 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { AppComponent } from './app.component';
 import { AuthGuardServiceGuard } from './guard/auth-guard-service.guard';
-import {FacturaComponent} from './factura/factura.component'
+
 const routes: Routes = [
     {
         path: 'dashboard',
         loadChildren: 'app/dashboard/dashboard.module#DashboardModule'
     },
-    {
-        path: 'factura',
-        component:FacturaComponent
-    },
+
     {
         path: 'usuarios',
         loadChildren: 'app/usuarios/usuarios.module#UsuariosModule',canActivate:[AuthGuardServiceGuard]
@@ -34,6 +31,10 @@ const routes: Routes = [
         path: 'examenes',
         loadChildren: 'app/examenes/examenes.module#ExamenesModule'
     },
+    {
+        path: 'dosificaciones',
+        loadChildren: 'app/dosificaciones/dosificaciones.module#DosificacionesModule'
+    },
 
    // {
        // path: 'resultados',
@@ -51,10 +52,7 @@ const routes: Routes = [
         path: 'ecommerce',
         loadChildren: 'app/ecommerce/ecommerce.module#EcommerceModule'
     },
-    {
-        path: 'user-interface',
-        loadChildren: 'app/user-interface/user-interface.module#UserInterfaceModule'
-    },
+ 
     {
         path: 'forms',
         loadChildren: 'app/forms/forms.module#FormsModule'

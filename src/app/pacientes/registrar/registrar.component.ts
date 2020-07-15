@@ -9,7 +9,6 @@ import { LowerCasePipe, TitleCasePipe, UpperCasePipe, DatePipe } from '@angular/
 
 import { DOCUMENT } from '@angular/common'; 
 
-import {CapitalizePipe} from '../../pipes/capitalize.pipe'
 import { HAMMER_LOADER } from '@angular/platform-browser';
 //import { CedulaUnicaService, CedulaUnicaDirective} from '../validacion/cedula-unica.directive';
 declare const $: any;

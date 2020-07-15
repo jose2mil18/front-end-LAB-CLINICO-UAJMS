@@ -8,11 +8,17 @@ import { NgForm } from '@angular/forms';
 
 import {PacientesService} from './pacientes/pacientes.service'
 import {SolicitudesService} from './solicitudes/solicitudes.service'
+import { ServicioService } from './servicio.service';
 declare const $: any;
 declare const jquery: any;
 declare const screenfull: any;
 declare const validatePassword:any;
 declare var Stimulsoft: any;
+import * as global from './shared/variables_global'; //<== HERE
+interface HtmlInputEvent extends Event {
+    target: HTMLInputElement & EventTarget;
+  }
+  
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -21,6 +27,8 @@ declare var Stimulsoft: any;
 })
 
 export class AppComponent implements OnInit {
+    url_del_backup: string = ''+global.server+'api/file/';
+    roles:string[]=[];
     num_pacientes:number;
 num_solicitudes:number;
 num_solicitudes_pendientes:number;
@@ -39,11 +47,11 @@ enlaces: Array <{text: String, path: String}> = [];
 someArray:any[]
 nombre:String
 link:String
-link_foto_perfil_usuario:string="http://localhost:9898/api/file/";
+link_foto_perfil_usuario:string=""+global.server+"api/file/";
 
 imageUrl: string = "";
-    constructor(private authenticationService : AuthenticationService,  private pacienteService : PacientesService, private solicitudesService: SolicitudesService, private usuariosService:UsuariosService, private renderer: Renderer2, private router: Router) {
-      
+    constructor(private serviciosService: ServicioService, private authenticationService : AuthenticationService,  private pacienteService : PacientesService, private solicitudesService: SolicitudesService, private usuariosService:UsuariosService, private renderer: Renderer2, private router: Router) {
+      console.log("appcomponente.html")
     pacienteService.contar().subscribe(data => {
         this.num_pacientes=data;
     });
@@ -244,12 +252,11 @@ imageUrl: string = "";
     }
     }
     accesoMenu(nombreMenu: string): boolean {
-     //location.reload()
 
       let acceso = false;
       // let menusAux: Menu;
      
-        for (const menu of this.currentUser.roles[0].menus) {
+        for (const menu of this.currentUser.rol.menus) {
             
           if (nombreMenu === menu.nombre ) {
             acceso = true;
@@ -258,6 +265,47 @@ imageUrl: string = "";
    
       return acceso;
       }
+   estado_barra:boolean=false;
+    ver_barra_derecha(){
+        alert("klp")
+    }
+  cambiarRol() {
+ 
+}
+crear_copia(){
+    this.serviciosService.crearBackup()
+    .subscribe(data => {
+
+console.log(this.url_del_backup+data)
+alert("Backup realizado con exito")
+window.location.href = this.url_del_backup+data
     
-  
+    },
+    error => {
+    alert("error")
+    });
+}
+photoSelected:string | ArrayBuffer//muestra la imagen que el usuario sube
+bandera:boolean=false;
+file: File=null;
+restaurar_copia(event: HtmlInputEvent): void {
+    console.log("hjhjkh")
+    if (event.target.files && event.target.files[0]) {//verificando si por lomenos esta subiendouna foto
+        this.file = <File>event.target.files[0];//ñaimagen guarda en file
+        // image preview
+        this.serviciosService.restaurarCopia(this.file.name)
+        .subscribe(data => {
+    
+    console.log(data)
+    alert("Restauracion realizado con exito")
+    //window.location.href = this.url_del_backup+data
+    this.router.navigate(['/authentication/sign-in']);
+        
+        },
+        error => {
+        alert("error")
+        });
+      }
+    console.log("no se selecciono ningun archjkjkjlkivoooo")
+  }
 }

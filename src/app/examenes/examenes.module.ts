@@ -11,7 +11,7 @@ import { NgSelectModule } from '@ng-select/ng-select';
 import {TableModule} from 'primeng/table';
 //import { BrowserModule } from '@angular/platform-browser';
 //import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-
+import {InputTextModule} from 'primeng/inputtext';
 import {ButtonModule} from 'primeng/button';
 //import {DataTableModule} from 'primeng/primeng';
 import {DropdownModule} from 'primeng/dropdown';
@@ -19,6 +19,7 @@ import { ListarSolicitadosComponent } from './listar-solicitados/listar-solicita
 import { ModificarComponent } from './modificar/modificar.component';
 @NgModule({
   imports: [
+    InputTextModule,
     CommonModule,
     ExamenesRoutingModule,
     NgSelectModule,

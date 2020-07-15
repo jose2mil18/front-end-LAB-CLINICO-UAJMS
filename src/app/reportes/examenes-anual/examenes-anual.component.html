@@ -2,7 +2,7 @@
   <div class="block-header">
     <div class="row">
       <div class="col-lg-7 col-md-6 col-sm-12">
-        <h2>Reportes
+        <h2>Reportes Anuales
           
         </h2>
       </div>
@@ -21,26 +21,9 @@
       <div class="col-lg-12">
         <div class="card">
           <div class="header">  
-              <div class="container">
-                  <div class="row">
-                    <div class="col-md-2">
-                        <ng-select  placeholder="institucion"  name="instiucion"  [(ngModel)]="reporte.institucion" (ngModelChange)="insti($event)"   >
-                         
-                            <ng-option *ngFor="let i of instituciones" [value]="i">{{i.nombre}}</ng-option>
-                          
-                          </ng-select>
-                     </div>
-                     <div class="col-md-2">
-                        <ng-select  placeholder="año"   name="año"  [(ngModel)]="reporte.anio" (ngModelChange)="anio($event)"    >
-                            <ng-option [value]="2018">2018</ng-option>
-                            <ng-option [value]="2019" >2019</ng-option>
-                          
-                          </ng-select>
-                     </div>
-                   
-                  </div>
-               </div>
-   
+       
+            <h2><strong>Reporte </strong> Del Año {{reporte.anio}} <span *ngIf="reporte.institucion.cod_institucion!=''">De La Institucion {{reporte.institucion.nombre}}</span></h2>
+         
             <ul class="header-dropdown">
               <li class="dropdown"> <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"> <i class="zmdi zmdi-more"></i> </a>
                 <ul class="dropdown-menu dropdown-menu-right slideUp float-right">
@@ -55,7 +38,28 @@
             </ul>
           </div>
           <div class="body">
-            <div class="table-responsive">
+              <div class="container">
+                  <div class="row">
+                    <div class="col-md-2">
+                        <ng-select  placeholder="institucion"  name="instiucion"  [(ngModel)]="reporte.institucion" (ngModelChange)="insti($event)"   >
+                         
+                            <ng-option *ngFor="let i of instituciones" [value]="i">{{i.nombre}}</ng-option>
+                          
+                          </ng-select>
+                     </div>
+                     <div class="col-md-2">
+                        <ng-select  placeholder="año"   name="año"  [(ngModel)]="reporte.anio" (ngModelChange)="anio($event)"    >
+                            <ng-option [value]="2018">2018</ng-option>
+                            <ng-option [value]="2019" >2019</ng-option>
+                          
+                            <ng-option [value]="2020" >2020</ng-option>
+                          </ng-select>
+                     </div>
+                   
+                  </div>
+               </div>
+               <br>
+            <div class="">
              <!--
               <table class="table table-bordered table-striped table-hover js-basic-example2 dataTable">
                 <thead>
@@ -90,7 +94,7 @@
               </table>
               -->
 
-          
+          <!--   
               <table class="table table-bordered table-striped table-hover js-basic-example2 dataTable">
                   <thead>
                     <tr>
@@ -123,7 +127,53 @@
                 </tr>
                  </tbody>
                 </table>
+              -->
+                <p-table  #dd [value]="reportes_mensual" [columns]="cols" [paginator]="true" [rows]="20" [pageLinks]="2" [rowsPerPageOptions]="[5,10,20]"  >
               
+                  <ng-template pTemplate="caption">
+                    <div class="ui-helper-clearfix" style="text-align: left">
+                     <!--- 
+                      <button type="button" pButton icon="pi pi-file-o" iconPos="left" label="DOCX" (click)="exportdoc()" style="margin-right: 0.5em;"></button>
+                      <button type="button" pButton icon="pi pi-file-pdf" iconPos="left" label="PDF" (click)="exportPdf()" class="btn btn-warning"></button>
+                    -->
+                    <button type="button" pButton icon="pi pi-file" iconPos="left" label="PDF" (click)="exportPdf()" class="btn btn-warning"></button>
+                 
+                      </div>
+                </ng-template>
+                  <ng-template pTemplate="header" let-solicitud="rowData">
+                      <tr>
+                        <th style="width:45px">#</th>
+                        <th>Mes</th>
+                        <th>Numero de prestaciones</th>
+                          <th>Monto en Bs.</th>
+                          
+                      </tr>
+                    
+                  </ng-template>
+                  <ng-template pTemplate="body"   let-i="rowIndex" let-r>
+                    <tr>
+                      <td scope="row">{{i+1}}</td>
+                    
+                      <td>{{r.mes}}</td>
+                      
+                      <td>{{r.nro_prestaciones}}</td>
+                     <td>{{r.monto}}</td>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="footer" let-columns>
+                
+                  <tr>
+                    <td></td>
+                    <td><strong>Total</strong></td>
+                    
+                    <td>{{reportes_anual.nro_prestaciones_total}}</td>
+                    <td>{{reportes_anual.monto_total}}</td>
+                  
+                  </tr>
+                
+              </ng-template>
+                    
+                </p-table>
  <!-- 
               <table class="table table-bordered table-striped table-hover js-basic-example2 dataTable">
                   <thead>

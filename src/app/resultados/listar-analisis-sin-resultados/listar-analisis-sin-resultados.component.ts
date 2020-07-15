@@ -118,7 +118,7 @@ doc.save('analisisSinResultados.pdf');
 }
 exportPdf() {
   */
-  window.location.href = 'http://localhost:8080/jasperserver/rest_v2/reports/reports/solicitudes_sin_resultados.html?am_usuario='+this.currentUser.personal_laboratorio.persona.am+'&cedula='+this.form.cedula+'&ap_usuario='+this.currentUser.personal_laboratorio.persona.ap+'&nombre_usuario='+this.currentUser.personal_laboratorio.persona.nombre+'&fecha_inicio='+this.form.fecha_inicio+'&fecha_fin='+this.form.fecha_fin+'&estado_solicitud='+this.form.estado_solicitud+'&resultados='+this.form.resultados+'&j_username='+'jasperadmin'+'&j_password='+'jasperadmin';
+  window.location.href = 'http://localhost:8080/jasperserver/rest_v2/reports/reports/solicitudes_sin_resultados.pdf?am_usuario='+this.currentUser.personal_laboratorio.persona.am+'&cedula='+this.form.cedula+'&ap_usuario='+this.currentUser.personal_laboratorio.persona.ap+'&nombre_usuario='+this.currentUser.personal_laboratorio.persona.nombre+'&fecha_inicio='+this.form.fecha_inicio+'&fecha_fin='+this.form.fecha_fin+'&estado_solicitud='+this.form.estado_solicitud+'&resultados='+this.form.resultados+'&j_username='+'jasperadmin'+'&j_password='+'jasperadmin';
 }
 busca_pacientes(){
   console.log(this.form.resultados);

@@ -22,6 +22,7 @@ area:Area;
 currentUser:Usuario;
 cols:any[];
 form
+e:Examen=new Examen();
   constructor(private solicitudesService:SolicitudesService, public examenesService:ExamenesService) { 
     this.solicitudesService.getAllAreas().subscribe(data=>{
       this.areas=data;
@@ -111,11 +112,14 @@ console.log(this.currentUser)
   
   }
   exportPdf() {
-    window.location.href = 'http://localhost:8080/jasperserver/rest_v2/reports/reports/examenes_ofertados.html?am_usuario='+this.currentUser.personal_laboratorio.persona.am+'&ap_usuario='+this.currentUser.personal_laboratorio.persona.ap+'&nombre_usuario='+this.currentUser.personal_laboratorio.persona.nombre+'&nombre_area='+this.form.nombre_area+'&caracter_nombre_examen='+this.form.caracter_nombre_examen+'&j_username='+'jasperadmin'+'&j_password='+'jasperadmin';
+    window.location.href = 'http://localhost:8080/jasperserver/rest_v2/reports/reports/examenes_ofertados.pdf?am_usuario='+this.currentUser.personal_laboratorio.persona.am+'&ap_usuario='+this.currentUser.personal_laboratorio.persona.ap+'&nombre_usuario='+this.currentUser.personal_laboratorio.persona.nombre+'&nombre_area='+this.form.nombre_area+'&caracter_nombre_examen='+this.form.caracter_nombre_examen+'&j_username='+'jasperadmin'+'&j_password='+'jasperadmin';
    }
    actualizar(examen){
 
     localStorage.setItem('examen', JSON.stringify(examen));
    }
 
+   ver(e){
+     this.e=e;
+   }
 }

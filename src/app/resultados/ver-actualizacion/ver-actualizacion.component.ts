@@ -159,6 +159,9 @@ indice:number=0;
       })
   
   }
-  
+  salir(){
+ 
+    this.router.navigate(['/resultados/ver-actualizaciones']);
+  }
   }
   

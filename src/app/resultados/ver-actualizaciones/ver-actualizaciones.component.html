@@ -22,6 +22,7 @@
           <div class="card">
             <div class="header">
               
+            <h2><strong>Lista</strong> de Actualizaciones de Resultados de los Examenes de la Solicitud</h2>
              <ul class="header-dropdown">
                 <li class="dropdown"> <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"> <i class="zmdi zmdi-more"></i> </a>
                   <ul class="dropdown-menu dropdown-menu-right slideUp float-right">
@@ -44,7 +45,7 @@
                     <tr>
                         <th>#</th>
                         
-                        <th>ANALISIS</th>
+                        <th>EXAMEN</th>
                         <th>USUARIO</th>
                         <TH>FECHA</TH>
                         <TH>VER</TH>
@@ -63,7 +64,7 @@
                         <td  >
                       {{e.usuario.personal_laboratorio.persona.nombre}} {{e.usuario.personal_laboratorio.persona.ap}} {{e.usuario.personal_laboratorio.persona.am}}
                           </td>
-                        <td>{{e.fecha}}</td>
+                        <td>{{e.fecha  | date: 'dd-MM-yyyy'}}</td>
                         <td class="text-center">
                           <a  (click)="ver(e)" routerLink="/resultados/ver-actualizacion" class=" waves-effect waves-float waves-green"><i class="zmdi zmdi-edit"></i></a>
                         </td>

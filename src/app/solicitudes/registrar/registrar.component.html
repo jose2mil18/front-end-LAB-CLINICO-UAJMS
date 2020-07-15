@@ -43,10 +43,11 @@
                 </div>
                 <div class="col-lg-10 col-md-10 col-sm-8">
                   <div class="form-group">
-                    <input  type="search" id="cedula" [(ngModel)]="form.paciente.cedula" name="cedula" class="form-control" [formControl]="control" placeholder="Entra tu cedula" required>
+                    <input  type="search" id="cedula" [(ngModel)]="form.paciente.cedula" name="cedula" class="form-control" [formControl]="control" placeholder="Ingresa la cedula" required>
                     <button style="display:none" type="button" (click)="buscar_paciente()"  class="btn btn-raised btn-primary btn-round waves-effect"   >buscar</button>
                    
-                     
+                    <div *ngIf="bandera2" class="alert alert-danger" role="alert">cedula no valido o no registrado en el sistema</div>
+
 
 
 
@@ -83,6 +84,7 @@
               
               
 
+       
 
               <div class="row clearfix">
                 <div class="col-lg-2 col-md-2 col-sm-4 form-control-label">
@@ -105,171 +107,170 @@
                     </div>
                 </div>
               </div> 
-<div class="row clearfix">
-  <div class="col-lg-2 col-md-2 col-sm-4 form-control-label">
-    <label for="ap">Doctor Solicitante</label>
-  </div>
-  <!---
-  <div class="col-lg-10 col-md-10 col-sm-8">
-    <div class="form-group">
-      <input [(ngModel)]="form.doctor" name="doctor" class="form-control" placeholder="doctor" required>
-    </div>
-  </div>
--->
-
-<div class="col-lg-10 col-md-10 col-sm-8">
-  
-<div class="row clearfix">
-  <div class="col-sm-4">
-    <div class="form-group">
-      <input type="text" [(ngModel)]="form.doctor_solicitante.nombre" name="nombre" class="form-control  titulo" placeholder="nombre" required />
-    </div>
-  </div>
-  <div class="col-sm-4">
-    <div class="form-group">
-      <input type="text" [(ngModel)]="form.doctor_solicitante.ap" name="ap" class="form-control titulo" placeholder="apellido paterno" required/>
-    </div>
-  </div>
-  <div class="col-sm-4">
-    <div class="form-group">
-      <input type="text" [(ngModel)]="form.doctor_solicitante.am" name="am" class="form-control titulo"  placeholder="apellido materno" />
-    </div>
-  </div>
-</div>
-</div>
-</div>
-
-
-<div class="row clearfix">
-  <div class="col-lg-2 col-md-2 col-sm-4 form-control-label">
-    <label for="login">Fecha</label>
-  </div>
-  <div class="col-lg-10 col-md-10 col-sm-8">
-    <div class="form-group">
-     
-    <!--  <input [(ngModel)]="form.fecha_entrega" name="fecha_entrega" type="date" id="fecha_entrega" class="form-control" placeholder="Entra tu procedencia">-->
-    <input type="date" [(ngModel)]="fecha" name="fecha" id="fecha" class="form-control" placeholder="fecha" size="12" required />
-            
-  </div>
-  </div>
-</div>
-<div class="row clearfix">
-  <div class="col-lg-2 col-md-2 col-sm-4 form-control-label">
-    <label for="login">Fecha Entrega</label>
-  </div>
-  <div class="col-lg-10 col-md-10 col-sm-8">
-    <div class="form-group">
-     
-    <!--  <input [(ngModel)]="form.fecha_entrega" name="fecha_entrega" type="date" id="fecha_entrega" class="form-control" placeholder="Entra tu procedencia">-->
-    <input type="date" [(ngModel)]="fecha_entrega" id="fecha_entrega" name="fecha_entrega" class="form-control" placeholder="Fecha de entreg"  size="12" required />
-  </div>
-  </div>
-</div>
-
-<div class="row clearfix">
-    <div class="col-lg-2 col-md-2 col-sm-4 form-control-label">
-      <label for="login">Examenes Solicitados</label>
-    </div>
-  
-  </div>
-
-<div class="row clearfix " *ngIf="mostrar">
-  <div class="col-lg-2 col-md-2 col-sm-4 form-control-label">
-    <label for="login">Area</label>
-  </div>
-    <div class="col-lg-10 col-md-10 col-sm-8" >
-   <div class="form-group">
-        <ng-select  class=""  placeholder="seleccione el area donde esta el examen"  style="width:100%" [(ngModel)]="form.examenes_solicitados[i].precio_examen.examen.area" (ngModelChange)="listarExamenesdeArea($event)"  name="cod_area">
-       
-          <ng-option  [disabled] *ngFor="let area of areas" [value]="area"  >{{area.nombre}}</ng-option>
-        
-        </ng-select>
-    
-
-      </div>
-   
- 
-  </div>
-</div>
-
-<br>
-<div class="row clearfix" *ngIf="mostrar">
-  <div class="col-lg-2 col-md-2 col-sm-4 form-control-label">
-    <label for="login">Examen</label>
-  </div>
-    <div class="col-lg-10 col-md-10 col-sm-8">
-     
-        <ng-select  [(ngModel)]="form.examenes_solicitados[i].precio_examen"  placeholder="seleccione un examen" (ngModelChange)="examenseleccionar($event)"   name="cod_examen">
-       <ng-container *ngIf="examenes.length >0">
-          <ng-container *ngFor="let e of examenes">
-   
-          <ng-option [value]="e"  >{{e.examen.nombre}}</ng-option>
-  
-        </ng-container>
-      </ng-container>
-      <ng-container *ngIf="examenes.length == 0">
-      
-        <ng-option></ng-option>
-
-      
-    </ng-container>
-        </ng-select>
-        <br>
-
-  {{form.examenes_solicitados[i].precio_examen.examen.cod_examen}}
- 
-  </div>
-</div>
-{{i}}
-<div class="body" >
-    <div class="table-responsive">
-<table class="table table-bordered table-striped table-hover js-basic-example dataTable">
-                      <thead>
-                        <tr>
-                            <th>#</th>
-                            
-                            <th>NOMBRE</th>
+              
+              <div class="row clearfix">
+                <div class="col-lg-2 col-md-2 col-sm-4 form-control-label">
+                  <label for="ap">Doctor Solicitante</label>
+                </div>
+                <!---
+                <div class="col-lg-10 col-md-10 col-sm-8">
+                  <div class="form-group">
+                    <input [(ngModel)]="form.doctor" name="doctor" class="form-control" placeholder="doctor" required>
+                  </div>
+                </div>
+              -->
+              
+              <div class="col-lg-10 col-md-10 col-sm-8">
+                
+              <div class="row clearfix">
+                <div class="col-sm-4">
+                  <div class="form-group">
+                    <input type="text" [(ngModel)]="form.doctor_solicitante.nombre" name="nombre" class="form-control titulo" placeholder="Ingresa el nombre" required />
+                  </div>
+                </div>
+                <div class="col-sm-4">
+                  <div class="form-group">
+                    <input type="text" [(ngModel)]="form.doctor_solicitante.ap" name="ap" class="form-control titulo" placeholder="Ingresa el apellido paterno"  required/>
+                  </div>
+                </div>
+                <div class="col-sm-4">
+                  <div class="form-group">
+                    <input type="text" [(ngModel)]="form.doctor_solicitante.am" name="am" class="form-control titulo"  placeholder="Ingresa el apellido materno" />
+                  </div>
+                </div>
+              </div>
+              </div>
+              </div>
+              
+              <div class="row clearfix">
+                <div class="col-lg-2 col-md-2 col-sm-4 form-control-label">
+                  <label for="login">Fecha</label>
+                </div>
+                <div class="col-lg-10 col-md-10 col-sm-8">
+                  <div class="form-group">
+                   
+                  <!--  <input [(ngModel)]="form.fecha_entrega" name="fecha_entrega" type="date" id="fecha_entrega" class="form-control" placeholder="Entra tu procedencia">-->
+                  <input type="date" [(ngModel)]="fecha" name="fecha" id="fecha" class="form-control" placeholder="fecha"  size="12" required/>
                           
-                            <th>QUITAR EXAMEN</th>
-                        </tr>
-                      </thead>
-                    
-                      <tbody>
-                        <ng-container *ngFor="let e of form.examenes_solicitados; index as in" > 
-                        <tr *ngIf="mostrar && i!=in ">
-                            <th scope="row" ><span >{{in+1}}</span></th>
-                          <td >{{e.precio_examen.examen.nombre}}</td>
-                          <td><a  routerLink="/solicitudes/registrar" (click)="quitar_examen(e.precio_examen.examen.cod_examen, in )"  class=" waves-effect waves-float waves-green"><i class="zmdi zmdi-delete"></i></a>
+                </div>
+                </div>
+              </div>
+              <div class="row clearfix">
+                <div class="col-lg-2 col-md-2 col-sm-4 form-control-label">
+                  <label for="login">Fecha Entrega</label>
+                </div>
+                <div class="col-lg-10 col-md-10 col-sm-8">
+                  <div class="form-group">
+                   
+                  <!--  <input [(ngModel)]="form.fecha_entrega" name="fecha_entrega" type="date" id="fecha_entrega" class="form-control" placeholder="Entra tu procedencia">-->
+                  <input type="date" [(ngModel)]="fecha_entrega" id="fecha_entrega" name="fecha_entrega" class="form-control" placeholder="Fecha de entreg"  size="12" required />
+                </div>
+                </div>
+              </div>
+              <div class="row clearfix">
+                  <div class="col-lg-2 col-md-2 col-sm-4 form-control-label">
+                    <label for="login">Examenes Solicitados</label>
+                  </div>
+                
+                </div>
+              <div class="row clearfix "  *ngIf="mostrar">
+                <div class="col-lg-2 col-md-2 col-sm-4 form-control-label">
+                  <label for="login">Area</label>
+                </div>
+                  <div class="col-lg-10 col-md-10 col-sm-8" >
+                 
+                      <ng-select  class="" placeholder="seleccione el area donde esta el examen"  style="width:100%" [(ngModel)]="cod_area" (ngModelChange)="listarExamenesdeArea()"  name="cod_area">
+                     
+                        <ng-option *ngFor="let area of areas" [value]="area.cod_area"  >{{area.nombre}}</ng-option>
+                      
+                      </ng-select>
                   
-                          
-                        </tr>
-                      </ng-container>
-                       
-                    </tbody>
-                    </table>
-
-
-
-
-
-
-                  
+              
+                   
+                 
+               
                 </div>
               </div>
               
-
               
+              <br>
 
-
-
+          
+              <div class="row clearfix" *ngIf="mostrar">
+                <div class="col-lg-2 col-md-2 col-sm-4 form-control-label">
+                  <label for="login">Examen</label>
+                </div>
+                  <div class="col-lg-10 col-md-10 col-sm-8">
+                   
+                      <ng-select  id="cod_precio_examen" class="" [(ngModel)]="cod_precio_examen" #e="ngModel"  placeholder="seleccione un examen" (ngModelChange)="examenseleccionar()"   name="cod_examen" >
+                    
+                     
+                          <ng-option [value]="e.cod_precio_examen"  *ngFor="let e of examenes" >{{e.examen.nombre}}</ng-option>
+                  
+                     
+                  
+                      </ng-select>
+                      <br>
+              
+               
+                </div>
+              </div>
+              
+              
+              
+              
+              
+              
+              <div class="body">
+                  <div class="table-responsive">
+              <table class="table table-bordered table-striped table-hover js-basic-example dataTable">
+                                    <thead>
+                                      <tr>
+                                          <th>#</th>
+                                          
+                                          <th>NOMBRE</th>
+                                          <th>QUITAR EXAMEN</th>
+                                        
+                                      </tr>
+                                    </thead>
+                  
+                                    <tbody>  <ng-container *ngFor="let e of form.examenes_solicitados; index as in" > 
+                                      <tr *ngIf=" e.estado=='Sin Registrar'">
+                                          <th scope="row">{{in+1}}</th>
+                                        <td >{{e.precio_examen.examen.nombre}}</td>
+                                        <td><a  routerLink="/solicitudes/registrar"  (click)="quitar_examen(e.precio_examen.examen.cod_examen, in )"  class=" waves-effect waves-float waves-green"><i class="zmdi zmdi-delete"></i></a>
+                                
+                                     
+                                           
+                                      </tr>
+                                    </ng-container>
+                                     
+                                  </tbody>
+                                  </table>
+              
+              
+              
+              
+              
+              
+                                
+                              </div>
+                            </div>
+                            
+              
+                            
+              
+              
+              
+              
+              
               <div *ngIf="bandera" class="alert alert-danger" role="alert">tiene que haber como minimo un examen en la solicitud</div>
-
-
-
-
-
-
-
+              
+              
+              
+              
+              
+              
 
 
               

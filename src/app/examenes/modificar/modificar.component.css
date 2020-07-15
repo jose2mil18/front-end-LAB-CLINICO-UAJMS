@@ -3,3 +3,7 @@
   
   cursor: pointer
 }
+.titulo{
+   
+  text-transform: capitalize;
+}

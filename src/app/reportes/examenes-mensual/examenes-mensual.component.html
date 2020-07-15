@@ -2,7 +2,7 @@
   <div class="block-header">
     <div class="row">
       <div class="col-lg-7 col-md-6 col-sm-12">
-        <h2>Reportes
+        <h2>Reportes Mensuales 
           
         </h2>
       </div>
@@ -21,52 +21,8 @@
       <div class="col-lg-12">
         <div class="card">
           <div class="header">  
-              <div class="container">
-                  <div class="row">
-                    <div class="col-md-2">
-                        <ng-select  placeholder="institucion"  name="instiucion"  [(ngModel)]="reporte.institucion" (ngModelChange)="insti($event)"   >
-                         
-                            <ng-option *ngFor="let i of instituciones" [value]="i">{{i.nombre}}</ng-option>
-                          
-                          </ng-select>
-                     </div>
-                     <div class="col-md-2">
-                        <ng-select  placeholder="año"   name="año"  [(ngModel)]="reporte.anio" (ngModelChange)="anio($event)"    >
-                            <ng-option [value]="2018">2018</ng-option>
-                            <ng-option [value]="2019" >2019</ng-option>
-                          
-                          </ng-select>
-                     </div>
-                     <div class="col-md-2">
-                        <ng-select  placeholder="mes"  name="mes"   [(ngModel)]="reporte.mes" (ngModelChange)="vermes($event)"  >
-                          
-                            <ng-option [value]="1">Enero</ng-option>  
-                          <ng-option [value]="2">febrero</ng-option>
-                            
-                            <ng-option [value]="3">Marzo</ng-option>
-                            
-                            <ng-option [value]="4">Abril</ng-option>
-                            
-                            <ng-option [value]="5">Mayo</ng-option>
-                            
-                            <ng-option [value]="6">Junio</ng-option>
-                            
-                            <ng-option [value]="7">Julio</ng-option>
-                            <ng-option [value]="8">Agosto</ng-option>
-                            <ng-option [value]="9">Septiembre</ng-option>
-                            
-                            <ng-option [value]="10">Octubre</ng-option>
-                            
-                            <ng-option [value]="11">Noviembre</ng-option>
-                            
-                            <ng-option [value]="12">Diciembre</ng-option>
-                            
-                          
-                          </ng-select>
-                     </div>
-                  </div>
-               </div>
-   
+            <h2 *ngIf="reporte.institucion.cod_institucion!=''"><strong>Reporte </strong> Del Mes de <span></span>{{reportes_mensual.mes}} Año {{reporte.anio}} De La Institucion {{reporte.institucion.nombre}}</h2>
+         
             <ul class="header-dropdown">
               <li class="dropdown"> <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"> <i class="zmdi zmdi-more"></i> </a>
                 <ul class="dropdown-menu dropdown-menu-right slideUp float-right">
@@ -81,9 +37,59 @@
             </ul>
           </div>
           <div class="body">
-            <div class="table-responsive">
-             
+
+            <div class="container">
+              <div class="row">
+                <div class="col-md-2">
+                    <ng-select  placeholder="institucion"  name="instiucion"  [(ngModel)]="reporte.institucion" (ngModelChange)="insti($event)"   >
+                     
+                        <ng-option *ngFor="let i of instituciones" [value]="i">{{i.nombre}}</ng-option>
+                      
+                      </ng-select>
+                 </div>
+                 <div class="col-md-2">
+                    <ng-select  placeholder="año"   name="año"  [(ngModel)]="reporte.anio" (ngModelChange)="anio($event)"    >
+                        <ng-option [value]="2018">2018</ng-option>
+                        <ng-option [value]="2019" >2019</ng-option>
+                      
+                        <ng-option [value]="2020" >2020</ng-option>
+                      </ng-select>
+                 </div>
+                 <div class="col-md-2">
+                    <ng-select  placeholder="mes"  name="mes"   [(ngModel)]="reporte.mes" (ngModelChange)="vermes($event)"  >
+                      
+                        <ng-option [value]="1">Enero</ng-option>  
+                      <ng-option [value]="2">febrero</ng-option>
+                        
+                        <ng-option [value]="3">Marzo</ng-option>
+                        
+                        <ng-option [value]="4">Abril</ng-option>
+                        
+                        <ng-option [value]="5">Mayo</ng-option>
+                        
+                        <ng-option [value]="6">Junio</ng-option>
+                        
+                        <ng-option [value]="7">Julio</ng-option>
+                        <ng-option [value]="8">Agosto</ng-option>
+                        <ng-option [value]="9">Septiembre</ng-option>
+                        
+                        <ng-option [value]="10">Octubre</ng-option>
+                        
+                        <ng-option [value]="11">Noviembre</ng-option>
+                        
+                        <ng-option [value]="12">Diciembre</ng-option>
+                        
+                      
+                      </ng-select>
+                 </div>
+              </div>
+           </div>
+           <div></div>
+           <br>
+            <div class="">
+             <!-- 
               <table class="table table-bordered table-striped table-hover js-basic-example2 dataTable">
+              
                 <thead>
                   <tr>
                       <th>#</th>
@@ -109,13 +115,61 @@
                     <td><strong>Nro. Total de Prestaciones</strong></td>
                     <td>{{reportes_mensual.nro_prestaciones}}</td>
                     <td><strong>Total</strong></td>
-                    <td>{{reportes_mensual.monto}}</td>
+                    <td>{{reportes_mensual.monto}} Bs.</td>
                   </tr>
                  
               </tbody>
               </table>
-              -->
-
+            -->
+              <p-table  #dd [responsive]="true" [value]="Reportes_examen_mensual" [columns]="cols" [paginator]="true" [rows]="5" [pageLinks]="2" [rowsPerPageOptions]="[5,10,20]"  >
+              
+                <ng-template pTemplate="caption">
+                  <div class="ui-helper-clearfix" style="text-align: left">
+                   <!--- 
+                    <button type="button" pButton icon="pi pi-file-o" iconPos="left" label="DOCX" (click)="exportdoc()" style="margin-right: 0.5em;"></button>
+                    <button type="button" pButton icon="pi pi-file-pdf" iconPos="left" label="PDF" (click)="exportPdf()" class="btn btn-warning"></button>
+                  -->
+                  <button type="button" pButton icon="pi pi-file" iconPos="left" label="PDF" (click)="exportPdf()" class="btn btn-warning"></button>
+               
+                    </div>
+              </ng-template>
+                <ng-template pTemplate="header" let-solicitud="rowData">
+                    <tr>
+                      <th style="width:45px">#</th>
+                      <th>Prestaciones realizadas</th>
+                      <th>Nro. prestaciones</th>
+                        <th>Costo unitario</th>
+                        <TH>Costo total</TH>
+                        
+                    </tr>
+                  
+                </ng-template>
+                <ng-template pTemplate="body"   let-i="rowIndex" let-r>
+                  <tr>
+                    <td class="text-left">
+                            {{i+1}}
+                    
+                    </td>
+                    <td>{{r.precio_examen.examen.nombre}}</td>
+                    <td>{{r.nro_prestaciones}}</td>
+                 <td>{{r.precio_examen.costo.toFixed(1)}}</td>
+                      <td>{{r.costo_total_examen.toFixed(1)}}</td>
+                     
+                  </tr>
+              </ng-template>
+              <ng-template pTemplate="footer" let-columns>
+              
+                <tr>
+                  <td></td>
+                  <td><strong>Nro. Total de Prestaciones</strong></td>
+                  <td>{{reportes_mensual.nro_prestaciones}}</td>
+                  <td><strong>Total</strong></td>
+                  <td class="font-weight-normal">{{reportes_mensual.monto.toFixed(1)}} Bs.</td>
+                </tr>
+              
+            </ng-template>
+                  
+              </p-table>
           <!-- 
               <table class="table table-bordered table-striped table-hover js-basic-example2 dataTable">
                   <thead>

@@ -11,7 +11,7 @@ import { DatePipe } from '@angular/common';
 import 'jspdf-autotable';
 import { SelectItem } from 'primeng/primeng';
 declare const $: any;
-
+import * as glob from '../../shared/variables_global'; //<== HERE
 import {debounceTime} from 'rxjs/operators'
 @Component({
   selector: 'app-listar',
@@ -43,8 +43,10 @@ rootNode: any;
 columnDefs=[]
 rowData=[];
 cols:any[];
+paciente:Paciente=new Paciente();
+edad:number
   constructor(public datePipe:DatePipe, private pacientesService:PacientesService, private router: Router, private node:ElementRef) { 
-   
+
     this.currentUser = JSON.parse(localStorage.getItem('currentUser'));
    this.procedencia=""
    this.sexo="";
@@ -141,20 +143,23 @@ this.rootNode=node;
     
     localStorage.setItem('paciente', JSON.stringify(paciente));
   }
+  ver(paciente){
+
+   this.paciente=paciente;
+  }
   verhistorialclinico(paciente){
 
     
     localStorage.setItem('paciente', JSON.stringify(paciente));
   }
 filtro_completo(){
-  
-  if(this.sexo==null)
-  {
-    this.sexo=""
-  }
+
+
+
 console.log(this.procedencia)
-  this.pacientesService.filtro(this.procedencia, this.sexo).subscribe(data => {
-      this.pacientes=data;
+  this.pacientesService.filtro(this.procedencia, this.sexo,this.edad).subscribe(data => {
+ 
+    this.pacientes=data;
       for(let i=0;i<this.pacientes.length; i++)
       {
         this.pacientes[i].persona.apellidos=this.pacientes[i].persona.ap+" "+this.pacientes[i].persona.am
@@ -163,11 +168,18 @@ console.log(this.procedencia)
        }
   });
 }
+crear_backup(){
+  
+}
 exportdoc() {
-  window.location.href = 'http://localhost:8080/jasperserver/rest_v2/reports/reports/pacientes.docx?am_usuario='+this.currentUser.personal_laboratorio.persona.am+'&procedencia='+this.procedencia+'&ap_usuario='+this.currentUser.personal_laboratorio.persona.ap+'&sexo='+this.sexo+'&nombre_usuario='+this.currentUser.personal_laboratorio.persona.nombre+'&j_username='+'jasperadmin'+'&j_password='+'jasperadmin';
+  window.location.href = 'http://localhost:8080/jasperserver/rest_v2/reports/reports/pacientes.html?am_usuario='+this.currentUser.personal_laboratorio.persona.am+'&procedencia='+this.procedencia+'&ap_usuario='+this.currentUser.personal_laboratorio.persona.ap+'&sexo='+this.sexo+'&nombre_usuario='+this.currentUser.personal_laboratorio.persona.nombre+'&j_username='+'jasperadmin'+'&j_password='+'jasperadmin';
 }
  exportPdf() {
-    window.location.href = 'http://localhost:8080/jasperserver/rest_v2/reports/reports/pacientes.pdf?am_usuario='+this.currentUser.personal_laboratorio.persona.am+'&procedencia='+this.procedencia+'&ap_usuario='+this.currentUser.personal_laboratorio.persona.ap+'&sexo='+this.sexo+'&nombre_usuario='+this.currentUser.personal_laboratorio.persona.nombre+'&j_username='+'jasperadmin'+'&j_password='+'jasperadmin';
+   if(this.edad==undefined)
+   {
+     this.edad=0;
+   }
+    window.location.href = 'http://localhost:8080/jasperserver/rest_v2/reports/reports/pacientes.pdf?am_usuario='+this.currentUser.personal_laboratorio.persona.am+'&procedencia='+this.procedencia+'&ap_usuario='+this.currentUser.personal_laboratorio.persona.ap+'&sexo='+this.sexo+'&nombre_usuario='+this.currentUser.personal_laboratorio.persona.nombre+'&edad='+this.edad+'&j_username='+'jasperadmin'+'&j_password='+'jasperadmin';
  
 //window.location.href = 'http://localhost:8080/jasperserver/rest_v2/reports/reports/pacientes.pdf?nombre_usuario='+this.currentUser.personal_laboratorio.persona.nombre
     /*

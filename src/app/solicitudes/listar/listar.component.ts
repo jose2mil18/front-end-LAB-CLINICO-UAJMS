@@ -45,7 +45,7 @@ brands2:any[]
 rootNode: any;
 form;
 fecha:String;
-  solicitud:Solicitud;
+  solicitud:Solicitud=new Solicitud()
 solicitudes:Solicitud[]=[];
 cols:any[];
 currentUser:Usuario
@@ -54,6 +54,7 @@ fechita:string;
 texto:string;
 areas:Area[]
 fecha_solicitud_minima:String
+
   constructor(private datePipe: DatePipe,  private titleCasePipe: TitleCasePipe, public solicitudesService:SolicitudesService, public pacientesService:PacientesService,private node:ElementRef) { 
     this.form={
       fech:'',
@@ -349,12 +350,12 @@ exportPdf() {
   if(this.datePipe.transform(this.form.fecha_inicio,"yyyy-MM-dd") == this.datePipe.transform(new Date(),"yyyy-MM-dd")  || this.datePipe.transform(this.form.fecha_final,"yyyy-MM-dd") == this.datePipe.transform(new Date(),"yyyy-MM-dd") )
   {
   
-    window.location.href = 'http://localhost:8080/jasperserver/rest_v2/reports/reports/solicitudes.html?am_usuario='+this.currentUser.personal_laboratorio.persona.am+'&cedula='+this.form.cedula+'&ap_usuario='+this.currentUser.personal_laboratorio.persona.ap+'&nombre_usuario='+this.currentUser.personal_laboratorio.persona.nombre+'&estado_solicitud='+this.form.estado_solicitud+'&resultados='+this.form.resultados+'&j_username='+'jasperadmin'+'&j_password='+'jasperadmin';
+    window.location.href = 'http://localhost:8080/jasperserver/rest_v2/reports/reports/solicitudes.pdf?am_usuario='+this.currentUser.personal_laboratorio.persona.am+'&cedula='+this.form.cedula+'&ap_usuario='+this.currentUser.personal_laboratorio.persona.ap+'&nombre_usuario='+this.currentUser.personal_laboratorio.persona.nombre+'&estado_solicitud='+this.form.estado_solicitud+'&resultados='+this.form.resultados+'&j_username='+'jasperadmin'+'&j_password='+'jasperadmin';
 
   }
   else
   {
-  window.location.href = 'http://localhost:8080/jasperserver/rest_v2/reports/reports/solicitudes.html?am_usuario='+this.currentUser.personal_laboratorio.persona.am+'&cedula='+this.form.cedula+'&ap_usuario='+this.currentUser.personal_laboratorio.persona.ap+'&nombre_usuario='+this.currentUser.personal_laboratorio.persona.nombre+'&fecha_inicio='+this.form.fecha_inicio+'&fecha_fin='+this.form.fecha_fin+'&estado_solicitud='+this.form.estado_solicitud+'&resultados='+this.form.resultados+'&j_username='+'jasperadmin'+'&j_password='+'jasperadmin';
+  window.location.href = 'http://localhost:8080/jasperserver/rest_v2/reports/reports/solicitudes.pdf?am_usuario='+this.currentUser.personal_laboratorio.persona.am+'&cedula='+this.form.cedula+'&ap_usuario='+this.currentUser.personal_laboratorio.persona.ap+'&nombre_usuario='+this.currentUser.personal_laboratorio.persona.nombre+'&fecha_inicio='+this.form.fecha_inicio+'&fecha_fin='+this.form.fecha_fin+'&estado_solicitud='+this.form.estado_solicitud+'&resultados='+this.form.resultados+'&j_username='+'jasperadmin'+'&j_password='+'jasperadmin';
   }
 
   /*
@@ -567,5 +568,8 @@ if(this.solicitudes[i].paciente.persona.nombre == this.form.caracter_nombre){
     }
   }
   console.log(this.solicitudes)
+}
+ver(s){
+  this.solicitud=s
 }
 }

@@ -23,7 +23,7 @@
       <div class="row clearfix">
         <div class="col-lg-12">
           <div class="card">
-            <div class="body"><div style="margin:40px" id="contentToConvert">
+            <div class="body"><div style="margin:40px; padding:10px" id="contentToConvert" align-text="text-center">
   
               <div >
                   <div  class=""  >
@@ -83,7 +83,7 @@
               
               <div class="container">
                   <div class="row">
-                      <div class="col-md-2">     </div>
+                      <div class="col-md-2"></div>
                       <div class="col-md-4"></div>
                     
                       <div class="col-md-2"><Strong> Valor de Referencia</Strong>        </div>
@@ -94,16 +94,17 @@
 
                   <div  *ngFor="let ex of solicitud.examenes_solicitados">
                     <ng-container *ngIf="ex.precio_examen.examen.cod_examen !=48  &&  ex.precio_examen.examen.cod_examen !=25">
-                      <div class="col-md-3" *ngIf="ex.num_subexamenes == 0"><strong ></strong>      </div>
+                           <div class="col-md-3" *ngIf="ex.num_subexamenes == 0">  
+                           </div>
                   <ng-container >
                       <div class="row">
      
                        <div class="col-md-3"><strong >{{ex.precio_examen.examen.nombre}} </strong>      </div>
-                   <div class="col-md-3"><strong ><span *ngIf="ex.precio_examen.examen.num_subexamenes==0">:</span></strong>  <span *ngFor="let v of ex.resultados_examen.valores">{{v.valor}}</span></div>
+                       <div class="col-md-3"><strong ><span *ngIf="ex.precio_examen.examen.num_subexamenes==0">:</span></strong>  <span *ngFor="let v of ex.resultados_examen.valores">{{v.valor}}</span></div>
                  
-                   <div class="col-md-3">  <span *ngFor="let v of ex.precio_examen.examen.valores_referencia">
+                       <div class="col-md-3">  <span *ngFor="let v of ex.precio_examen.examen.valores_referencia">
                     {{v.tipo_persona}} <span *ngIf="v.valor_inicial != v.valor_final">{{v.valor_inicial}} - {{v.valor_final}} .</span><span *ngIf="v.valor_inicial == v.valor_final">{{v.valor_inicial}}.</span>
-                  </span>  {{ex.precio_examen.examen.unidades}}     </div>
+                      </span>  {{ex.precio_examen.examen.unidades}}     </div>
      
      
                    <div class="col-md-3"></div>
@@ -148,7 +149,7 @@
                   
           
           
-          </ng-container>
+                    </ng-container>
           
           
           </div>
@@ -192,7 +193,7 @@
         </div>
         <div class="col-sm-8 offset-sm-2">
           <button type="button" (click)="captureScreen()" class="btn btn-raised btn-primary btn-round waves-effect"   >
-            <div class="demo-google-material-icon"> <i class="material-icons">picture_as_pdf</i> <span class="icon-name">descargar</span></div></button>
+            <div class="demo-google-material-icon"> <i class="material-icons">picture_as_pdf</i> <span class="icon-name">Descargar</span></div></button>
         </div>
       </div>
   </section>

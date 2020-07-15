@@ -16,13 +16,14 @@ import { NgxPaginationModule } from 'ngx-pagination';
 //import {MatFormFieldModule} from '@angular/material/form-field';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { ListarComponent } from './listar/listar.component'
-
+import {InputTextModule} from 'primeng/inputtext';
 import { ButtonModule} from 'primeng/primeng';
 import {DropdownModule} from 'primeng/dropdown';
 import {TableModule} from 'primeng/table';
 
 @NgModule({
   imports: [
+    InputTextModule,
     ButtonModule,
     DropdownModule,
     TableModule,

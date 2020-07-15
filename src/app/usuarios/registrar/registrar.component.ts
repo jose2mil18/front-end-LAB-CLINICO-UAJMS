@@ -12,6 +12,9 @@ declare const noUiSlider: any;
 declare const validateCedulaUnica:any
 declare const validateCedula:any
 declare const validatePassword:any;
+interface HtmlInputEvent extends Event {
+  target: HTMLInputElement & EventTarget;
+}
 @Component({
   selector: 'app-registrar',
   templateUrl: './registrar.component.html',
@@ -143,7 +146,8 @@ registrar(){
 constructor(private titleCasePipe:TitleCasePipe, private formBuilder: FormBuilder, private usuarioService : UsuariosService, private router:Router) { 
   
 this.form=new Usuario();
-  this.imageUrl="assets/images/photo_profile_user.png"
+this.imageUrl=this.imageUrl+"photo_profile_user.png";
+console.log(this.imageUrl)
 
   this.usuarioService.getAllRoles().subscribe(data=>{
 this.roles=data;
@@ -173,39 +177,39 @@ this.bandera=false
     validateCedula();
     console.log('cedularepetidad');
  
-     
+    this.form.personal_laboratorio.persona.nombre=(this.titleCasePipe.transform(this.form.personal_laboratorio.persona.nombre))
+    this.form.personal_laboratorio.persona.ap=(this.titleCasePipe.transform(this.form.personal_laboratorio.persona.ap))
+    this.form.personal_laboratorio.persona.am=(this.titleCasePipe.transform(this.form.personal_laboratorio.persona.am))
+    this.form.personal_laboratorio.profesion=(this.titleCasePipe.transform(this.form.personal_laboratorio.profesion))
+    console.log(this.form)
+    console.log($('#password').val() == $('#password_confirmation').val())
+    
+    console.log($('#password').val() +"   "+$('#password_confirmation').val())
+  if( this.bandera && formulario.valid && ($('#password').val() == $('#password_confirmation').val()) ){
+  
+    if(this.form.personal_laboratorio.foto != '' && this.file!=null)
+    {
+    this.usuarioService.uploadImagen(this.file).subscribe(data=>{
+      console.log("imagen guardada")
+    })
+  }
+    this.usuarioService.register( this.form )
+    .subscribe(data => {
+      this.router.navigate(['/usuarios/listar']);
+    },
+    error => {  
+      this.router.navigate(['/usuarios/registrar']);
+    });
+  }
+  else
+  {
+    console.log("ofrormicoreecto opasswordno coinciden")
+  }
    
   });
   //validateCedulaUnica(this.form.cedula);
  // this.form.personal_laboratorio.foto=this.fileToUpload.name;
-  this.form.personal_laboratorio.persona.nombre=(this.titleCasePipe.transform(this.form.personal_laboratorio.persona.nombre))
-  this.form.personal_laboratorio.persona.ap=(this.titleCasePipe.transform(this.form.personal_laboratorio.persona.ap))
-  this.form.personal_laboratorio.persona.am=(this.titleCasePipe.transform(this.form.personal_laboratorio.persona.am))
-  this.form.personal_laboratorio.profesion=(this.titleCasePipe.transform(this.form.personal_laboratorio.profesion))
-  console.log(this.form)
-  console.log($('#password').val() == $('#password-confirmation').val())
-if( this.bandera && formulario.valid && ($('#password').val() == $('#password-confirmation').val()) ){
 
-  if(this.form.personal_laboratorio.foto != '')
-  {
-  this.usuarioService.uploadImagen(this.fileToUpload).subscribe(data=>{
-    console.log("imagen guardada")
-  })
-}
-  this.usuarioService.register( this.form )
-  .subscribe(data => {
-    this.router.navigate(['/usuarios/listar']);
-  
-  },
-  error => {
-     
-    this.router.navigate(['/usuarios/registrar']);
-  });
-}
-else
-{
-  console.log("ofrormicoreecto opasswordno coinciden")
-}
 }
 
 handleFileInput(file: FileList) {
@@ -223,5 +227,21 @@ console.log(file.item.length)
 }
 rolseleccionar(d){
 console.log($('#rol').val())
+}
+photoSelected:string | ArrayBuffer//muestra la imagen que el usuario sube
+
+file: File=null;
+onPhotoSelected(event: HtmlInputEvent): void {
+  
+  if (event.target.files && event.target.files[0]) {//verificando si por lomenos esta subiendouna foto
+    this.file = <File>event.target.files[0];//ñaimagen guarda en file
+    // image preview
+    const reader = new FileReader();//lee un archivo
+    reader.onload = e =>
+     this.photoSelected = reader.result;//llena photoselect con el resultado que esta leendo
+    reader.readAsDataURL(this.file);
+    console.log(this.file.name)
+  this.form.personal_laboratorio.foto=this.file.name
+  }
 }
 }

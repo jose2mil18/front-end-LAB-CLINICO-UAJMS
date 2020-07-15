@@ -12,6 +12,7 @@ interface HtmlInputEvent extends Event {
   target: HTMLInputElement & EventTarget;
 }
 
+
 declare const fun :any;
 declare const validatePassword:any;
 @Component({
@@ -39,12 +40,12 @@ fileToUpload: File = null;
        })
     this.estados=['habilitado', 'deshabilitado']
     this.form=JSON.parse(localStorage.getItem('usuarioamodificar'));
-    if(this.form.personal_laboratorio.foto ==''){
-      this.imageUrl="assets/images/photo_profile_user.png"
-    }
     this.imageUrl=this.imageUrl+this.form.personal_laboratorio.foto;
-
-    this.rolSeleccionado=this.form.roles[0].nombre
+    //if(this.form.personal_laboratorio.foto ==''){
+     // this.imageUrl="assets/images/photo_profile_user.png"
+   /// }
+   
+    this.rolSeleccionado=this.form.rol.nombre
     this.form.login='';
 this.contraseña=this.form.password;
     this.form3={password:''}
@@ -56,18 +57,39 @@ this.form2={
 this.form.password=''
    
    }
+   photoSelected:string | ArrayBuffer//muestra la imagen que el usuario sube
+bandera:boolean=false;
+file: File=null;
+onPhotoSelected(event: HtmlInputEvent): void {
+  
+  if (event.target.files && event.target.files[0]) {//verificando si por lomenos esta subiendouna foto
+    this.file = <File>event.target.files[0];//ñaimagen guarda en file
+    // image preview
+    const reader = new FileReader();//lee un archivo
+    reader.onload = e =>
+     this.photoSelected = reader.result;//llena photoselect con el resultado que esta leendo
+    reader.readAsDataURL(this.file);
+    console.log(this.file.name)
+  this.form.personal_laboratorio.foto=this.file.name
+  }
+}
 
    handleFileInput(file: FileList) {
+
     this.fileToUpload = file.item(0);
 
     //Show image preview
     var reader = new FileReader();
-    reader.onload = (event:any) => {
-      this.imageUrl = event.target.result;
+    reader.onload = e => {
+      //this.imageUrl = event.target.result;
+      this.photoSelected=reader.result// reader.result lee el archivo y lo asigna a photo selected
+      reader.readAsDataURL
     }
     reader.readAsDataURL(this.fileToUpload);
-    
-  this.form.personal_laboratorio.foto=this.fileToUpload.name;
+    //alert(this.fileToUpload.name)
+    this.form.personal_laboratorio.foto="http://localhost:9898/api/file/"+this.fileToUpload.name;
+    alert(this.form.personal_laboratorio.foto)
+//this.form.personal_laboratorio.foto=this.fileToUpload.name;
   }
 
   ngOnInit() {
@@ -101,10 +123,11 @@ guardar_modificacion(formu:NgForm){
   console.log(this.form)
   if(formu.valid)
   {
-    console.log("ok")
-    if(this.form.personal_laboratorio.foto !='')
+   console.log(this.file!=null)
+    if(this.form.personal_laboratorio.foto !='' && this.file!=null)
     {
-    this.usuarioService.uploadImagen(this.fileToUpload).subscribe(data=>{
+      console.log("klp")
+    this.usuarioService.uploadImagen(this.file).subscribe(data=>{
       console.log("imagen guardada")
     })
   }

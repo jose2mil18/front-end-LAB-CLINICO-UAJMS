@@ -25,6 +25,7 @@ import {DropdownModule} from 'primeng/dropdown';
 import {TableModule} from 'primeng/table';
 @NgModule({
   imports: [
+    ButtonModule,
     InputTextModule,
     CommonModule,
     ResultadosRoutingModule,

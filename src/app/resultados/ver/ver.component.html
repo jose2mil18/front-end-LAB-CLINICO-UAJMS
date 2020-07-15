@@ -44,9 +44,7 @@
             <p-table [columns]="cols" #dd [value]="analisisSinResultados" [paginator]="true" [rows]="5" >
               <ng-template pTemplate="caption">
                 <div class="ui-helper-clearfix" style="text-align: left">
-                 
-                  <button type="button" pButton icon="pi pi-file-o" iconPos="left" label="CSV" (click)="dd.exportCSV()" style="margin-right: 0.5em;"></button>
-                  <button type="button" pButton icon="pi pi-file-pdf" iconPos="left" label="PDF" (click)="exportPdf()" class="btn btn-warning"></button>
+                 <button type="button" pButton icon="pi pi-file" iconPos="left" label="PDF" (click)="exportPdf()" class="btn btn-warning"></button>
                    
                   </div>
             </ng-template>
@@ -66,19 +64,23 @@
                   </tr>
                   <tr>
                     <th></th>
-                      <th  style="width:auto" *ngFor="let col of cols" [ngSwitch]="col.field">
+                      <th   *ngFor="let col of cols" [ngSwitch]="col.field">
                         
                           <ng-container  *ngSwitchCase="'nombres_paciente'">
-                              <input  [(ngModel)]="form.caracter_nombre" list="valores_paciente" (input)="busca_pacientes()" name="caracter_nombre" type="text"  placeholder="">
+                              <input  [(ngModel)]="form.caracter_nombre" pInputText list="valores_paciente" (input)="busca_pacientes()" name="caracter_nombre" type="text"  placeholder="">
                             
                              </ng-container>
                            
                       </th>
                       <th> <ng-container >
-                        <input  [(ngModel)]="form.fech" (ngModelChange)="filtro_completo()" name="fech" type="date"  placeholder="fecha_inicio">
-                      
-                        <a   data-toggle="modal" data-target="#addevent"  class=" waves-effect waves-float waves-green"><i class="zmdi zmdi-edit"></i></a> 
-                      </ng-container></th>
+
+                        <div class="ui-inputgroup">
+                          <span style="width: 20%;"class="ui-inputgroup-addon"   data-toggle="modal" data-target="#addevent"><i class="pi pi-calendar" style="line-height: 1.25;"></i></span>
+                          <input style="width: 80%;"pInputText  [(ngModel)]="form.fech" (ngModelChange)="filtro_completo()" name="fech" type="date"  placeholder="fecha_inicio">         
+                      </div>
+                     
+                      </ng-container>
+                    </th>
                       <th>
                         <!--
                          <input pInputText type="text" placeholder="buscar por nombre de paciente" (input)="buscaPaciente($event)">
@@ -126,16 +128,28 @@
                             </td>
                          <td  class="text-center">
                           <div class="row">
-                            
+                          
                             <div class="col-md-1">
-                            </div>
-                            <div class="col-md-3">
-                                <a  *ngIf="currentUser.roles[0].nombre== 'Administrador'"   (click)="ver_actualizaciones(solicitud)" routerLink="/resultados/ver-actualizaciones" class=" waves-effect waves-float waves-green"><i class="zmdi zmdi-eye col-blue zmdi-hc-2x"></i></a>
-                              </div>
-                            <div class="col-md-3">
-                                <a  (click)="modificar(solicitud)" routerLink="/resultados/modificar" class=" waves-effect waves-float waves-green"><i class="zmdi zmdi-edit"></i></a>
-                            </div>
-                            </div>
+                          <button  rel="tooltip" data-placement="top" title="Ver actualizaciones" *ngIf="currentUser.rol.nombre== 'Administrador'"   (click)="ver_actualizaciones(solicitud)" routerLink="/resultados/ver-actualizaciones" class="btn btn-info btn-pequeño  btn-icon-mini btn-round">
+                            <i class="zmdi zmdi-eye col-white" style="color:white; font-size:17px"></i></button>
+                      </div>
+                    
+                      <div class="col-md-1">
+                        
+                        <button  rel="tooltip" data-placement="top" title="Modificar" (click)="modificar(solicitud)" routerLink="/resultados/modificar"  class="btn btn-warning btn-pequeño  btn-icon-mini btn-round">
+                          <i class="zmdi zmdi-edit col-white" style="color:white; font-size:17px"></i></button>
+                      </div>
+                      <!--   
+                      <div class="col-md-1">
+                        <button rel="tooltip" data-placement="top" title="Ver historial clinico" (click)="verhistorialclinico(paciente)" routerLink="/pacientes/ver-historial-clinico" class="btn btn-secondary btn-pequeño  btn-icon-mini btn-round"><i class="zmdi zmdi-assignment col-white" style="color:white; font-size:17px"></i></button>
+                        
+                        </div>
+                      -->
+                      </div>
+
+
+
+                       
                         </td>
                   </tr>
               </ng-template>

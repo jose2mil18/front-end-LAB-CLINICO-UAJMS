@@ -7,12 +7,12 @@ export class Usuario {
     estado: string;
     cedula:String;
     nombres:string;
-  roles:Rol[]
+  rol:Rol
     token: Usuario;
-    
+ 
   constructor(){
-    this.roles=[]
-    this.roles[0]=new Rol();
+    this.nombres=""
+   this.rol=new Rol()
 
     this.login='';
     this.password='';

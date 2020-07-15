@@ -2,13 +2,13 @@
   <div class="block-header m_img_btn">
     <div class="row">
       <div class="col-lg-7 col-md-6 col-sm-12">
-        <h2>Modificar Usuario
+        <h2>Usuarios
           <small></small>
         </h2>
       </div>
       <div class="col-lg-5 col-md-6 col-sm-12">
         <ul class="breadcrumb float-md-right">
-          <li class="breadcrumb-item"><a routerLink="/dashboard/main"><i class="zmdi zmdi-home"></i> Oreo</a></li>
+          <li class="breadcrumb-item"><a routerLink="/dashboard/main"><i class="zmdi zmdi-home"></i></a></li>
           <li class="breadcrumb-item"><a href="javascript:void(0);">usuarios</a></li>
           <li class="breadcrumb-item active">modificar</li>
         </ul>
@@ -22,7 +22,9 @@
       <div class="col-lg-12 col-md-12 col-sm-12">
         <div class="card">
           <div class="header">
-            <h2><strong></strong> </h2>
+            
+            <h2><strong>Modificar</strong> Usuario</h2>
+        
             <ul class="header-dropdown">
               <li class="dropdown"> <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"> <i class="zmdi zmdi-more"></i> </a>
                 <ul class="dropdown-menu dropdown-menu-right">
@@ -72,7 +74,7 @@
 </div>
 <div class="col-lg-10 col-md-10 col-sm-8">
   <div class="form-group">
-    <input [(ngModel)]="form.personal_laboratorio.persona.ap" name="ap" #ap="ngModel" class="form-control titulo" placeholder="Entra tu apellido paterno" required>
+    <input [(ngModel)]="form.personal_laboratorio.persona.ap" name="ap" #ap="ngModel" class="form-control titulo" placeholder="Entra apellido paterno" required>
   </div>
  
 </div>
@@ -109,7 +111,7 @@
 </div>
 <div class="col-lg-10 col-md-10 col-sm-8">
 
-    <select id=rol placeholder="selecciona"  [(ngModel)]="form.roles[0].cod_rol"  class="form-control" (ngModelChange)="rolseleccionar($event.target)"   name="rol" required>
+    <select id=rol placeholder="selecciona"  [(ngModel)]="form.rol.cod_rol"  class="form-control" (ngModelChange)="rolseleccionar($event.target)"   name="rol" required>
       <option selected disabled value="Selecciona">Choose...</option>
       <option  *ngFor=" let rol of roles" [value]="rol.cod_rol" >{{rol.nombre}}</option>
      
@@ -138,21 +140,25 @@
 
 <br>
 
-
 <div class="row clearfix">
   <div class="col-lg-2 col-md-2 col-sm-4 form-control-label">
     <label for="estado">Foto </label>
   </div>
   <div class="col-lg-2 col-md-10 col-sm-8 card-img text-center p-2">
-  
+  <!--  
     <img [src]="form.personal_laboratorio.foto"  style="width:250px;height:145px; border-radius: 50%"  >
-    
-    <input type="file" #Image accept="image/*" (change)="handleFileInput($event.target.files)">
- 
+  -->
+    <input type="file" class="d-none" (change)="onPhotoSelected($event)" #photoInput>
+    <img [src]="photoSelected || imageUrl" class="img-raised imgRedonda" 
+        (click)="photoInput.click()"><!-- al hacer click en la imagen el input oculto funciona -->
+        <!-- 
+    <input type="file" #Image accept="image/*hjhjkh" (change)="handleFileInput($event.target.files)">
+  -->
     
     
   </div>
 </div>
+
 <!--
 <div class="row clearfix">
   <div class="col-lg-2 col-md-2 col-sm-4 form-control-label">
@@ -233,11 +239,12 @@ contraseña es requerido.
     
   </div>
   <div class="col-sm-8 offset-sm-2">
-    <button   data-type="autoclose-timer" type="submit" (click)="guardar_modificacion(formulario, Image)"  class="btn btn-raised btn-primary btn-round waves-effect"   >Guardar</button>
+    <button   data-type="autoclose-timer" type="submit" (click)="guardar_modificacion(formulario)"  class="btn btn-raised btn-primary btn-round waves-effect"   >Guardar</button>
   </div>
 </div>
 
             </form>
+            <!-- 
             <form  form ngNativeValidate id="sign_up" method="post" action="/auth/identity/register">
               <h1>Password check</h1>
               <div class="field">
@@ -256,7 +263,7 @@ contraseña es requerido.
                   <input class="btn btn-primary" type="submit" value="Sign up" (click)="validatePassword()" name="commit">
               </div>
           </form>
-
+        -->
 
           </div>
         </div>

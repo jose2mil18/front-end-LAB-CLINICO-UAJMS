@@ -2,15 +2,15 @@
   <div class="block-header">
     <div class="row">
       <div class="col-lg-7 col-md-6 col-sm-12">
-        <h2>Solicitudes
+        <h2>Reportes de Solicitudes Agrupados por Examen
           
         </h2>
       </div>
       <div class="col-lg-5 col-md-6 col-sm-12">
         <ul class="breadcrumb float-md-right">
           <li class="breadcrumb-item"><a routerLink="/dashboard/main"><i class="zmdi zmdi-home"></i> </a></li>
-          <li class="breadcrumb-item"><a href="javascript:void(0);">solicitudes</a></li>
-           <li class="breadcrumb-item active">listar</li>
+          <li class="breadcrumb-item"><a href="javascript:void(0);">reportes</a></li>
+           <li class="breadcrumb-item active">examenes-solicitados</li>
         </ul>
       </div>
     </div>
@@ -22,7 +22,6 @@
         <div class="card">
           <div class="header">
             
-              <button data-type="success" type="button" routerLink="/solicitudes/registrar" class="btn btn-raised btn-primary btn-round waves-effect">Registrar</button>
             <ul class="header-dropdown">
               <li class="dropdown"> <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"> <i class="zmdi zmdi-more"></i> </a>
                 <ul class="dropdown-menu dropdown-menu-right slideUp float-right">
@@ -218,8 +217,7 @@ from solicitud s, pacientes pa, persona pe where s.cedula_paciente=pa.cedula and
       
     <div class="ui-helper-clearfix" style="text-align: left">
      
-      <button type="button" pButton icon="pi pi-file-o" iconPos="left" label="CSV" (click)="dd.exportCSV()" style="margin-right: 0.5em;"></button>
-      <button type="button" pButton icon="pi pi-file-pdf" iconPos="left" label="PDF" (click)="exportPdf()" class="btn btn-warning"></button>
+     <button type="button" pButton icon="pi pi-file" iconPos="left" label="PDF" (click)="exportPdf()" class="btn btn-warning"></button>
        
       </div>
 </ng-template>
@@ -248,9 +246,11 @@ from solicitud s, pacientes pa, persona pe where s.cedula_paciente=pa.cedula and
             </th>
             <th>
               <ng-container  >
-                <input  [(ngModel)]="form.fech" (ngModelChange)="filtro_completo(formulario)" name="fech" type="date"  placeholder="fecha_inicio">
-              
-                <a  (click)="registrar(s)" data-toggle="modal" data-target="#addevent"  class=" waves-effect waves-float waves-green"><i class="zmdi zmdi-edit"></i></a> 
+                <div class="ui-inputgroup">
+                  <span  style="width: 20%;" class="ui-inputgroup-addon" data-toggle="modal" data-target="#addevent"><i class="pi pi-calendar" style="line-height: 1.25;"></i></span>
+                  <input  style="width: 80%;" [(ngModel)]="form.fech" pInputText data-date-format="YYYYY-MMMM-DD" (ngModelChange)="filtro_completo(formulario)" name="fech" type="date"  placeholder="fecha_inicio">         
+              </div>
+             
               </ng-container>
   
             </th>

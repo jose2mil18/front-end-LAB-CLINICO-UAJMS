@@ -8,6 +8,7 @@ import {debounceTime} from 'rxjs/operators'
 import { Subject } from 'rxjs';
 import { Router } from '@angular/router';
 
+import * as global from '../shared/variables_global'; //<== HERE
 @Injectable({
     
     providedIn : 'root'
@@ -19,7 +20,7 @@ export class AuthenticationService {
     constructor(private router: Router,private http: HttpClient) { }
 
     login(form) {
-        return this.http.post<any>(`${'http://localhost:9898/api/validarusuarios'}`,form, {headers: this.httpHeaders})
+        return this.http.post<any>(`${''+global.server+'api/validarusuarios'}`,form, {headers: this.httpHeaders})
         .pipe(map(user => {
             // login successful if there's a jwt token in the response
           

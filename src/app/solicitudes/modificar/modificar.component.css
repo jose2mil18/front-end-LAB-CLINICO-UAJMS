@@ -1,3 +1,16 @@
 @import "../../../assets/plugins/jquery-datatable/dataTables.bootstrap4.min.css";
 @import "../../../assets/plugins/bootstrap-material-datetimepicker/css/bootstrap-material-datetimepicker.css";
-@import "../../../assets/plugins/bootstrap-select/css/bootstrap-select.css";
+select:required:invalid {
+    color: gray;
+  }
+  option[value=""][disabled] {
+    display: none;
+  }
+  option {
+    color: black;
+  }
+
+  .titulo{
+   
+    text-transform: capitalize;
+  }

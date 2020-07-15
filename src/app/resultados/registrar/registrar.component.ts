@@ -1,6 +1,7 @@
 import { Component, OnInit,Input , ViewEncapsulation } from '@angular/core';
 
 import {ResultadosService} from '../resultados.service'
+import {ExamenesService} from '../../examenes/examenes.service'
 import { Solicitud , Examen, Examen_solicitado, Valor_referencia, Valor, Resultados_examen, Usuario, Resultados_por_defecto} from '../../models';
 import { routerNgProbeToken } from '@angular/router/src/router_module';
 
@@ -44,12 +45,18 @@ a:number;
   ab;
   array:String[];
   public contador:number;
-  examen:Examen;
+  examen:Examen=new Examen()
   tamaño:number=0
   indice:number=0;
 cod_examen_hijo
 currentUser:Usuario
-  constructor(private resultadosService:ResultadosService, private router:Router) { 
+personas:any[]
+  constructor(private resultadosService:ResultadosService,private examenesService:ExamenesService, private router:Router) { 
+
+    this.personas=[]
+
+    this.personas=[{nombre:'Adultos', valor:'A.'}, {nombre:'Niños', valor:'N.'}, {nombre:'Masculino', valor:'M.'}, {nombre:'Femenino', valor:'F.'}]
+   
     this.a=0
     this.currentUser = JSON.parse(localStorage.getItem('currentUser'));
     this.form={
@@ -139,8 +146,7 @@ this.subexamenes=this.solicitudSinResultado.examenes_solicitados[this.indice].pr
 
    // this.form.examenes=this.solicitudSinResultado.examenes;
    this.cod_examen='selecciona un examen'
-   this.examen=new Examen()
-this.examen.nombre='Carola'
+
     //resultadosService.getAnalisisSinResultadosporcodigo(3).subscribe(data => {
     //  this.analisisSinResultado=data;
     //});
@@ -148,7 +154,6 @@ this.examen.nombre='Carola'
   
 t(tamaño, solicitudSinResultado){
   
-
 
 }
 
@@ -302,10 +307,15 @@ guardarvalorreferencia(){
 
 }
 registrar(s:Examen){
-  
+  this.examen=s
   this.cod_examen=s.cod_examen
   this.nombreexamen=s.nombre
-
+  this.examenesService.modificar(this.examen).subscribe(data =>{
+    console.log(data);
+    alert("examen "+ data.nombre+" guardado")
+    
+    this.router.navigate(['/examenes/listar']);
+})
 
 }
 

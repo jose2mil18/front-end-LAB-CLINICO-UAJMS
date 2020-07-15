@@ -2,7 +2,7 @@
   <div class="block-header">
     <div class="row">
       <div class="col-lg-7 col-md-6 col-sm-12">
-        <h2>Registrar Resultados
+        <h2>Modificar Resultados
            
         </h2>
        
@@ -12,7 +12,7 @@
         <ul class="breadcrumb float-md-right">
           <li class="breadcrumb-item"><a routerLink="/dashboard/main"><i class="zmdi zmdi-home"></i> </a></li>
           <li class="breadcrumb-item"><a href="javascript:void(0);">resultados</a></li>
-          <li class="breadcrumb-item active">registrar</li>
+          <li class="breadcrumb-item active">modificar</li>
         </ul>
       </div>
     </div>
@@ -71,7 +71,7 @@
 <table class="table table-bordered table-striped table-hover js-basic-example dataTable" >
                       <thead>
                         <tr>
-                            <th>PRUEBA</th>
+                            <th>Examen</th>
                             
                             <th>RESULTADO</th>
                             <th>UNIDADES</th>
@@ -128,8 +128,7 @@
 <input *ngIf="s.nombre !='Otros'" type="text"  list="valores_examen" [(ngModel)]="solicitudSinResultado.examenes_solicitados[indice].resultados_examen.resultados_examenes[i].valores[0].valor" name="solicitudSinResultado.examenes_solicitados[indice].resultados_examen.resultados_examenes[i].cod_examen"  class="form-control" (ngModelChange)="kambio_valores(s.cod_examen, solicitudSinResultado.examenes_solicitados[indice].resultados_examen.resultados_examenes[i].valores[0].valor,i)" required>
 
 <input *ngIf="s.nombre =='Otros'" type="text"  list="valores_examen" [(ngModel)]="solicitudSinResultado.examenes_solicitados[indice].resultados_examen.resultados_examenes[i].valores[0].valor" name="solicitudSinResultado.examenes_solicitados[indice].resultados_examen.resultados_examenes[i].cod_examen"  class="form-control" (ngModelChange)="kambio_valores(s.cod_examen, solicitudSinResultado.examenes_solicitados[indice].resultados_examen.resultados_examenes[i].valores[0].valor,i)" >
-{{solicitudSinResultado.examenes_solicitados[indice].resultados_examen.resultados_examenes[i].valores[0].valor}} 
-        
+
 <datalist id="valores_examen">
   <option *ngFor="let c of examenesfiltradosporcaracter" [value]="c.valor" ></option>
 </datalist>                
@@ -169,7 +168,6 @@
                                               <div class="form-group">
                                                  <!-- <p-autoComplete (ngModelChange)="k(s.cod_examen, i)" [(ngModel)]="form.resultados[i]" name="resultados[i]" class="form-control" [suggestions]="filteredCountriesSingle" (completeMethod)="buscaValorExamen($event, s.cod_examen, i)" field="valor" [size]="30" placeholder="Countries" [minLength]="1"></p-autoComplete>-->
           <input  type="text"  list="valores_examen" [(ngModel)]="solicitudSinResultado.examenes_solicitados[indice].resultados_examen.resultados_examenes[i].resultados_examenes[in].valores[0].valor" name="solicitudSinResultado.examenes_solicitados[indice].resultados_examen.resultados_examenes[i].resultados_examenes[in]" [attr.id]="indice+''+i+''+ in" [ngClass]="borde" class="form-control" (ngModelChange)="kambio_valor(s.cod_examen, solicitudSinResultado.examenes_solicitados[indice].resultados_examen.resultados_examenes[i].resultados_examenes[in].valores[0].valor)" required>
-        {{solicitudSinResultado.examenes_solicitados[indice].resultados_examen.resultados_examenes[i].resultados_examenes[in].valores[0].valor}}
      
           <datalist id="valores_examen">
             <option *ngFor="let c of examenesfiltradosporcaracter" [value]="c.valor" ></option>

@@ -2,13 +2,13 @@
   <div class="block-header m_img_btn">
     <div class="row">
       <div class="col-lg-7 col-md-6 col-sm-12">
-        <h2>Registrar Usuario
+        <h2>Usuarios
           <small></small>
         </h2>
       </div>
       <div class="col-lg-5 col-md-6 col-sm-12">
         <ul class="breadcrumb float-md-right">
-          <li class="breadcrumb-item"><a routerLink="/dashboard/main"><i class="zmdi zmdi-home"></i> Oreo</a></li>
+          <li class="breadcrumb-item"><a routerLink="/dashboard/main"><i class="zmdi zmdi-home"></i> </a></li>
           <li class="breadcrumb-item"><a href="javascript:void(0);">usuarios</a></li>
           <li class="breadcrumb-item active">registrar</li>
         </ul>
@@ -47,7 +47,7 @@
                 </div>
                 <div class="col-lg-10 col-md-10 col-sm-8">
                   <div class="form-group">
-                    <input  type="text" id="cedula" [(ngModel)]="form.cedula" name="cedula"  class="form-control " placeholder="Entra tu cedula"required>
+                    <input  type="text" id="cedula" [(ngModel)]="form.cedula" name="cedula"  class="form-control " placeholder="Entra  cedula"required>
                   
                   
                   </div>
@@ -62,7 +62,7 @@
                 </div>
                 <div class="col-lg-10 col-md-10 col-sm-8">
                   <div class="form-group">
-                    <input  type="text" id="nombre" [(ngModel)]="form.personal_laboratorio.persona.nombre" name="nombre" #nombre="ngModel"  class="form-control titulo" placeholder="Entra tu nombre" required>
+                    <input  type="text" id="nombre" [(ngModel)]="form.personal_laboratorio.persona.nombre" name="nombre" #nombre="ngModel"  class="form-control titulo" placeholder="Entra nombre" required>
                   </div>
 
                 
@@ -75,7 +75,7 @@
   </div>
   <div class="col-lg-10 col-md-10 col-sm-8">
     <div class="form-group">
-      <input [(ngModel)]="form.personal_laboratorio.persona.ap" name="ap" #ap="ngModel" class="form-control titulo" placeholder="Entra tu apellido paterno" required>
+      <input [(ngModel)]="form.personal_laboratorio.persona.ap" name="ap" #ap="ngModel" class="form-control tilo" placeholder="Entra apellido paterno" required>
     </div>
    
   </div>
@@ -87,7 +87,7 @@
   </div>
   <div class="col-lg-10 col-md-10 col-sm-8">
     <div class="form-group">
-      <input [(ngModel)]="form.personal_laboratorio.persona.am" name="am" #am="ngModel" class="form-control titulo" placeholder="Entra tu apellido materno" >
+      <input [(ngModel)]="form.personal_laboratorio.persona.am" name="am" #am="ngModel" class="form-control titulo" placeholder="Entra  apellido materno" >
     </div>
   
   </div>
@@ -99,7 +99,7 @@
   </div>
   <div class="col-lg-10 col-md-10 col-sm-8">
     <div class="form-group">
-      <input [(ngModel)]="form.personal_laboratorio.profesion" name="profesion" #profesion="ngModel" class="titulo form-control" placeholder="Entra tu apellido materno" required >
+      <input [(ngModel)]="form.personal_laboratorio.profesion" name="profesion" #profesion="ngModel" class="titulo form-control" placeholder="Entra  profesion" required >
     </div>
    
   </div>
@@ -112,7 +112,7 @@
   </div>
   <div class="col-lg-10 col-md-10 col-sm-8">
   
-      <select id=rol placeholder="selecciona"  [(ngModel)]="form.roles[0].cod_rol"  class="form-control" (ngModelChange)="rolseleccionar($event.target)"   name="rol" required>
+      <select id=rol placeholder="selecciona"  [(ngModel)]="form.rol.cod_rol"  class="form-control" (ngModelChange)="rolseleccionar($event.target)"   name="rol" required>
         <option selected disabled value="Selecciona">Choose...</option>
         <option  *ngFor=" let rol of roles" [value]="rol.cod_rol" >{{rol.nombre}}</option>
        
@@ -142,7 +142,7 @@
   </div>
   <div class="col-lg-10 col-md-10 col-sm-8">
     <div class="form-group">
-      <input [(ngModel)]="form.password" id="password" name="password" type="password"  class="form-control" placeholder="Entra tu apellido paterno" required>
+      <input [(ngModel)]="form.password" id="password" name="password" type="password"  class="form-control" placeholder="contraseña" required>
      
     </div>
   
@@ -152,11 +152,11 @@
 
 <div class="row clearfix">
   <div class="col-lg-2 col-md-2 col-sm-4 form-control-label">
-    <label for="ap">repetir contraseña</label>
+    <label for="ap">Confirmar contraseña</label>
   </div>
   <div class="col-lg-10 col-md-10 col-sm-8">
     <div class="form-group">
-      <input  type="password"   id="password_confirmation"   name="pass" class="form-control" placeholder="Entra tu apellido paterno" required>
+      <input  type="password"   id="password_confirmation"   name="pass" class="form-control" placeholder="contraseña" required>
     
       <!--   
       <div *ngIf="form2.pass!=form.password && pass.valid" class="alert alert-danger">
@@ -182,17 +182,19 @@
     <label for="estado">Foto </label>
   </div>
   <div class="col-lg-2 col-md-10 col-sm-8 card-img text-center p-2">
-  
-    <img [src]="imageUrl"  style="width:250px;height:145px; border-radius: 50%"  >
-    
+  <!--  
+    <img [src]="form.personal_laboratorio.foto"  style="width:250px;height:145px; border-radius: 50%"  >
+  -->
+    <input type="file" class="d-none" (change)="onPhotoSelected($event)" #photoInput>
+    <img [src]="photoSelected || imageUrl"  class="rounded-circle img-raised imgRedonda"
+        (click)="photoInput.click()"><!-- al hacer click en la imagen el input oculto funciona -->
+        <!-- 
     <input type="file" #Image accept="image/*" (change)="handleFileInput($event.target.files)">
- 
+  -->
     
     
   </div>
-</div>
-bandera {{bandera}}
-         {{formulario.valid}}     
+</div> 
 <div class="row clearfix">
   <div class="col-sm-8 offset-sm-2">
     

@@ -6,7 +6,7 @@ import {FormControl, FormBuilder, FormGroup, Validators, NgForm, FormArray } fro
 import {Examen, Valor_referencia, Area, Institucion, Resultados_por_defecto, Precio_examen} from '../../models'
 
 import { LowerCasePipe, TitleCasePipe, UpperCasePipe, DatePipe } from '@angular/common';
-import {CapitalizePipe} from '../../pipes/capitalize.pipe'
+
 import { NONE_TYPE } from '@angular/compiler/src/output/output_ast';
 import { debounceTime } from 'rxjs/operators';
 declare const $: any;
@@ -35,6 +35,10 @@ examensito:Examen=new Examen()
 array:number[]
 subexamenes:Examen[]=[]
   constructor(private titleCasePipe:TitleCasePipe ,private datePipe: DatePipe,private fb: FormBuilder, private examenesService : ExamenesService, private router:Router) { 
+    const capitalize = (s) => {
+      if (typeof s !== 'string') return ''
+      return s.charAt(0).toUpperCase() + s.slice(1)
+    }
     
     this.subexamenes[0]=new Examen()
     this.control.valueChanges.pipe(debounceTime(450)).subscribe(value=>{
@@ -169,6 +173,8 @@ console.log(this.otroFormGroup.value)
     
     this.examen.subexamenes.push(new Examen())
     this.examen.subexamenes[this.examen.subexamenes.length-1].cod_area=this.examen.cod_area
+    this.examen.subexamenes[this.examen.subexamenes.length-1].nombre=this.capitalize(this.examen.subexamenes[this.examen.subexamenes.length-1].nombre)
+    
     
   }
   removersubexamen(indice){
@@ -206,6 +212,18 @@ removerValoresReferencia_de_subexamen_de_subexamen(i,ii, indice_valor_referencia
 }
 
   onSubmit(form : NgForm){
+    //this.examen.nombre=this.titleCasePipe.transform(this.examen.nombre)
+    console.log(this.examen);
+    this.examen.nombre=this.capitalize(this.examen.nombre)
+    for(let i=0;i<this.examen.subexamenes.length; i++)
+    {
+      this.examen.subexamenes[i].nombre=this.capitalize(this.examen.subexamenes[i].nombre)
+      for(let j=0;j<this.examen.subexamenes[i].subexamenes.length; j++)
+      {
+        this.examen.subexamenes[i].subexamenes[j].nombre=this.capitalize(this.examen.subexamenes[i].subexamenes[j].nombre)
+        
+      }
+    }
     console.log(this.examen);
     if(form.valid){
       this.examenesService.registrar(this.examen).subscribe(data =>{
@@ -257,6 +275,16 @@ cambio2(valor,i,ii){
 this.examen.area.cod_area=i.target.value
     
     }
-
-
+a(){
+  event.preventDefault();
+  window.location.href = 'http://www.google.com'
+}
+skillsHandleEnter(event, skillString) {
+  event.preventDefault();
+  // ... your logic
+}
+capitalize(s){
+  if (typeof s !== 'string') return ''
+  return s.charAt(0).toUpperCase() + s.slice(1)
+}
 }

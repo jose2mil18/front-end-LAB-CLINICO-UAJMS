@@ -117,13 +117,16 @@ from solicitud s, pacientes pa, persona pe where s.cedula_paciente=pa.cedula and
   <datalist id="valores_paciente">
     <option *ngFor="let p of pacientes" [value]="p.nombres" ></option>
   </datalist> 
-<p-table id="table" #dd [value]="solicitudes" [columns]="cols" [paginator]="true" [rows]="10" [pageLinks]="2" [rowsPerPageOptions]="[5,10,20]"  selectionMode="multiple">
   
-  <ng-template pTemplate="caption">
+   
+    
+<p-table id="table" #dd [value]="solicitudes" [columns]="cols" [paginator]="true" [rows]="10" [pageLinks]="2" [rowsPerPageOptions]="[5,10,20]" >
+  
+  <ng-template pTemplate="caption" style="background-color: red;">
       
     <div class="ui-helper-clearfix" style="text-align: left">
      
-      <button type="button" pButton icon="pi pi-file-pdf" iconPos="left" label="PDF" (click)="exportPdf()" class="btn btn-warning"></button>
+      <button type="button" pButton icon="pi pi-file" iconPos="left" label="PDF" (click)="exportPdf()" class="btn btn-warning"></button>
        
       </div>
 </ng-template>
@@ -135,17 +138,18 @@ from solicitud s, pacientes pa, persona pe where s.cedula_paciente=pa.cedula and
           
           <th style="width:200px"> Fecha</th>
           <th>Estado</th>
-          <th  >Analisis</th>
+          <th  >Examenes</th>
           
-          <th style="width:100px">Editar</th>
-          <th>Factura</th>
+          <th style="width:115px">Acciones</th>
+     
       </tr>
       <tr>
         <th></th>
           <th  style="width:auto" *ngFor="let col of cols" [ngSwitch]="col.field">
             <ng-container  *ngSwitchCase="'nombres_paciente'">
-              <input  [(ngModel)]="form.caracter_nombre" list="valores_paciente" (input)="busca_pacientes()"  name="caracter_nombre" type="text"  placeholder="">
-            
+           
+              <input   pInputText  [(ngModel)]="form.caracter_nombre" list="valores_paciente" (input)="busca_pacientes()"  name="caracter_nombre" type="text"  placeholder="">
+      
              </ng-container>
               <ng-select  *ngSwitchCase="'estado'"  placeholder=""  [(ngModel)]="form.resultados" class="" (ngModelChange)="filtro_completo(formulario)"   name="resultados" required>
                 <ng-option  *ngFor=" let rol of brands" [value]="rol.value" >{{rol.label}}</ng-option>
@@ -156,9 +160,10 @@ from solicitud s, pacientes pa, persona pe where s.cedula_paciente=pa.cedula and
            
           </th>
           <th>
-            <input  [(ngModel)]="form.fech" data-date-format="YYYYY-MMMM-DD" (ngModelChange)="filtro_completo(formulario)" name="fech" type="date"  placeholder="fecha_inicio">
-            
-            <a  (click)="registrar(s)" data-toggle="modal" data-target="#addevent"  class=" waves-effect waves-float waves-green"><i class="zmdi zmdi-edit"></i></a> 
+              <div class="ui-inputgroup">
+                  <span  style="width: 20%;" class="ui-inputgroup-addon" data-toggle="modal" data-target="#addevent"><i class="pi pi-calendar" style="line-height: 1.25;"></i></span>
+                  <input  style="width: 80%;" [(ngModel)]="form.fech" pInputText data-date-format="YYYYY-MMMM-DD" (ngModelChange)="filtro_completo(formulario)" name="fech" type="date"  placeholder="fecha_inicio">         
+              </div>
          
           </th>
           <th>
@@ -172,7 +177,6 @@ from solicitud s, pacientes pa, persona pe where s.cedula_paciente=pa.cedula and
              <input pInputText type="text" placeholder="buscar por nombre de paciente" (input)="buscaPaciente($event)">
           -->
           </th>
-          <th></th>
           <th></th>
       </tr>
   </ng-template>
@@ -192,21 +196,43 @@ from solicitud s, pacientes pa, persona pe where s.cedula_paciente=pa.cedula and
             {{solicitud.estado_solicitud}}
           </td>
           <td>  
-              <ng-select  placeholder="mostrar analisis">
+              <ng-select  placeholder="mostrar examenes">
                 <ng-option *ngFor="let e of solicitud.examenes_solicitados" [value]="e"  >{{e.precio_examen.examen.nombre}}</ng-option>
               
               </ng-select>
               
              </td>
              <td  class="text-center">
-               <ng-container *ngIf="solicitud.estado=='Sin Registrar'">
-                <a (click)="actualizar(solicitud)" routerLink="/solicitudes/modificar" class=" waves-effect waves-float waves-green"><i class="zmdi zmdi-edit"></i></a>
+              <div class="row">
+                          
+                <div class="col-md-1" >
+              <button  rel="tooltip" data-placement="top" title="Ver Datos" (click)="ver(solicitud)"  data-toggle="modal" data-target="#defaultModal" class="btn btn-info btn-pequeño  btn-icon-mini btn-round">
+                <i class="zmdi zmdi-eye col-white" style="color:white; font-size:17px"></i></button>
+          </div>
+        
+          <div class="col-md-1" >
+            <ng-container  *ngIf="solicitud.estado=='Sin Registrar'">
+            <button  rel="tooltip" data-placement="top" title="Modificar" (click)="actualizar(solicitud)" routerLink="/solicitudes/modificar"  class="btn btn-warning btn-pequeño  btn-icon-mini btn-round">
+              <i class="zmdi zmdi-edit col-white" style="color:white; font-size:17px"></i></button>
+            </ng-container>
+            <ng-container  *ngIf="solicitud.estado=='Registrado'">
+              <button  rel="tooltip" data-placement="top" title="Modificar" (click)="actualizar(solicitud)" routerLink="/solicitudes/modificar"  class="btn btn-warning btn-pequeño  btn-icon-mini btn-round" disabled>
+                <i class="zmdi zmdi-edit col-white" style="color:white; font-size:17px"></i></button>
               </ng-container>
-            </td>
-            <td  class="text-center">
-              <ng-container *ngIf="solicitud.estado=='Registrado'">
-               <a (click)="facturar(solicitud)" routerLink="/solicitudes/factura" class=" waves-effect waves-float waves-green"><i class="zmdi zmdi-edit"></i></a>
-             </ng-container>
+          </div>
+          
+          <div class="col-md-1" >
+            
+            <ng-container  *ngIf="solicitud.estado=='Registrado'">
+            <button rel="tooltip" data-placement="top" title="Ver factura" (click)="facturar(solicitud)" routerLink="/solicitudes/factura" class="btn btn-secondary btn-pequeño  btn-icon-mini btn-round"><i class="zmdi zmdi-assignment col-white" style="color:white; font-size:17px"></i></button>
+          </ng-container>
+          <ng-container  *ngIf="solicitud.estado=='Sin Registrar'">
+            <button rel="tooltip" data-placement="top" title="Ver factura" (click)="facturar(solicitud)" routerLink="/solicitudes/factura" class="btn btn-secondary btn-pequeño  btn-icon-mini btn-round" disabled><i class="zmdi zmdi-assignment col-white" style="color:white; font-size:17px"></i></button>
+          </ng-container>
+            </div>
+       
+          </div>
+              
            </td>
       </tr>
   </ng-template>
@@ -272,27 +298,28 @@ from solicitud s, pacientes pa, persona pe where s.cedula_paciente=pa.cedula and
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h4 class="title" id="defaultModalLabel" >{{nombreexamen}}</h4>
+        <h4 class="title" id="defaultModalLabel" >Periodo Entre Fechas</h4>
       </div>
       <div class="modal-body">
            <form  ngNativeValidate  #formulario="ngForm">
-          <div class=" row clearfix">
+          <div class=" row">
             
   <div class="col-lg-4">
             <label for="fecha_inicio">Desde:</label>
             </div>
             
   <div class="col-lg-8">
-            <input id="fecha_inicio" [(ngModel)]="form.fecha_inicio" name="fecha_inicio" type="date" placeholder="fecha_inicio" required max="form.fecha_fin">
+            <input id="fecha_inicio" class="form-control" [(ngModel)]="form.fecha_inicio" name="fecha_inicio" type="date" placeholder="fecha_inicio" required max="form.fecha_fin">
         
                   </div>
-
+<br>
+<div class="col-lg-4"></div><div class="col-lg-8"></div>
                   <div class="col-lg-4">
                       <label for="fecha_fin">Hasta:</label>
                       </div>
                       
             <div class="col-lg-8">
-                      <input id="fecha_fin" [(ngModel)]="form.fecha_fin"  name="fecha_fin" type="date"  placeholder="fecha_final" required>
+                      <input  class="form-control"  id="fecha_fin" [(ngModel)]="form.fecha_fin"  name="fecha_fin" type="date"  placeholder="fecha_final" required>
                   
                             </div>
               </div>
@@ -304,4 +331,98 @@ from solicitud s, pacientes pa, persona pe where s.cedula_paciente=pa.cedula and
     </div>
   </div>
 </div>
+</div>
+<!-- j modal de ver solicitud-->
+<div class="modal fade" id="defaultModal" >
+  <div class="modal-dialog modal-login">
+    <div class="modal-content">
+      <div class="modal-header">
+        
+        <!-- 
+        <h4 class="title" id="defaultModalLabel">Datos del Paciente</h4>
+      -->
+      </div>
+      <div class="modal-body">
+        <div class="container text-center">
+         
+       
+        <div class="row">
+          <div class="col ">
+              <p class="font-weight-bold">Paciente: 
+                  <span class="font-weight-normal">{{solicitud.paciente.nombres}}</span>
+              </p>
+          </div>
+      </div>
+    
+        
+    <div class="row">
+      <div class="col ">
+          <p class="font-weight-bold">Institucion: 
+              <span class="font-weight-normal">{{solicitud.institucion.nombre}}</span>
+          </p>
+      </div>
+  </div>
+      
+  <div class="row">
+    <div class="col ">
+        <p class="font-weight-bold">Doctor solicitante: 
+            <span class="font-weight-normal">{{solicitud.doctor_solicitante.nombre}} {{solicitud.doctor_solicitante.ap}} {{solicitud.doctor_solicitante.am}}</span>
+        </p>
+    </div>
+</div>
+    
+<div class="row">
+  <div class="col ">
+      <p class="font-weight-bold">Fecha: 
+          <span class="font-weight-normal" >{{solicitud.fecha  | date: 'dd-MM-yyyy'}}</span>
+      </p>
+  </div>
+</div>
+<div class="row">
+  <div class="col ">
+      <p class="font-weight-bold">Fecha de entrega:  
+          <span class="font-weight-normal" >{{solicitud.fecha_entrega  | date: 'dd-MM-yyyy'}}</span>
+      </p>
+  </div>
+</div>
+
+
+<div class="row" >
+  <div class="col ">
+      <p class="font-weight-bold">Estado: 
+          <span class="font-weight-normal" >{{solicitud.estado_solicitud}}</span>
+      </p>
+  </div>
+</div>
+<div class="row">
+  <div class="col ">
+      <p class="font-weight-bold">Resultados: 
+          <span class="font-weight-normal" >{{solicitud.estado}}</span>
+      </p>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col ">
+      <p class="font-weight-bold">Examenes: 
+          <span class="font-weight-normal" >
+            <div *ngFor="let e of solicitud.examenes_solicitados"  >{{e.precio_examen.examen.nombre}}</div>
+          
+        </span>
+      </p>
+  </div>
+</div>
+
+
+
+</div>
+       </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger btn-round waves-effect" data-dismiss="modal">CERRAR</button>
+       
+      </div>
+    </div>
+
+    
+  </div>
 </div>

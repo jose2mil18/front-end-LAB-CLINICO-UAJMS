@@ -126,6 +126,7 @@ indice:number=0;
           this.resultadosService.modificarResultados(this.solicitudSinResultado.examenes_solicitados[this.indice]).subscribe(
             solicitud => {
               alert("resultados actualizados")
+              this.router.navigate(['/resultados/ver']);
               console.log(solicitud)
               this.solicitudSinResultado=solicitud
           
