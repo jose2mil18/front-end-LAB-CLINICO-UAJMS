@@ -572,4 +572,18 @@ if(this.solicitudes[i].paciente.persona.nombre == this.form.caracter_nombre){
 ver(s){
   this.solicitud=s
 }
+enviar(formsolicitud:NgForm){
+if(formsolicitud.valid)
+{
+  window.location.href="https://www.google.com"
+}
+}
+keyPressHandler(e) {
+  if (e.keyCode === 13) {
+      e.preventDefault();
+      e.stopPropagation();
+
+      // Perform your custom logic here if any
+  }
+}
 }

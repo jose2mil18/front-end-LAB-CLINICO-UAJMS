@@ -26,8 +26,17 @@ date:Date;
 fechita:String;
 currentUser:Usuario;
 bandera:boolean
+item:string="Agrupar"
+grupos:any[];
+grupo
   constructor(private solicitudesService:SolicitudesService, private datePipe:DatePipe, private router:Router) {
     this.bandera=true;
+    this.grupo={
+      label:'',
+      seleccionador:'',
+      agrupador:''
+    }
+  
     this.currentUser = JSON.parse(localStorage.getItem('currentUser'));
     this.date=new Date();
     this.fechita=this.datePipe.transform(this.date,"dd-MM-yyyy")
@@ -63,6 +72,13 @@ console.log(this.solicitudes)
       { label: 'Recibido', value: 'Recibido' }
    
   ];
+  this.grupos = [
+    { label: 'Examen', seleccionador: 'e.nombre', agrupador: 'nombre'},
+    { label: 'Area', seleccionador: 'a.nombre' , agrupador: 'nombre'},
+    { label: 'Paciente', seleccionador: 's.cedula_paciente' , agrupador: 'cedula_paciente'},
+    { label: 'Estado', seleccionador: 's.estado_solicitud' , agrupador: 'estado_solicitud'}
+ 
+];
     this.cols = [
       
    
@@ -107,8 +123,11 @@ console.log(this.solicitudes)
   exportPdf() {
     window.location.href = 'http://localhost:8080/jasperserver/rest_v2/reports/reports/examenes_solicitados.pdf?am_usuario='+this.currentUser.personal_laboratorio.persona.am+'&cedula='+this.form.cedula+'&ap_usuario='+this.currentUser.personal_laboratorio.persona.ap+'&nombre_usuario='+this.currentUser.personal_laboratorio.persona.nombre+'&nombre_paciente='+this.paciente.persona.nombre+'&ap_paciente='+this.paciente.persona.ap+'&am_paciente='+this.paciente.persona.am+'&nombre_area='+this.form.nombre_area+'&fecha_inicio='+this.form.fecha_inicio+'&fecha_fin='+this.form.fecha_fin+'&j_username='+'jasperadmin'+'&j_password='+'jasperadmin';
    }
-   klp(){
-     console.log("hola")
+   klp(value){
+     console.log(value)
+     console.log(this.item)
+     localStorage.setItem('grupo', JSON.stringify(this.grupo));
+     console.log(this.grupo.seleccionador)
 this.router.navigate(['/reportes/examenes-solicitados'])
    }
 

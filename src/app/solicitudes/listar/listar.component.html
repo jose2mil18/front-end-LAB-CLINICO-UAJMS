@@ -118,7 +118,12 @@ from solicitud s, pacientes pa, persona pe where s.cedula_paciente=pa.cedula and
     <option *ngFor="let p of pacientes" [value]="p.nombres" ></option>
   </datalist> 
   
-   
+  <form   #fo="ngForm" ngNativeValidate>
+    <input type="text" required>
+    <input type="number" step="0.01" />
+    {{fo.valid}}
+    <input type="submit" (click)="enviar(fo)" >
+  </form>
     
 <p-table id="table" #dd [value]="solicitudes" [columns]="cols" [paginator]="true" [rows]="10" [pageLinks]="2" [rowsPerPageOptions]="[5,10,20]" >
   
@@ -394,7 +399,7 @@ from solicitud s, pacientes pa, persona pe where s.cedula_paciente=pa.cedula and
       </p>
   </div>
 </div>
-<div class="row">
+<div class="row" style="display:none">
   <div class="col ">
       <p class="font-weight-bold">Resultados: 
           <span class="font-weight-normal" >{{solicitud.estado}}</span>
@@ -403,14 +408,30 @@ from solicitud s, pacientes pa, persona pe where s.cedula_paciente=pa.cedula and
 </div>
 
 <div class="row">
-  <div class="col ">
+  <div class="col-md-6 "style="padding: 0px;">
       <p class="font-weight-bold">Examenes: 
           <span class="font-weight-normal" >
-            <div *ngFor="let e of solicitud.examenes_solicitados"  >{{e.precio_examen.examen.nombre}}</div>
+            <div *ngFor="let e of solicitud.examenes_solicitados" >{{e.precio_examen.examen.nombre}} </div>
           
         </span>
       </p>
   </div>
+  <div class="col-md-3 " style="padding: 0px;">
+    <p class="font-weight-bold">Resultados: 
+        <span class="font-weight-normal" >
+          <div *ngFor="let e of solicitud.examenes_solicitados"  >{{e.estado}}</div>
+        
+      </span>
+    </p>
+</div>
+<div class="col-md-3 " style="padding: 0px;">
+  <p class="font-weight-bold">Fecha: 
+      <span class="font-weight-normal" >
+        <div *ngFor="let e of solicitud.examenes_solicitados"  >{{e.fecha | date: 'dd-MM-yyyy'}}</div>
+      
+    </span>
+  </p>
+</div>
 </div>
 
 

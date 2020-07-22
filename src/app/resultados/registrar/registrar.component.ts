@@ -8,6 +8,8 @@ import { routerNgProbeToken } from '@angular/router/src/router_module';
 //import { CompleterService, CompleterData } from 'ng2-completer';
 import { Router, ActivatedRoute } from '@angular/router';
 import { NgForm } from '@angular/forms';
+import { createEmbeddedViewNode } from '@angular/core/src/render3/instructions';
+import { SolicitudesService } from '../../solicitudes/solicitudes.service';
 
 
 declare const swal: any;
@@ -39,7 +41,7 @@ a:number;
   word;
   tamañoNivel2:number=0
   nombreexamen;
-  solicitudSinResultado:Solicitud;
+  solicitudSinResultado:Solicitud=new Solicitud();
   cod_examen;
   subexamenes:Examen[];
   ab;
@@ -51,7 +53,9 @@ a:number;
 cod_examen_hijo
 currentUser:Usuario
 personas:any[]
-  constructor(private resultadosService:ResultadosService,private examenesService:ExamenesService, private router:Router) { 
+estado:boolean=true
+examensito:Examen=new Examen();
+  constructor(private resultadosService:ResultadosService,private examenesService:ExamenesService, private router:Router, private solicitudesService:SolicitudesService) { 
 
     this.personas=[]
 
@@ -68,32 +72,10 @@ personas:any[]
     this.solicitud=new Solicitud();
   
     this.solicitud.examenes_solicitados[0]=new Examen_solicitado();
- this.codeList = [
-  { code: 'abcdhe568dhjkldn', name: 'item1' },
-  { code: 'ksdkcs7238t8cds', name: 'item2' },
-  { code: 'kascggibebbi', name: 'item3' }
-];
-    this.countries=["bolivia", "argentina"];
-    this.word='70-80'
+
     this.nombreexamen=''
 this.contador=0;
-    this.form={
-      cod_solicitud:0,
-      examen:null,
-      klp:[],
-      examenes_solicitados:[
-      {
-        resultado_examen:{
-          valores:[
-            {valor:'hola'}
-          ]
-        }
-      }
-      ],
-      subexamenes:[]
-    
-      
-    }
+  
     //this.form.examenes_solicitados.resultado_examen.valores=[];
     
    // this.form.examenes_solicitados.resultado_examen.valores[0].valor='jk';
@@ -103,50 +85,41 @@ this.contador=0;
     //this.form.resultados[0];
     this.solicitudSinResultado = JSON.parse(localStorage.getItem('solicitudSinResultado'));
     console.log(this.solicitudSinResultado.cod_solicitud+" afsdk")
-    // inicializando cod_examen , cod_solexamende resultados del primer examen solicitado
-this.solicitudSinResultado.examenes_solicitados[this.indice].resultados_examen=new Resultados_examen();
-this.solicitudSinResultado.examenes_solicitados[this.indice].resultados_examen.cod_examen=this.solicitudSinResultado.examenes_solicitados[this.indice].precio_examen.examen.cod_examen
-this.solicitudSinResultado.examenes_solicitados[this.indice].resultados_examen.cod_sol_exam=  this.solicitudSinResultado.examenes_solicitados[this.indice].cod_sol_exam
-
-//
+    
+this.solicitudesService.obtenerSolicitud(this.solicitudSinResultado.cod_solicitud).subscribe(data=>{
+console.log(data)
+  this.solicitudSinResultado=data
 
 
+  // inicializando cod_examen , cod_solexamende resultados del primer examen solicitado
+  this.solicitudSinResultado.examenes_solicitados[this.indice].resultados_examen=new Resultados_examen();
+  this.solicitudSinResultado.examenes_solicitados[this.indice].resultados_examen.cod_examen=this.solicitudSinResultado.examenes_solicitados[this.indice].precio_examen.examen.cod_examen
+  this.solicitudSinResultado.examenes_solicitados[this.indice].resultados_examen.cod_sol_exam=  this.solicitudSinResultado.examenes_solicitados[this.indice].cod_sol_exam
+  this.subexamenes=[];
+  
+  this.tamaño=this.solicitudSinResultado.examenes_solicitados[this.indice].precio_examen.examen.subexamenes.length
+  
+  this.t(this.tamaño, this.solicitudSinResultado);
+  this.instanciar_resultados()
+  
+  if(this.solicitudSinResultado.examenes_solicitados[this.indice].precio_examen.examen.subexamenes.length == 0)
+    {
+    this.subexamenes[this.indice]=this.solicitudSinResultado.examenes_solicitados[this.indice].precio_examen.examen
+   // this.solicitudSinResultado.examenes_solicitados[this.indice].resultados_examenes[0].examen=this.subexamenes[this.indice]
+    }
+    else{
+  this.subexamenes=this.solicitudSinResultado.examenes_solicitados[this.indice].precio_examen.examen.subexamenes
+    }
+  //
+  
+  
+     // this.form.examenes=this.solicitudSinResultado.examenes;
+     this.cod_examen='selecciona un examen'
+  
 
-
-
-this.subexamenes=[];
-
-
-
-this.tamaño=this.solicitudSinResultado.examenes_solicitados[this.indice].precio_examen.examen.subexamenes.length
-//if(this.tamaño == 0){
-  //this.tamaño=1
-//}
-this.t(this.tamaño, this.solicitudSinResultado);
-this.instanciar_resultados()
-
-
-
-
-
-
-
-
-if(this.solicitudSinResultado.examenes_solicitados[this.indice].precio_examen.examen.subexamenes.length == 0)
-  {
-  this.subexamenes[this.indice]=this.solicitudSinResultado.examenes_solicitados[this.indice].precio_examen.examen
- // this.solicitudSinResultado.examenes_solicitados[this.indice].resultados_examenes[0].examen=this.subexamenes[this.indice]
-  }
-  else{
-   // this.subexamenes=examensito.subexamenes;
-this.subexamenes=this.solicitudSinResultado.examenes_solicitados[this.indice].precio_examen.examen.subexamenes
-  }
-//
-
-
-   // this.form.examenes=this.solicitudSinResultado.examenes;
-   this.cod_examen='selecciona un examen'
-
+  
+})
+  
     //resultadosService.getAnalisisSinResultadosporcodigo(3).subscribe(data => {
     //  this.analisisSinResultado=data;
     //});
@@ -192,6 +165,13 @@ instanciar_resultados()
 }
   ngOnInit() { 
 
+
+
+    $('#control').on('click', function() {
+      
+      $('#control').addClass('is-valid');
+  });
+
     $(function() {
       'use strict';
       window.addEventListener('load', function() {
@@ -224,6 +204,8 @@ instanciar_resultados()
   }
 listarsubexamenes(){
   
+
+
 this.subexamenes=[];
 //cambiando tamaño de oloos subexamenes
 this.solicitudSinResultado.examenes_solicitados[this.indice].resultados_examen.cod_examen=this.solicitudSinResultado.examenes_solicitados[this.indice].precio_examen.cod_examen
@@ -242,9 +224,9 @@ this.subexamenes=this.solicitudSinResultado.examenes_solicitados[this.indice].pr
  
  
 }
-
+formulario:NgForm;
 guardarresultados(form: NgForm){
-  
+  this.formulario=form
   this.solicitudSinResultado.examenes_solicitados[this.indice].cedula_usuario=this.currentUser.cedula
   console.log(this.solicitudSinResultado.examenes_solicitados[this.indice])
   if(form.valid && this.solicitudSinResultado.examenes_solicitados[this.indice].estado =='Sin Registrar')
@@ -299,10 +281,13 @@ salir(){
   this.router.navigate(['/resultados/ingresar']);
 }
 guardarvalorreferencia(){
-  this.resultadosService.guardarvalorreferencia($('#valor').val(),this.cod_examen).subscribe(
-    datas => {
-   //this.listarsubexamenes(this.examen)
-    })
+  console.log(this.examen)
+  this.examenesService.modificar(this.examen).subscribe(data =>{
+    console.log(data);
+    alert("examen "+ data.nombre+"actualizado")
+    
+    this.router.navigate(['/resultados/registrar']);
+})
   
 
 }
@@ -310,12 +295,15 @@ registrar(s:Examen){
   this.examen=s
   this.cod_examen=s.cod_examen
   this.nombreexamen=s.nombre
+  console.log(this.examen.nombre)
+  /*
   this.examenesService.modificar(this.examen).subscribe(data =>{
     console.log(data);
     alert("examen "+ data.nombre+" guardado")
     
     this.router.navigate(['/examenes/listar']);
 })
+*/
 
 }
 
@@ -329,8 +317,34 @@ b(event, cadena){
   //this.filteredCountriesSingle=this.countries;
 }
 
+obtener_examen(cod_examen:number){
+  this.examenesService.obtenerExamen(cod_examen).subscribe(data=>{
+this.examensito=data;
+if(this.examensito.valores_referencia.length>0){
+  console.log(true)
+}
+  })
+
+}
+
+
+
+
 kambio_valor(cod_examen, caracter) { 
+
   console.log(cod_examen+" "+caracter)
+  console.log(caracter.length)
+//this.obtener_examen(cod_examen);
+
+/*
+  if(caracter.length>0){
+
+    $("#resultado_examen"+cod_examen).removeClass("is-invalid").addClass("is-valid");
+  }
+  else{
+    $("#resultado_examen"+cod_examen).removeClass("is-valid").addClass("is-invalid");
+  }
+  */
   this.resultadosService.obtener_valores__por_defecto_examnes(cod_examen,caracter).subscribe(
     resultados_defecto => {
   this.examenesfiltradosporcaracter=resultados_defecto;
@@ -339,10 +353,18 @@ kambio_valor(cod_examen, caracter) {
   console.log(resultados_defecto[0].cod)
  // this.form.resultados[i]=this.filteredCountriesSingle[i].valor
     })
-
 }
 kambio_valores(cod_examen, caracter,i) { 
   console.log(cod_examen+" "+caracter+" "+i)
+/*
+  if(caracter.length>0){
+
+    $("#resultado_subexamen"+cod_examen).removeClass("is-invalid").addClass("is-valid");
+  }
+  else{
+    $("#resultado_subexamen"+cod_examen).removeClass("is-valid").addClass("is-invalid");
+  }
+  */
   this.resultadosService.obtener_valores__por_defecto_examnes(cod_examen,caracter).subscribe(
     resultados_defecto => {
       console.log(resultados_defecto)
@@ -353,6 +375,26 @@ kambio_valores(cod_examen, caracter,i) {
   console.log(resultados_defecto[0].cod)
  // this.form.resultados[i]=this.filteredCountriesSingle[i].valor
     })
-
+}
+cadena:String="";
+cambio(event){
+  console.log(event.target.value)
+if(event.target.value!=''){
+  this.estado=false
+}
+else{
+  this.estado=true
+}
+  
+}
+cambi(valor){
+ console.log(valor.length)
+if(valor.length>0)
+{
+  $("#a"+7).removeClass("is-invalid").addClass("is-valid");
+}
+else{
+  $("#a"+7).removeClass("is-valid").addClass("is-invalid");
+}
 }
 }

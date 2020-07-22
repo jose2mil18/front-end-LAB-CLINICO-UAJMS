@@ -125,9 +125,9 @@
                                  <div class="col-lg-10 col-md-10 col-sm-8">
                                     <div class="form-group">
                                        <!-- <p-autoComplete (ngModelChange)="k(s.cod_examen, i)" [(ngModel)]="form.resultados[i]" name="resultados[i]" class="form-control" [suggestions]="filteredCountriesSingle" (completeMethod)="buscaValorExamen($event, s.cod_examen, i)" field="valor" [size]="30" placeholder="Countries" [minLength]="1"></p-autoComplete>-->
-<input *ngIf="s.nombre !='Otros'" type="text"  list="valores_examen" [(ngModel)]="solicitudSinResultado.examenes_solicitados[indice].resultados_examen.resultados_examenes[i].valores[0].valor" name="solicitudSinResultado.examenes_solicitados[indice].resultados_examen.resultados_examenes[i].cod_examen"  class="form-control" (ngModelChange)="kambio_valores(s.cod_examen, solicitudSinResultado.examenes_solicitados[indice].resultados_examen.resultados_examenes[i].valores[0].valor,i)" required>
+<input *ngIf="s.nombre !='Otros'" type="text"  list="valores_examen" [(ngModel)]="solicitudSinResultado.examenes_solicitados[indice].resultados_examen.resultados_examenes[i].valores[0].valor" [name]="'a'+i" class="form-control" (ngModelChange)="kambio_valores(s.cod_examen, solicitudSinResultado.examenes_solicitados[indice].resultados_examen.resultados_examenes[i].valores[0].valor,i)" required>
 
-<input *ngIf="s.nombre =='Otros'" type="text"  list="valores_examen" [(ngModel)]="solicitudSinResultado.examenes_solicitados[indice].resultados_examen.resultados_examenes[i].valores[0].valor" name="solicitudSinResultado.examenes_solicitados[indice].resultados_examen.resultados_examenes[i].cod_examen"  class="form-control" (ngModelChange)="kambio_valores(s.cod_examen, solicitudSinResultado.examenes_solicitados[indice].resultados_examen.resultados_examenes[i].valores[0].valor,i)" >
+<input *ngIf="s.nombre =='Otros'" type="text"  list="valores_examen" [(ngModel)]="solicitudSinResultado.examenes_solicitados[indice].resultados_examen.resultados_examenes[i].valores[0].valor" [name]="'a'+i" class="form-control" (ngModelChange)="kambio_valores(s.cod_examen, solicitudSinResultado.examenes_solicitados[indice].resultados_examen.resultados_examenes[i].valores[0].valor,i)" >
 
 <datalist id="valores_examen">
   <option *ngFor="let c of examenesfiltradosporcaracter" [value]="c.valor" ></option>
@@ -167,7 +167,7 @@
                                             <div class="col-lg-10 col-md-10 col-sm-8">
                                               <div class="form-group">
                                                  <!-- <p-autoComplete (ngModelChange)="k(s.cod_examen, i)" [(ngModel)]="form.resultados[i]" name="resultados[i]" class="form-control" [suggestions]="filteredCountriesSingle" (completeMethod)="buscaValorExamen($event, s.cod_examen, i)" field="valor" [size]="30" placeholder="Countries" [minLength]="1"></p-autoComplete>-->
-          <input  type="text"  list="valores_examen" [(ngModel)]="solicitudSinResultado.examenes_solicitados[indice].resultados_examen.resultados_examenes[i].resultados_examenes[in].valores[0].valor" name="solicitudSinResultado.examenes_solicitados[indice].resultados_examen.resultados_examenes[i].resultados_examenes[in]" [attr.id]="indice+''+i+''+ in" [ngClass]="borde" class="form-control" (ngModelChange)="kambio_valor(s.cod_examen, solicitudSinResultado.examenes_solicitados[indice].resultados_examen.resultados_examenes[i].resultados_examenes[in].valores[0].valor)" required>
+          <input  type="text"  list="valores_examen" [(ngModel)]="solicitudSinResultado.examenes_solicitados[indice].resultados_examen.resultados_examenes[i].resultados_examenes[in].valores[0].valor" [name]="s.nombre" [attr.id]="indice+''+i+''+ in" [ngClass]="borde" class="form-control" (ngModelChange)="kambio_valor(s.cod_examen, solicitudSinResultado.examenes_solicitados[indice].resultados_examen.resultados_examenes[i].resultados_examenes[in].valores[0].valor)" required>
      
           <datalist id="valores_examen">
             <option *ngFor="let c of examenesfiltradosporcaracter" [value]="c.valor" ></option>
@@ -214,7 +214,7 @@
 
             
 
-
+{{form.valid}}
     
       <div style="margin:20px" class="row">    
 <div class="row clearfix col-md-3">

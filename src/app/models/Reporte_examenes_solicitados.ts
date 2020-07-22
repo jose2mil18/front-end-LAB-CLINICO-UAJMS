@@ -6,8 +6,10 @@ export class Reporte_examenes_solicitados {
     precio_examen:Precio_examen;
     nro_prestaciones:number
 solicitud:Solicitud;
+grupo:string// es el item por el que queremos agrupar
 constructor(){
-   this.precio_examen=new Precio_examen();
+    this.grupo="";
+  
 
 
 }

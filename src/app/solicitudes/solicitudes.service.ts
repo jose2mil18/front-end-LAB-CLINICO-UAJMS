@@ -23,6 +23,10 @@ usuario={};
    public getAll() {
         return this.http.get<Solicitud[]>(`${''+global.server+'api/solicitudes'}`,  {headers: this.httpHeaders});
     }
+    obtenerSolicitud(cod_solicitud){
+        console.log(cod_solicitud)
+        return this.http.get<Solicitud>(`${''+global.server+'api/solicitud/'}`+cod_solicitud, {headers: this.httpHeaders});
+    }
     public numSolicitudes() {
         return this.http.get<number>(`${''+global.server+'api/contar-solicitudes'}`,  {headers: this.httpHeaders});
     }

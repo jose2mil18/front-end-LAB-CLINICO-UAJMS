@@ -208,8 +208,23 @@ from solicitud s, pacientes pa, persona pe where s.cedula_paciente=pa.cedula and
 </p-table>
 -->
 <!-- -------------------------------------------------------------------------------------------------------------------->
-
-
+<p-accordion>
+  <p-accordionTab header="Header 1">
+     Content 1 <br>
+     hjhjhjkhj
+  </p-accordionTab>
+</p-accordion>
+<p-accordion>
+  <p-accordionTab header="Godfather I" [selected]="true">
+      The story begins as Don Vito Corleone, the head of a New York Mafia family, overseeshis daughter's wedding. His beloved son ichael has just come home from the war, but does not intend to become part of his father's business. T hrough Michael's life the nature of the family business becomes clear. The business of the family is just like the head of the family, kind and benevolent to those who give respect, but given to ruthless violence whenever anything stands against the good of the family.
+  </p-accordionTab>
+  <p-accordionTab header="Godfather II">
+      Francis Ford Coppola's legendary continuation and sequel to his landmark 1972 film, The_Godfather parallels the young Vito Corleone's rise with his son Michael's spiritual fall, deepening The_Godfather's depiction of the dark side of the American dream. In the early 1900s, the child Vito flees his Sicilian village for America after the local Mafia kills his family. Vito struggles to make a living, legally or illegally, for his wife and growing brood in Little Italy, killing the local Black Hand Fanucci after he demands his customary cut of the tyro's business. With Fanucci gone, Vito's communal stature grows.
+  </p-accordionTab>
+  <p-accordionTab header="Godfather III">
+      After a break of more than  15 years, director Francis Ford Coppola and writer Mario Puzo returned to the well for this third and final story of the fictional Corleone crime family. Two decades have passed, and crime kingpin Michael Corleone, now divorced from his wife Kay has nearly succeeded in keeping his promise that his family would one day be completely legitimate.
+  </p-accordionTab>
+</p-accordion>
 
 <p-table id="table" #dd [value]="reporte_examenes_solicitados" [columns]="cols" [paginator]="true" [rows]="10" [pageLinks]="2" [rowsPerPageOptions]="[5,10,20]"  selectionMode="multiple">
   
@@ -224,26 +239,30 @@ from solicitud s, pacientes pa, persona pe where s.cedula_paciente=pa.cedula and
     <ng-template pTemplate="header" let-reporte="rowData">
         <tr><th style="width:30px">#</th>
           
-          <th style="width:260px">Paciente</th>
-  
-          <th style="width:150px">Area</th>
+          <th style="width:260px" *ngIf="grupo.label!='Paciente'">Paciente</th>
+          <th style="width:150px" *ngIf="grupo.label!='Examen'">Examen</th>
+          <th style="width:150px" *ngIf="grupo.label!='Area'">Area</th>
+    
             <th >
                Fecha
             </th>
-            <th>Estado</th>
+            <th *ngIf="grupo.label!='Estado'">Estado</th>
             
             <th>Fecha de Entrega</th>
         </tr>
         <tr>
           <th></th>
-          <th></th>
-          <th>
+          <th *ngIf="grupo.label!='Paciente'"></th>
+          <th *ngIf="grupo.label!='Examen'"></th>
+          <th *ngIf="grupo.label!='Area'">
+
             <ng-select   placeholder="Selecciona un area"   [(ngModel)]="form.nombre_area" class="" (ngModelChange)="filtro_completo(formulario)"   name="area" required>
            
               <ng-option  *ngFor=" let a of areas" [value]="a.nombre" >{{a.nombre}}</ng-option>
            
              </ng-select> 
             </th>
+     
             <th>
               <ng-container  >
                 <div class="ui-inputgroup">
@@ -254,9 +273,10 @@ from solicitud s, pacientes pa, persona pe where s.cedula_paciente=pa.cedula and
               </ng-container>
   
             </th>
-            <th>
+            <th *ngIf="grupo.label!='Estado'"> 
               
-                <ng-select   placeholder="Selecciona un estado"  [(ngModel)]="this.form.estado_solicitud" class="" (ngModelChange)="filtro_completo(formulario)"   name="estado" required>
+
+                <ng-select  style="display:none" placeholder="Selecciona un estado"  [(ngModel)]="this.form.estado_solicitud" class="" (ngModelChange)="filtro_completo(formulario)"   name="estado" required>
                     <ng-option  *ngFor=" let rol of brands" [value]="rol.value" >{{rol.label}}</ng-option>
                    
                    </ng-select>
@@ -276,25 +296,27 @@ from solicitud s, pacientes pa, persona pe where s.cedula_paciente=pa.cedula and
         <tr class="ui-widget-header" >
          
             <td colspan="5">
-                <span style="font-weight:bold">  {{reporte.precio_examen.examen.nombre}} </span>
+                <span style="font-weight:bold">  {{reporte.grupo}}</span>
             </td>
         </tr>
-        <tr *ngFor="let solicitud of reporte.solicitudes; index as i">
+        <tr *ngFor="let examen_solicitado of reporte.examenes_solicitados; index as i">
           <td>
                   {{i+1}}  
           
           </td>
-          <td>
-            {{solicitud.paciente.persona.nombre}} {{solicitud.paciente.persona.ap}} {{solicitud.paciente.persona.am}}  
+          <td  *ngIf="grupo.label!='Paciente'">
+            {{examen_solicitado.solicitud.paciente.persona.nombre}} {{examen_solicitado.solicitud.paciente.persona.ap}} {{examen_solicitado.solicitud.paciente.persona.am}}  
     
     </td>
-        
-           <td> 
-             {{reporte.precio_examen.examen.area.nombre}}
+    <td *ngIf="grupo.label!='Examen'"> 
+      {{examen_solicitado.precio_examen.examen.nombre}}
+     </td>
+           <td *ngIf="grupo.label!='Area'"> 
+             {{examen_solicitado.precio_examen.examen.area.nombre}}
             </td>
-  
+          
             <td  >
-                {{solicitud.fecha | date: 'dd-MM-yyyy'}}
+                {{examen_solicitado.solicitud.fecha | date: 'dd-MM-yyyy'}}
             </td>
            <!--  
             <td>  
@@ -311,11 +333,11 @@ from solicitud s, pacientes pa, persona pe where s.cedula_paciente=pa.cedula and
               </td>
             -->
   
-            <td>
-                {{solicitud.estado_solicitud}}
+            <td *ngIf="grupo.label!='Estado'">
+                {{examen_solicitado.solicitud.estado_solicitud}}
               </td>
               <td  >
-                {{solicitud.fecha_entrega | date: 'dd-MM-yyyy'}}
+                {{examen_solicitado.solicitud.fecha_entrega | date: 'dd-MM-yyyy'}}
             </td>
         </tr>
     </ng-template>

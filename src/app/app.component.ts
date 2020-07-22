@@ -160,7 +160,6 @@ imageUrl: string = "";
 
 
 
-
         // ========
         $(function () {
             $('.selectpicker').selectpicker();
@@ -185,6 +184,7 @@ imageUrl: string = "";
             });
         });
         $('.theme-light-dark .t-light').on('click', function() {
+            
             $('body').removeClass('menu_dark');
         });
 

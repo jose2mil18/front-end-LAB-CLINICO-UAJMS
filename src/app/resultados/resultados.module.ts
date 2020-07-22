@@ -14,6 +14,7 @@ import { ReporteOrinaComponent } from './reporte-orina/reporte-orina.component';
 import { ReporteHemogramaComponent } from './reporte-hemograma/reporte-hemograma.component';
 import { ReporteAnalisisComponent } from './reporte-analisis/reporte-analisis.component';
 
+import {AccordionModule} from 'primeng/accordion';
 //import {BootstrapAutocompleteModule} from 'angular-bootstrap-autocomplete'jh
 import {InputTextModule} from 'primeng/inputtext';
 import {AutoCompleteModule} from 'primeng/autocomplete';
@@ -25,6 +26,7 @@ import {DropdownModule} from 'primeng/dropdown';
 import {TableModule} from 'primeng/table';
 @NgModule({
   imports: [
+    AccordionModule,
     ButtonModule,
     InputTextModule,
     CommonModule,

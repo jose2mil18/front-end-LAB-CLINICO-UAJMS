@@ -30,7 +30,12 @@ currentUser:Usuario;
 bandera:boolean
 fecha_minima_solicitud:String
 rowGroupMetadata: any;
+grupo
   constructor(private reportesService:ReportesService, private solicitudesService:SolicitudesService, private datePipe:DatePipe, private router:Router) {
+ 
+    
+    this.grupo = JSON.parse(localStorage.getItem('grupo'));
+  
     this.solicitudesService.minimaFecha().subscribe(data=>{
   
      console.log(data)
@@ -59,9 +64,10 @@ this.solicitudesService.getAllAreas().subscribe(data=>{
     this.paciente= JSON.parse(localStorage.getItem('paciente'));
     this.examenes_solicitados=this.paciente.examenes_solicitados
 
-    this.reportesService.getReporteExamenesSolicitados(this.form.cedula, this.area.nombre, this.form.caracter_nombre_examen, this.form.fech, this.form.fecha_inicio, this.form.fecha_fin, this.form.estado_solicitud).subscribe(data => {
+    this.reportesService.getReporteExamenesSolicitados(this.form.cedula, this.form.nombre_area, this.form.caracter_nombre_examen, this.form.fech, this.form.fecha_inicio, this.form.fecha_fin, this.form.estado_solicitud, this.grupo.agrupador, this.grupo.seleccionador).subscribe(data => {
     this.reporte_examenes_solicitados=data
     console.log(data)
+   // this.reporte_examenes_solicitados.grupo=this.grupo;
 
           })
    
@@ -82,6 +88,7 @@ this.solicitudesService.getAllAreas().subscribe(data=>{
   ];
   }
   filtro_completo(formu : NgForm){
+   
     //console.log(this.form.fech)
   if(this.form.resultados == null)
   {
@@ -108,7 +115,7 @@ this.solicitudesService.getAllAreas().subscribe(data=>{
     }
     console.log(this.form.fech)
     console.log(this.area.nombre+" "+this.area.cod_area)
-    this.reportesService.getReporteExamenesSolicitados(this.form.cedula, this.form.nombre_area, this.form.caracter_nombre_examen, this.form.fech, this.form.fecha_inicio, this.form.fecha_fin, this.form.estado_solicitud).subscribe(data=>{
+    this.reportesService.getReporteExamenesSolicitados(this.form.cedula, this.form.nombre_area, this.form.caracter_nombre_examen, this.form.fech, this.form.fecha_inicio, this.form.fecha_fin, this.form.estado_solicitud, this.grupo.agrupador, this.grupo.seleccionador).subscribe(data=>{
       this.reporte_examenes_solicitados=data
       
       console.log(data)
@@ -116,27 +123,92 @@ this.solicitudesService.getAllAreas().subscribe(data=>{
   }
   
   }
-  onSort() {
-    this.updateRowGroupMetaData();
-}
+
   buscar_por_fecha(fech){
     console.log(fech)
   
   }
   
-  exportPdf() {
-if(this.form.nombre_area == '')
-
-    window.location.href = 'http://localhost:8080/jasperserver/rest_v2/reports/reports/reporte_examenes_solicitados.pdf?am_usuario='+this.currentUser.personal_laboratorio.persona.am+'&cedula='+this.form.cedula+'&ap_usuario='+this.currentUser.personal_laboratorio.persona.ap+'&nombre_usuario='+this.currentUser.personal_laboratorio.persona.nombre+'&nombre_paciente='+'%%'+'&ap_paciente='+this.paciente.persona.ap+'&am_paciente='+this.paciente.persona.am+'&fecha_inicio='+this.form.fecha_inicio+'&fecha_fin='+this.form.fecha_fin+'&j_username='+'jasperadmin'+'&j_password='+'jasperadmin';
-
+exportPdf() {
+if(this.grupo.label=='Examen')   
+{
+  if(this.form.nombre_area == '')
+  {
+    window.location.href = 'http://localhost:8080/jasperserver/rest_v2/reports/reports/reporte_examnes_solicitados.html?am_usuario='+this.currentUser.personal_laboratorio.persona.am+'&cedula='+this.form.cedula+'&ap_usuario='+this.currentUser.personal_laboratorio.persona.ap+'&nombre_usuario='+this.currentUser.personal_laboratorio.persona.nombre+'&nombre_paciente='+'%%'+'&ap_paciente='+this.paciente.persona.ap+'&am_paciente='+this.paciente.persona.am+'&fecha_inicio='+this.form.fecha_inicio+'&fecha_fin='+this.form.fecha_fin+'&j_username='+'jasperadmin'+'&j_password='+'jasperadmin';
+   }
     else{
-      window.location.href = 'http://localhost:8080/jasperserver/rest_v2/reports/reports/reporte_examenes_solicitados.pdf?am_usuario='+this.currentUser.personal_laboratorio.persona.am+'&cedula='+this.form.cedula+'&ap_usuario='+this.currentUser.personal_laboratorio.persona.ap+'&nombre_usuario='+this.currentUser.personal_laboratorio.persona.nombre+'&nombre_paciente='+'%%'+'&ap_paciente='+this.paciente.persona.ap+'&am_paciente='+this.paciente.persona.am+'&nombre_area='+this.form.nombre_area+'&fecha_inicio='+this.form.fecha_inicio+'&fecha_fin='+this.form.fecha_fin+'&j_username='+'jasperadmin'+'&j_password='+'jasperadmin';
+      window.location.href = 'http://localhost:8080/jasperserver/rest_v2/reports/reports/reporte_examnes_solicitados.html?am_usuario='+this.currentUser.personal_laboratorio.persona.am+'&cedula='+this.form.cedula+'&ap_usuario='+this.currentUser.personal_laboratorio.persona.ap+'&nombre_usuario='+this.currentUser.personal_laboratorio.persona.nombre+'&nombre_paciente='+'%%'+'&ap_paciente='+this.paciente.persona.ap+'&am_paciente='+this.paciente.persona.am+'&nombre_area='+this.form.nombre_area+'&fecha_inicio='+this.form.fecha_inicio+'&fecha_fin='+this.form.fecha_fin+'&j_username='+'jasperadmin'+'&j_password='+'jasperadmin';
 
-    }
+   }
+}
+if(this.grupo.label=='Area')   
+{
+  if(this.form.nombre_area == '')
+  {
+    window.location.href = 'http://localhost:8080/jasperserver/rest_v2/reports/reports/reporte_examnes_solicitados_por_are.html?am_usuario='+this.currentUser.personal_laboratorio.persona.am+'&cedula='+this.form.cedula+'&ap_usuario='+this.currentUser.personal_laboratorio.persona.ap+'&nombre_usuario='+this.currentUser.personal_laboratorio.persona.nombre+'&nombre_paciente='+'%%'+'&ap_paciente='+this.paciente.persona.ap+'&am_paciente='+this.paciente.persona.am+'&fecha_inicio='+this.form.fecha_inicio+'&fecha_fin='+this.form.fecha_fin+'&j_username='+'jasperadmin'+'&j_password='+'jasperadmin';
+   }
+    else{
+      window.location.href = 'http://localhost:8080/jasperserver/rest_v2/reports/reports/reporte_examnes_solicitados_por_are.html?am_usuario='+this.currentUser.personal_laboratorio.persona.am+'&cedula='+this.form.cedula+'&ap_usuario='+this.currentUser.personal_laboratorio.persona.ap+'&nombre_usuario='+this.currentUser.personal_laboratorio.persona.nombre+'&nombre_paciente='+'%%'+'&ap_paciente='+this.paciente.persona.ap+'&am_paciente='+this.paciente.persona.am+'&nombre_area='+this.form.nombre_area+'&fecha_inicio='+this.form.fecha_inicio+'&fecha_fin='+this.form.fecha_fin+'&j_username='+'jasperadmin'+'&j_password='+'jasperadmin';
+
+   }
+}
+if(this.grupo.label=='Paciente')   
+{
+  if(this.form.nombre_area == '')
+  {
+    window.location.href = 'http://localhost:8080/jasperserver/rest_v2/reports/reports/reporte_examnes_solicitados_por_paciente.html?am_usuario='+this.currentUser.personal_laboratorio.persona.am+'&cedula='+this.form.cedula+'&ap_usuario='+this.currentUser.personal_laboratorio.persona.ap+'&nombre_usuario='+this.currentUser.personal_laboratorio.persona.nombre+'&nombre_paciente='+'%%'+'&ap_paciente='+this.paciente.persona.ap+'&am_paciente='+this.paciente.persona.am+'&fecha_inicio='+this.form.fecha_inicio+'&fecha_fin='+this.form.fecha_fin+'&j_username='+'jasperadmin'+'&j_password='+'jasperadmin';
+   }
+    else{
+      window.location.href = 'http://localhost:8080/jasperserver/rest_v2/reports/reports/reporte_examnes_solicitados_por_paciente.html?am_usuario='+this.currentUser.personal_laboratorio.persona.am+'&cedula='+this.form.cedula+'&ap_usuario='+this.currentUser.personal_laboratorio.persona.ap+'&nombre_usuario='+this.currentUser.personal_laboratorio.persona.nombre+'&nombre_paciente='+'%%'+'&ap_paciente='+this.paciente.persona.ap+'&am_paciente='+this.paciente.persona.am+'&nombre_area='+this.form.nombre_area+'&fecha_inicio='+this.form.fecha_inicio+'&fecha_fin='+this.form.fecha_fin+'&j_username='+'jasperadmin'+'&j_password='+'jasperadmin';
+
+   }
+}
+if(this.grupo.label=='Estado')   
+{
+  if(this.form.nombre_area == '')
+  {
+    window.location.href = 'http://localhost:8080/jasperserver/rest_v2/reports/reports/reporte_examnes_solicitados_por_estado.html?am_usuario='+this.currentUser.personal_laboratorio.persona.am+'&cedula='+this.form.cedula+'&ap_usuario='+this.currentUser.personal_laboratorio.persona.ap+'&nombre_usuario='+this.currentUser.personal_laboratorio.persona.nombre+'&nombre_paciente='+'%%'+'&ap_paciente='+this.paciente.persona.ap+'&am_paciente='+this.paciente.persona.am+'&fecha_inicio='+this.form.fecha_inicio+'&fecha_fin='+this.form.fecha_fin+'&j_username='+'jasperadmin'+'&j_password='+'jasperadmin';
+   }
+    else{
+      window.location.href = 'http://localhost:8080/jasperserver/rest_v2/reports/reports/reporte_examnes_solicitados_por_estado.html?am_usuario='+this.currentUser.personal_laboratorio.persona.am+'&cedula='+this.form.cedula+'&ap_usuario='+this.currentUser.personal_laboratorio.persona.ap+'&nombre_usuario='+this.currentUser.personal_laboratorio.persona.nombre+'&nombre_paciente='+'%%'+'&ap_paciente='+this.paciente.persona.ap+'&am_paciente='+this.paciente.persona.am+'&nombre_area='+this.form.nombre_area+'&fecha_inicio='+this.form.fecha_inicio+'&fecha_fin='+this.form.fecha_fin+'&j_username='+'jasperadmin'+'&j_password='+'jasperadmin';
+
+   }
+}
+
   }
+  /*
+
+  
+	SELECT 
+	s.cedula_paciente,
+per.nombre AS nombre_paciente,
+	
+count(s.cedula_paciente) as nro_prestaciones   
+	, min(s.fecha) as fecha_inicio, max(s.fecha) as fecha_fin 
+FROM sol_exam soe,
+	solicitud s,
+	precio_examen pe,
+	examen e,
+	area a, pacientes pa, persona per
+WHERE 
+s.cedula_paciente=pa.cedula and per.cod_persona=pa.cod_persona and
+(s.fecha >=  '2018-01-01' AND  s.fecha <= '2020-09-09')
+AND
+a.nombre like  '%%'
+	AND  pe.cod_precio_examen = soe.cod_precio_examen 
+	 AND a.cod_area = e.cod_area 
+	 AND pe.cod_examen = e.cod_examen 
+	 AND soe.cod_solicitud = s.cod_solicitud 
+	 AND pe.cod_institucion LIKE '%%' 
+	 AND soe.cod_sol_exam = (select max(cod_sol_exam) from sol_exam  where cod_precio_examen=soe.cod_precio_examen and cod_solicitud=soe.cod_solicitud) 
+GROUP BY 1,2
+  */
+
    klp(){
 this.router.navigate(['/reportes/examenes-solicitados'])
    }
+   
+   /*
    updateRowGroupMetaData() {
     this.rowGroupMetadata = {};
     if (this.examenes_solicitados) {
@@ -158,5 +230,5 @@ this.router.navigate(['/reportes/examenes-solicitados'])
     }
 }
 
-
+*/
 }

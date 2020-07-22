@@ -103,8 +103,9 @@
                       <td>{{solicitud.fecha | date: 'dd-MM-yyyy'}}</td>
                       <td>  
                           <ng-select  placeholder="mostrar analisis">
-                            <ng-option *ngFor="let e of solicitud.examenes_solicitados" [value]="e"  >{{e.precio_examen.examen.nombre}}</ng-option>
-                          
+                            <ng-container  *ngFor="let e of solicitud.examenes_solicitados" >
+                            <ng-option  rel="tooltip" data-placement="top" title="Ver actualizaciones"  >{{e.precio_examen.examen.nombre}}</ng-option>
+                          </ng-container>
                           </ng-select>
                           
                          </td>

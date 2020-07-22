@@ -24,8 +24,8 @@ usuario={};
     getReportesAnual(re:Reporte_anual) {
         return this.http.post<Reporte_anual>(`${''+global.server+'api/reporte-anual'}`,re, {headers: this.httpHeaders});
     }
-    getReporteExamenesSolicitados(cedula:String, nombre_area:String, caracter_nombre_examen:String, fecha_solicitud:String, fecha_inicio:String, fecha_fin:String, estado_solicitud:String) {
-        return this.http.get<Reporte_examenes_solicitados[]>(`${''+global.server+'api/reporte-examenes-solicitados?cedula='}`+cedula+'&nombre_area='+nombre_area+'&caracter_nombre_examen='+caracter_nombre_examen+'&fecha_solicitud='+fecha_solicitud+'&fecha_inicio='+fecha_inicio+'&fecha_fin='+fecha_fin+'&estado_solicitud='+estado_solicitud, {headers: this.httpHeaders});
+    getReporteExamenesSolicitados(cedula:String, nombre_area:String, caracter_nombre_examen:String, fecha_solicitud:String, fecha_inicio:String, fecha_fin:String, estado_solicitud:String, agrupador:string, seleccionador: string) {
+        return this.http.get<Reporte_examenes_solicitados[]>(`${''+global.server+'api/reporte-examenes-solicitados?cedula='}`+cedula+'&nombre_area='+nombre_area+'&caracter_nombre_examen='+caracter_nombre_examen+'&fecha_solicitud='+fecha_solicitud+'&fecha_inicio='+fecha_inicio+'&fecha_fin='+fecha_fin+'&estado_solicitud='+estado_solicitud+'&agrupador='+agrupador+'&seleccionador='+seleccionador, {headers: this.httpHeaders});
     }
     getReportes() {
          this.http.get(`${'http://localhost:8080/jasperserver/rest_v2/reports/reports/area.html'}`);

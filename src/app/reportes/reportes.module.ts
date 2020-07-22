@@ -9,9 +9,12 @@ import { ExamenesAnualComponent } from './examenes-anual/examenes-anual.componen
 import { ExamenesMensualComponent } from './examenes-mensual/examenes-mensual.component';
 import {TableModule} from 'primeng/table';
 import {ButtonModule} from 'primeng/button';
+import {AccordionModule} from 'primeng/accordion';
+
 
 @NgModule({
   imports: [
+    AccordionModule,
     ButtonModule,
     TableModule,
     CommonModule,

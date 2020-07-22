@@ -218,9 +218,11 @@
        
    
         <button type="button" pButton icon="pi pi-file" iconPos="left" label="PDF" (click)="exportPdf()" class="btn btn-warning"></button>
-        <ng-select   placeholder="Agrupar" [(ngModel)]="form.prueba" name=klp style="margin-right: 0.5em; width: 120px; float : left;"  (ngModelChange)="klp()"   >
-           
-          <ng-option   [value]="Examen" >Examen</ng-option>
+        <ng-select   id="item" placeholder="Agrupar" [(ngModel)]="grupo" name="item" style="margin-right: 0.5em; width: 120px; float : left;"  (ngModelChange)="klp($event)"   >
+          <ng-container *ngFor="let s of grupos"> 
+            <ng-option [value]="s" id="codkfjasd">{{s.label}}</ng-option>
+          </ng-container>
+      
        
          </ng-select>
         </div>

@@ -3,6 +3,10 @@ function fun(e){
 	alert(e)
 }
 
+$('form input').on('keypress', function(e) {
+    return e.which !== 13;
+});
+
 function validatePassword() {
 	console.log(document.getElementById("password").value)
 	var pass1 = document.getElementById("password").value;

@@ -163,6 +163,7 @@ console.log(this.roles)
 }
  bandera:boolean=true;
 onSubmit(formulario:NgForm) {
+  console.log(this.form)
   validatePassword()
 this.usuarioService.verificarCedula(this.form.cedula).subscribe(
   data => {
