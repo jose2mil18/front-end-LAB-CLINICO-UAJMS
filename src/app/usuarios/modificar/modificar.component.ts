@@ -126,12 +126,13 @@ guardar_modificacion(formu:NgForm){
    console.log(this.file!=null)
     if(this.form.personal_laboratorio.foto !='' && this.file!=null)
     {
-      console.log("klp")
     this.usuarioService.uploadImagen(this.file).subscribe(data=>{
       console.log("imagen guardada")
     })
   }
   this.usuarioService.actualizarUsuario(this.form).subscribe(data =>{
+    
+    alert("Usuario actualizado")
 
     this.router.navigate(['/usuarios/listar']);
   })

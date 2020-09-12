@@ -4,7 +4,7 @@ import { Proceso } from './proceso';
 export * from './proceso';
 export class Menu {
     cod_menu:number;
-    nombre:String;
+    nombre:string;
     procesos:Proceso[]
    
 

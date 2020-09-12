@@ -3,7 +3,6 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { RegistrarComponent } from './registrar/registrar.component';
 import { ListarComponent } from './listar/listar.component';
-import { ReporteComponent } from './reporte/reporte.component';
 
 import { ModificarComponent } from './modificar/modificar.component';
 import {FacturaComponent} from './factura/factura.component'
@@ -25,10 +24,7 @@ const routes: Routes = [
         component: ModificarComponent
     },
    
-    {
-        path: 'reporte',
-        component: ReporteComponent
-    },
+  
     {
         path: '',
         redirectTo: 'normal',

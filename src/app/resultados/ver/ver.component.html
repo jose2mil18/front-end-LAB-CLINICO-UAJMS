@@ -22,6 +22,7 @@
         <div class="card">
           <div class="header">
             
+            <h2><strong>Ver</strong> Solicitudes Con Resultados</h2>
            <ul class="header-dropdown">
               <li class="dropdown"> <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"> <i class="zmdi zmdi-more"></i> </a>
                 <ul class="dropdown-menu dropdown-menu-right slideUp float-right">
@@ -41,7 +42,7 @@
               <datalist id="valores_paciente">
                   <option *ngFor="let p of pacientes" [value]="p.nombres" ></option>
                 </datalist> 
-            <p-table [columns]="cols" #dd [value]="analisisSinResultados" [paginator]="true" [rows]="5" >
+            <p-table [columns]="cols" #dd [value]="analisisSinResultados" [paginator]="true" [rows]="10" [rowsPerPageOptions]="[5,10,20]" >
               <ng-template pTemplate="caption">
                 <div class="ui-helper-clearfix" style="text-align: left">
                  <button type="button" pButton icon="pi pi-file" iconPos="left" label="PDF" (click)="exportPdf()" class="btn btn-warning"></button>
@@ -55,7 +56,7 @@
                           
                       </th>
                       <th>Fecha</th>
-                      <th  >Analisis</th>
+                      <th  >Exámenes</th>
 
                       
                       <th style="width:100px">Ver</th>
@@ -102,7 +103,7 @@
                       </td>
                       <td>{{solicitud.fecha | date: 'dd-MM-yyyy'}}</td>
                       <td>  
-                          <ng-select  placeholder="mostrar analisis">
+                          <ng-select  placeholder="Mostrar exámenes">
                             <ng-container  *ngFor="let e of solicitud.examenes_solicitados" >
                             <ng-option  rel="tooltip" data-placement="top" title="Ver actualizaciones"  >{{e.precio_examen.examen.nombre}}</ng-option>
                           </ng-container>
@@ -238,7 +239,7 @@
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h4 class="title" id="defaultModalLabel" >{{nombreexamen}}</h4>
+          <h4 class="title" id="defaultModalLabel" ></h4>
         </div>
         <div class="modal-body">
              
@@ -249,7 +250,7 @@
               </div>
               
     <div class="col-lg-8">
-              <input id="fecha_inicio" [(ngModel)]="form.fecha_inicio" name="fech" type="date" placeholder="fecha_inicio">
+              <input id="fecha_inicio" class="form-control" [(ngModel)]="form.fecha_inicio" name="fech" type="date" placeholder="fecha_inicio">
           
                     </div>
   
@@ -258,7 +259,7 @@
                         </div>
                         
               <div class="col-lg-8">
-                        <input id="fecha_fin" [(ngModel)]="form.fecha_fin"  name="fech" type="date"  placeholder="fecha_inicio">
+                        <input id="fecha_fin" class="form-control" [(ngModel)]="form.fecha_fin"  name="fech" type="date"  placeholder="fecha_inicio">
                     
                               </div>
                 </div>

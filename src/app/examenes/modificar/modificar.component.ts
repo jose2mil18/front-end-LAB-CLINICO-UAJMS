@@ -5,10 +5,11 @@ import {ExamenesService} from '../examenes.service'
 import {FormControl, FormBuilder, FormGroup, Validators, NgForm, FormArray } from '@angular/forms';
 import {Examen, Valor_referencia, Area, Institucion, Resultados_por_defecto, Precio_examen} from '../../models'
 
-import { LowerCasePipe, TitleCasePipe, UpperCasePipe, DatePipe } from '@angular/common';
+import { LowerCasePipe, TitleCasePipe, UpperCasePipe, DatePipe , Location} from '@angular/common';
 
 import { NONE_TYPE } from '@angular/compiler/src/output/output_ast';
 import { debounceTime } from 'rxjs/operators';
+
 declare const $: any;
 
 
@@ -24,7 +25,7 @@ index:number=0
  
   mostrar:string="none";
   indice:number=0;
-examen:Examen;
+examen:Examen=new Examen();
 formGroup:FormGroup;
 otroFormGroup:FormGroup;
 instituciones:Institucion[];
@@ -35,7 +36,7 @@ productForm:FormGroup
 examensito:Examen=new Examen()
 array:number[]
 subexamenes:Examen[]=[]
-  constructor(private titleCasePipe:TitleCasePipe ,private datePipe: DatePipe,private fb: FormBuilder, private examenesService : ExamenesService, private router:Router) { 
+  constructor(private location: Location, private titleCasePipe:TitleCasePipe ,private datePipe: DatePipe,private fb: FormBuilder, private examenesService : ExamenesService, private router:Router) { 
    
     this.subexamenes[0]=new Examen()
     this.control.valueChanges.pipe(debounceTime(450)).subscribe(value=>{
@@ -50,12 +51,15 @@ console.log(this.subexamenes)
     
  
 		// Add an initial pet form-entry.
-    this.examen=new Examen()
+    
     this.examensito.valores_referencia=[]
     this.examensito.valores_referencia[0]=new Valor_referencia()
-    this.examen= JSON.parse(localStorage.getItem('examen'));
- this.examenesService.obtenerExamen(this.examen.cod_examen).subscribe(examen=>{
+    const examen= JSON.parse(localStorage.getItem('examen'));
+    console.log(examen)
+ this.examenesService.obtenerExamen(examen.cod_examen).subscribe(examen=>{
    this.examen=examen
+   console.log(examen);
+   
  })
     this.examenesService.getInstitucionesConPrecio().subscribe(i=> {
       this.instituciones=i
@@ -135,6 +139,7 @@ console.log(this.otroFormGroup.value)
     this.examen.valores_referencia.push(new Valor_referencia())
     this.examen.valores_referencia[this.examen.valores_referencia.length-1].cod_examen=this.examen.cod_examen
 
+    this.examen.valores_referencia[this.examen.valores_referencia.length-1].fecha=this.datePipe.transform(new Date(),"dd-MM-yyyy")
    
   }
   removerValoresReferencia(indice) {
@@ -181,6 +186,8 @@ console.log(this.otroFormGroup.value)
 agregarValoresReferencia_de_subexamen(i) {
   this.examen.subexamenes[i].valores_referencia.push(new Valor_referencia())
   this.examen.subexamenes[i].valores_referencia[this.examen.subexamenes[i].valores_referencia.length-1].cod_examen=this.examen.subexamenes[i].cod_examen
+  this.examen.subexamenes[i].valores_referencia[this.examen.subexamenes[i].valores_referencia.length-1].fecha=this.datePipe.transform(new Date(),"dd-MM-yyyy")
+   
 }
 removerValoresReferencia_de_subexamen(indice_subexamen, indice_valor_referencia_de_subexamen) {
  // this.examen.subexamenes[i].valores_referencia.push(new Valor_referencia())
@@ -199,6 +206,8 @@ removersubexamendelsubexamen(indice_subexamen,posicion){
 }
 agregarValoresReferencia_de_subexamen_de_subexamen(i,ii) {
   this.examen.subexamenes[i].subexamenes[ii].valores_referencia.push(new Valor_referencia())
+  this.examen.subexamenes[i].subexamenes[ii].valores_referencia[this.examen.subexamenes[i].subexamenes[ii].valores_referencia.length-1].fecha=this.datePipe.transform(new Date(),"dd-MM-yyyy")
+   
 }
 removerValoresReferencia_de_subexamen_de_subexamen(i,ii, indice_valor_referencia_de_subexamen_nivel2) {
   // this.examen.subexamenes[i].valores_referencia.push(new Valor_referencia())
@@ -209,12 +218,17 @@ removerValoresReferencia_de_subexamen_de_subexamen(i,ii, indice_valor_referencia
   onSubmit(form : NgForm){
     this.examen.nombre=this.titleCasePipe.transform(this.examen.nombre)
     console.log(this.examen);
+    this.examen.nombre=this.examen.nombre.toLowerCase();
+    console.log(this.examen.nombre)
     this.examen.nombre=this.capitalize(this.examen.nombre)
     for(let i=0;i<this.examen.subexamenes.length; i++)
     {
+      this.examen.subexamenes[i].nombre=this.examen.subexamenes[i].nombre.toLowerCase();
       this.examen.subexamenes[i].nombre=this.capitalize(this.examen.subexamenes[i].nombre)
       for(let j=0;j<this.examen.subexamenes[i].subexamenes.length; j++)
       {
+        this.examen.subexamenes[i].subexamenes[j].nombre=this.examen.subexamenes[i].subexamenes[j].nombre.toLowerCase();
+        
         this.examen.subexamenes[i].subexamenes[j].nombre=this.capitalize(this.examen.subexamenes[i].subexamenes[j].nombre)
         
       }
@@ -223,9 +237,10 @@ removerValoresReferencia_de_subexamen_de_subexamen(i,ii, indice_valor_referencia
     if(form.valid){
       this.examenesService.modificar(this.examen).subscribe(data =>{
         console.log(data);
-        alert("examen "+ data.nombre+" guardado")
+        alert("Examen "+ data.nombre+" actualizado")
         
-        this.router.navigate(['/examenes/listar']);
+      this.location.back();
+        //this.router.navigate(['/examenes/listar']);
     })
     
   }
@@ -271,7 +286,11 @@ this.examen.area.cod_area=i.target.value
     
     }
     capitalize(s){
+      s.toLowerCase();
       if (typeof s !== 'string') return ''
       return s.charAt(0).toUpperCase() + s.slice(1)
+    }
+    salir(){
+      this.location.back();
     }
 }

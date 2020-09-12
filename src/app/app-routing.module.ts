@@ -58,14 +58,8 @@ const routes: Routes = [
         loadChildren: 'app/forms/forms.module#FormsModule'
     },
   
-    {
-        path: 'charts',
-        loadChildren: 'app/charts/charts.module#ChartsModule'
-    },
-    {
-        path: 'widgets',
-        loadChildren: 'app/widgets/widgets.module#WidgetsModule'
-    },
+ 
+ 
     {
         path: 'authentication',
         loadChildren: 'app/authentication/authentication.module#AuthenticationModule'
@@ -77,7 +71,7 @@ const routes: Routes = [
   
     {
         path: '',
-        redirectTo: 'dashboard',
+        redirectTo: '/authentication/sign-in',
         pathMatch: 'full'
     }
 ];

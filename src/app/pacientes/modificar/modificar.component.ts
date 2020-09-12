@@ -1,4 +1,4 @@
-import { Component, OnInit , ViewEncapsulation} from '@angular/core';
+import { Component, OnInit, ViewEncapsulation, ViewChild, ElementRef } from '@angular/core';
 import {Paciente, Persona, Personal} from '../../models'
 import {PacientesService} from '../pacientes.service'
 
@@ -15,10 +15,13 @@ declare const swal: any;
   encapsulation: ViewEncapsulation.None
 })
 export class ModificarComponent implements OnInit {
+    @ViewChild('email') email:ElementRef;
 form
 cadena:string=''
+fechaHoy:string=''
   constructor(public datePipe:DatePipe,private titleCasePipe :TitleCasePipe, private pacienteService : PacientesService, private router:Router) { 
     this.cadena=""
+    this.fechaHoy=this.datePipe.transform(new Date(),"yyyy-MM-dd"),
     this.form = JSON.parse(localStorage.getItem('paciente'));
     
    this.cadena=datePipe.transform(this.form.fnac, "yyyy-MM-dd")
@@ -26,7 +29,20 @@ cadena:string=''
   }
 
   ngOnInit() {
+const email=this.email.nativeElement;
+console.log(this.email);
 
+console.log(email.validity.patterMismath);
+email.addEventListener("input", function (event) {
+  
+    console.log(email.validity.typeMismath);
+    
+  if (email.validity.typeMismatch) {
+    email.setCustomValidity("El email no es correcto!");
+  } else {
+    email.setCustomValidity("");
+  }
+});
 
     $(function() {
         'use strict';
@@ -297,6 +313,7 @@ this.form.persona.am=this.titleCasePipe.transform(this.form.persona.am)
   this.pacienteService.update(this.form)
       .subscribe(data => {
         console.log(data)
+        alert("Paciente actualizado")
         this.router.navigate(['/pacientes/listar']);
       
   localStorage.removeItem('paciente');

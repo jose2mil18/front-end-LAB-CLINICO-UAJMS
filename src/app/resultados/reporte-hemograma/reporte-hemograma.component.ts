@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import * as jspdf from 'jsPDF';  
 import html2canvas from 'html2canvas';
-import { Solicitud } from '../../models';
+import { Solicitud , Usuario} from '../../models';
+import { DatePipe } from '@angular/common';
 @Component({
   selector: 'app-reporte-hemograma',
   templateUrl: './reporte-hemograma.component.html',
@@ -9,8 +10,13 @@ import { Solicitud } from '../../models';
 })
 export class ReporteHemogramaComponent implements OnInit {
   solicitud:Solicitud;
-    constructor() { 
+  currentUser:Usuario;
   
+  fechita:string;
+      constructor(private datePipe:DatePipe) { 
+    
+        this.fechita=this.datePipe.transform(new Date(),"dd-MM-yyyy HH:mm")
+        this.currentUser = JSON.parse(localStorage.getItem('currentUser'));
       this.solicitud=JSON.parse(localStorage.getItem('solicitudaimprimir'));
       console.log(this.solicitud)
     }

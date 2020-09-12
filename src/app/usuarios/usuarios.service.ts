@@ -42,7 +42,7 @@ console.log(usuario)
     
     }
     verificarCedula(cedula:String){
-        return this.http.post<string>(`${''+global.server+'api/verificar-cedula'}`, {cedula}, {headers: this.httpHeaders});
+        return this.http.post<Usuario>(`${''+global.server+'api/verificar-cedula'}`, {cedula}, {headers: this.httpHeaders});
     
     }
 

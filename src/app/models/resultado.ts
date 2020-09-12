@@ -6,9 +6,9 @@ export class Resultado{
 
 cod_solicitud:number;
 
-resultado:String;
+resultado:string;
 examen:Examen;
-comentarios:String;
+comentarios:string;
 
 
 }

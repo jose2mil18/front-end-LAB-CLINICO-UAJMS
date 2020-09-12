@@ -38,7 +38,7 @@
           <div class="body">
 
             
-            <form class="needs-validation" ngNativeValidate  #formpaciente="ngForm">
+            <form class="needs-validation" ngNativeValidate  #formpaciente="ngForm" autocomplete="off">
              
 
               
@@ -50,7 +50,7 @@
                 </div>
                 <div class="col-lg-10 col-md-10 col-sm-8">
                   <div class="form-group">
-                    <input  type="text" id="nombre" [(ngModel)]="form.persona.nombre" name="nombre" [value]="form.nombre" class="form-control primeraletramayuscula" placeholder="Entra tu nombre" required>
+                    <input  type="text" id="nombre" [(ngModel)]="form.persona.nombre" name="nombre" [value]="form.nombre" class="form-control primeraletramayuscula" placeholder="Ingresa el nombre" required maxlength="15">
                   </div>
                 </div>
               </div>
@@ -61,7 +61,7 @@
   </div>
   <div class="col-lg-10 col-md-10 col-sm-8">
     <div class="form-group">
-      <input [(ngModel)]="form.persona.ap" name="ap" class="form-control primeraletramayuscula" placeholder="Entra tu apellido paterno" required>
+      <input [(ngModel)]="form.persona.ap" name="ap" class="form-control primeraletramayuscula" placeholder="Ingresa el apellido paterno" required maxlength="15">
     </div>
   </div>
 </div>
@@ -72,7 +72,7 @@
   </div>
   <div class="col-lg-10 col-md-10 col-sm-8">
     <div class="form-group">
-      <input [(ngModel)]="form.persona.am"  type="text" id="am" name="am" class="form-control primeraletramayuscula" placeholder="Entra apellido materno">
+      <input [(ngModel)]="form.persona.am"  type="text" id="am" name="am" class="form-control primeraletramayuscula" placeholder="Ingresa el apellido materno" maxlength="15">
     </div>
   </div>
 </div>
@@ -83,7 +83,7 @@
   </div>
   <div class="col-lg-10 col-md-10 col-sm-8">
     <div class="form-group">
-      <input [(ngModel)]="form.procedencia" name="procedencia" type="text" id="procedencia" class="form-control primeraletramayuscula" placeholder="Entra tu procedencia" required>
+      <input [(ngModel)]="form.procedencia" name="procedencia" type="text" id="procedencia" class="form-control primeraletramayuscula" placeholder="Ingresa la procedencia" required maxlength="15">
     </div>
   </div>
 </div>
@@ -109,7 +109,7 @@
       <div class="col-lg-10 col-md-10 col-sm-8">
         <div class="form-group">
           
-            <input type="date" [(ngModel)]="cadena" name="fnac" id="fnac" class="form-control" placeholder="MM/DD/YYYY"  size="12" required/>
+            <input type="date" [(ngModel)]="cadena" name="fnac" id="fnac" class="form-control" placeholder="MM/DD/YYYY"  size="12" required  [max]="fechaHoy"/>
             
            
         </div>
@@ -117,12 +117,12 @@
     </div>
     <div class="row clearfix">
       <div class="col-lg-2 col-md-2 col-sm-4 form-control-label">
-        <label for="fnac"> Correo Electronico </label>
+        <label for="fnac"> Correo Electrónico </label>
       </div>
       <div class="col-lg-10 col-md-10 col-sm-8">
         <div class="input-group">
           
-          <input  [(ngModel)]="form.correo_electronico" name="correo_electronico" id="correo_electronico" #fnac="ngModel" type="email" class="form-control" placeholder="Entra correo electronico" >
+          <input  [(ngModel)]="form.correo_electronico" name="correo_electronico" id="correo_electronico"  #email type="email" class="form-control" placeholder="Ingresa el correo electrónico"  pattern="[a-zA-Z0-9_]+([.][a-zA-Z0-9_]+)*@[a-zA-Z0-9_]+([.][a-zA-Z0-9_]+)*[.][a-zA-Z]{1,5}" >
          </div>
        
       </div>

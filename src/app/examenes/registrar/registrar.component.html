@@ -3,7 +3,7 @@
   <div class="block-header m_img_btn">
     <div class="row">
       <div class="col-lg-7 col-md-6 col-sm-12">
-        <h2>Regitrar examen
+        <h2>Exámenes
           <small></small>
         </h2>
       </div>
@@ -58,14 +58,14 @@
           <datalist id="valores_examen">
             <option *ngFor="let s of subexamenes" [value]="s.nombre" ></option>
           </datalist> 
-            <form  ngNativeValidate   class="needs-validation" #form="ngForm">  
+            <form  ngNativeValidate   class="needs-validation" #form="ngForm" autocomplete="off">  
               <div class="row clearfix">
               <div class="col-lg-2 col-md-2 col-sm-4 form-control-label">
-                <label for="nombre">Nombre</label>
+                <label for="nombre" class="titulo">Nombre</label>
               </div>
               <div class="col-lg-10 col-md-10 col-sm-8">
                 <div class="form-group">
-                    <input  type="text" id="nombre" name="nombre" [(ngModel)]="examen.nombre" class="form-control titulo" placeholder="Entra  nombre" required>
+                    <input  type="text" id="nombre" name="nombre" [(ngModel)]="examen.nombre"  class="form-control titulo" placeholder="Entra  nombre" #nombre required>
              
                     <!--- <input  type="text" id="nombre" [(ngModel)]="form.persona.nombre" name="nombre" #nombre="ngModel"  class="form-control" placeholder="Entra tu nombre" required>
                 </div>
@@ -238,6 +238,8 @@
             
                
                 </div>
+              
+              
               </div>
             
               
@@ -365,7 +367,7 @@
               
                 <div class="row clearfix">
                   <div class="col-sm-8">
-                    <div class="form-group"><label for="ap">Incluir examenes</label>
+                    <div class="form-group"><label for="ap">Incluir exámenes</label>
                     </div>
                   </div>
                   <div class="col-sm-4">
@@ -660,6 +662,11 @@
               <div class="row clearfix">
                 <div class="col-sm-8 offset-sm-2">
                   
+                </div>
+                
+                <div class="col-sm-8 offset-sm-2">
+
+                <button type="button"  id="guarda"  class="btn btn-raised btn-secondary btn-round waves-effect"   >Salir</button>
                 </div>
                 <div class="col-sm-8 offset-sm-2">
                   <button   data-type="autoclose-timer" type="submit" (click)="onSubmit(form)" class="btn btn-raised btn-primary btn-round waves-effect"   >Guardar</button>

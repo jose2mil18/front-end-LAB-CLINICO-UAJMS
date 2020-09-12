@@ -48,7 +48,7 @@
                           </ng-select>
                      </div>
                      <div class="col-md-2">
-                        <ng-select  placeholder="año"   name="año"  [(ngModel)]="reporte.anio" (ngModelChange)="anio($event)"    >
+                        <ng-select  placeholder="año"   name="año"  [(ngModel)]="reporte.anio" (ngModelChange)="anio()"    >
                             <ng-option [value]="2018">2018</ng-option>
                             <ng-option [value]="2019" >2019</ng-option>
                           
@@ -128,7 +128,7 @@
                  </tbody>
                 </table>
               -->
-                <p-table  #dd [value]="reportes_mensual" [columns]="cols" [paginator]="true" [rows]="20" [pageLinks]="2" [rowsPerPageOptions]="[5,10,20]"  >
+                <p-table  #dd [value]="reportes_mensual"  [paginator]="true" [rows]="20" [pageLinks]="2" [rowsPerPageOptions]="[5,10,20]"  >
               
                   <ng-template pTemplate="caption">
                     <div class="ui-helper-clearfix" style="text-align: left">

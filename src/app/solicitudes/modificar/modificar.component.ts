@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 
-import {Paciente,Area, Solicitud, Usuario,Posta, Institucion, Examen_solicitado, Precio_examen} from '../../models'
+import {Paciente,Area, Solicitud, Usuario,Posta, Institucion, Examen_solicitado, Precio_examen, Persona} from '../../models'
 import {Examen} from '../../models/examen'
 import {PacientesService} from '../../pacientes/pacientes.service';
 import {Http} from '@angular/http'
@@ -211,6 +211,7 @@ quitar_examen(cod_examen, i){
     console.log(this.precio_examen)
   console.log(this.myBusinessList)
     this.form=JSON.parse(localStorage.getItem('solicitudamodificar'));
+ 
     this.i=this.form.examenes_solicitados.length-1;
     this.precio_examen.cod_institucion=this.form.institucion.cod_institucion
  this.cod_precio_examen=null
@@ -450,9 +451,11 @@ modificar_solicitud(formsolicitud:NgForm){
   //this.form.fecha=$('#datepicker').val();
   
   //this.form.fecha_entrega=$('#datepicker2').val();
+  if(this.form.doctor_solicitante!= null){
   this.form.doctor_solicitante.nombre=this.titleCasePipe.transform(this.form.doctor_solicitante.nombre)
   this.form.doctor_solicitante.ap=this.titleCasePipe.transform(this.form.doctor_solicitante.ap)
   this.form.doctor_solicitante.am=this.titleCasePipe.transform(this.form.doctor_solicitante.am)
+  }
   console.log(this.form.fecha)
   this.form.cedula_usuario=this.currentUser.cedula,
  
@@ -467,6 +470,7 @@ this.form.fecha_entrega=this.datePipe.transform(this.form.fecha_entrega,'dd-MM-y
   if( formsolicitud.valid && this.contar_examenes_no_eliminados()>0){
     this.solicitudesService.modificar(this.form)
      .subscribe(data => {
+       alert("Solicitud actualizada")
      console.log(data)
      this.router.navigate(['/solicitudes/listar']);
  
@@ -535,5 +539,14 @@ printDiv(divName){
   `);
   newWindow.document.close();
 
+}
+mostrar_doctor:boolean=false;
+agregarDoctor(){
+  this.mostrar_doctor=true
+  this.form.doctor_solicitante=new Persona()
+}
+removerDoctor(){
+  this.mostrar_doctor=false
+  this.form.doctor_solicitante=null
 }
 }

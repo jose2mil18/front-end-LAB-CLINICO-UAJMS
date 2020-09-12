@@ -210,6 +210,8 @@
   <!-- -------------------------------------------------------------------------------------------------------------------->
   
   
+
+
   <p-table id="table" #dd [value]="examenes_solicitados" [columns]="cols" [paginator]="true" [rows]="10" [pageLinks]="2" [rowsPerPageOptions]="[5,10,20]"  selectionMode="multiple">
     
     <ng-template pTemplate="caption">
@@ -241,7 +243,7 @@
         <tr>
           <th></th>
           <th></th>
-          <th>   <input pInputText  [(ngModel)]="form.caracter_nombre_examen" name="caracter_nombre_examen" type="text" (input)="filtro_completo(formulario)" placeholder="">
+          <th>   <input pInputText  [formControl]="control" name="caracter_nombre_examen" type="text"placeholder="">
           </th>
           <th>
             <ng-select   placeholder="Selecciona un area"   [(ngModel)]="form.nombre_area" class="" (ngModelChange)="filtro_completo(formulario)"   name="area" required>
@@ -395,7 +397,7 @@
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h4 class="title" id="defaultModalLabel" >{{nombreexamen}}</h4>
+          <h4 class="title" id="defaultModalLabel" ></h4>
         </div>
         <div class="modal-body">
              <form  ngNativeValidate  #formulario="ngForm">
@@ -406,7 +408,7 @@
               </div>
               
     <div class="col-lg-8">
-              <input id="fecha_inicio" [(ngModel)]="form.fecha_inicio" name="fecha_inicio" type="date" placeholder="fecha_inicio" required max="form.fecha_fin">
+              <input id="fecha_inicio" class="form-control" [(ngModel)]="form.fecha_inicio" name="fecha_inicio" type="date" placeholder="fecha_inicio" required max="form.fecha_fin">
           
                     </div>
   
@@ -415,7 +417,7 @@
                         </div>
                         
               <div class="col-lg-8">
-                        <input id="fecha_fin" [(ngModel)]="form.fecha_fin"  name="fecha_fin" type="date"  placeholder="fecha_final" required>
+                        <input id="fecha_fin" class="form-control" [(ngModel)]="form.fecha_fin"  name="fecha_fin" type="date"  placeholder="fecha_final" required>
                     
                               </div>
                 </div>

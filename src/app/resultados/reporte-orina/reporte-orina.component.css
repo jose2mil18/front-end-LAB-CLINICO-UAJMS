@@ -3,12 +3,12 @@ table {
     border-bottom: 1px solid black;  margin: 0 auto}
  
 th {      width:50%; font-weight: normal;       
-    border: 1px solid black; color: #039; }
+    border: 1px solid black; color:black; }
 
 td {    padding: 3px; height: 5px;        border-left: 1px solid black;
        border-right: 1px solid black; 
 width:50%}
 #contentToConvert{
-font-size: 9px;
+font-size: 12 px;
 height: 160mm
 }

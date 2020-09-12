@@ -26,7 +26,7 @@ onSubmit(formsolicitud:NgForm){
   {
    this.dosificacionesService.save(this.form).subscribe(data=>{
      alert("Dosificacion guardada")
-     this.router.navigate(['/examenes/listar']);
+     this.router.navigate(['/dosificaciones/listar']);
    })
   
   }

@@ -5,7 +5,7 @@ export class Persona{
     nombre:string;
     ap:string;
     am:string;
-    tipo:String
+    tipo:string
     apellidos:string;
     private titleCasePipe:TitleCasePipe
     constructor(){

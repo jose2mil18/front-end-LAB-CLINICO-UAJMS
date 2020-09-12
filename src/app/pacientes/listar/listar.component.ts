@@ -4,11 +4,9 @@ import {PacientesService} from '../pacientes.service'
 import {Paciente, Usuario, Persona} from '../../models'
 
 import {FormControl, FormBuilder, FormGroup, Validators, NgForm } from '@angular/forms';
-import * as jspdf from 'jsPDF'; 
-import jsPDF from 'jspdf';
-import html2canvas from 'html2canvas';
+
 import { DatePipe } from '@angular/common';
-import 'jspdf-autotable';
+
 import { SelectItem } from 'primeng/primeng';
 declare const $: any;
 import * as glob from '../../shared/variables_global'; //<== HERE
@@ -22,6 +20,10 @@ import {debounceTime} from 'rxjs/operators'
 export class ListarComponent implements OnInit {
   
   control=new FormControl('')
+  
+  controlCedula=new FormControl('')
+  controlEdad=new FormControl('')
+  controlProcedencia=new FormControl('')
   procedencia:string;
   sexo:string;
   fechaklp:string="2019-10-10";
@@ -44,17 +46,40 @@ columnDefs=[]
 rowData=[];
 cols:any[];
 paciente:Paciente=new Paciente();
-edad:number
+edad:number=-1
+cedula:string="";
+nombres:string="";
   constructor(public datePipe:DatePipe, private pacientesService:PacientesService, private router: Router, private node:ElementRef) { 
 
+   // $('input').attr('autocomplete','off');
     this.currentUser = JSON.parse(localStorage.getItem('currentUser'));
    this.procedencia=""
    this.sexo="";
    this.control.valueChanges.pipe(debounceTime(450)).subscribe(value=>{
     console.log("hola"+value)
-    
- this.filtro_completo()
+    this.nombres=value
+    this.filtro_completo()
+}) 
+this.controlCedula.valueChanges.pipe(debounceTime(450)).subscribe(value=>{
+  console.log("hola"+value)
+  this.cedula=value
+  this.filtro_completo()
 })
+this.controlProcedencia.valueChanges.pipe(debounceTime(450)).subscribe(value=>{
+  console.log("hola"+value)
+  this.procedencia=value
+  this.filtro_completo()
+})
+this.controlEdad.valueChanges.pipe(debounceTime(450)).subscribe(value=>{
+  console.log("hola"+value)
+  if(value==''){
+    this.edad=-1
+  }
+  this.edad=value
+  this.filtro_completo()
+})
+
+this.filtro_completo()
     let list = [4, 5, 6];
 
     this.columnDefs = [
@@ -151,13 +176,20 @@ this.rootNode=node;
 
     
     localStorage.setItem('paciente', JSON.stringify(paciente));
+    localStorage.setItem('cedula', paciente.cedula);
   }
 filtro_completo(){
 
+if($('#edad').val()==''){
+  this.edad=-1
+}
+if(this.sexo==null){
+  this.sexo=""
+}
 
-
+console.log(this.nombres)
 console.log(this.procedencia)
-  this.pacientesService.filtro(this.procedencia, this.sexo,this.edad).subscribe(data => {
+  this.pacientesService.filtro(this.procedencia, this.sexo,this.edad, this.cedula, this.nombres).subscribe(data => {
  
     this.pacientes=data;
       for(let i=0;i<this.pacientes.length; i++)

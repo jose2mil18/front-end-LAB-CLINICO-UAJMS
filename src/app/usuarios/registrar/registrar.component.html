@@ -40,7 +40,7 @@
 
           
           
-            <form class="needs-validation" ngNativeValidate  #formulario=ngForm>
+            <form class="needs-validation" ngNativeValidate  #formulario=ngForm autocomplete="off">
 
               <div class="row clearfix">
                 <div class="col-lg-2 col-md-2 col-sm-4 form-control-label">
@@ -56,7 +56,6 @@
 
                 </div>
               </div>
-              <input type="number" step="0.01" required/>
               <div class="row clearfix">
                 <div class="col-lg-2 col-md-2 col-sm-4 form-control-label">
                   <label for="nombre">Nombre</label>
@@ -76,7 +75,7 @@
   </div>
   <div class="col-lg-10 col-md-10 col-sm-8">
     <div class="form-group">
-      <input [(ngModel)]="form.personal_laboratorio.persona.ap" name="ap" #ap="ngModel" class="form-control tilo" placeholder="Entra apellido paterno" required>
+      <input [(ngModel)]="form.personal_laboratorio.persona.ap" name="ap" #ap="ngModel" class="form-control titulo" placeholder="Entra apellido paterno" required>
     </div>
    
   </div>
@@ -96,7 +95,7 @@
 
 <div class="row clearfix">
   <div class="col-lg-2 col-md-2 col-sm-4 form-control-label">
-    <label for="ap">Profesion </label>
+    <label for="ap">Profesión </label>
   </div>
   <div class="col-lg-10 col-md-10 col-sm-8">
     <div class="form-group">
@@ -113,8 +112,8 @@
   </div>
   <div class="col-lg-10 col-md-10 col-sm-8">
   
-      <select id=rol placeholder="selecciona"  [(ngModel)]="form.rol.cod_rol"  class="form-control" (ngModelChange)="rolseleccionar($event.target)"   name="rol" required>
-        <option selected disabled value="Selecciona">Choose...</option>
+      <select id=rol placeholder="selecciona"  [(ngModel)]="form.rol.cod_rol"  class="form-control"   name="rol" required>
+        <option selected disabled value="Selecciona">Selecciona</option>
         <option  *ngFor=" let rol of roles" [value]="rol.cod_rol" >{{rol.nombre}}</option>
        
        </select>
@@ -196,7 +195,6 @@
     
   </div>
 </div> 
-{{formulario.valid}}
 <div class="row clearfix">
   <div class="col-sm-8 offset-sm-2">
     

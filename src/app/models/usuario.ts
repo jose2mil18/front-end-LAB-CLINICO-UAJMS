@@ -5,7 +5,7 @@ export class Usuario {
     login: string;
     password: string;
     estado: string;
-    cedula:String;
+    cedula:string;
     nombres:string;
   rol:Rol
     token: Usuario;

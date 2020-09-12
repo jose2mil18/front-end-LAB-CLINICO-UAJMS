@@ -7,24 +7,26 @@ import {Examen_solicitado} from './examen_solicitado'
 import { Institucion } from './institucion';
 import { Factura } from './factura';
 export class Solicitud{
-   
+   cedula_paciente:string;
 paciente :Paciente;
 cod_solicitud:number;
 institucion:Institucion;
 doctor_solicitante:Persona;
 fecha:string;
 fecha_entrega:string;
-estado:String;
+estado:string;
 examenes:Examen[];
-cedula_usuario:String;
+cedula_usuario:string;
 resultados_examenes:Resultado[];
 nombres_paciente:string;
 examenes_solicitados:Examen_solicitado[];
-area:String;
+examenes_solicitados_con_resultados_actualizados:Examen_solicitado[]
+area:string;
 costoTotal:any;
 gestion : number
 factura:Factura
 cod_factura:number=0;
+estado_solicitud:string
 constructor(){
     this.factura=new Factura()
     this.fecha=''
@@ -35,8 +37,8 @@ constructor(){
     this.cod_solicitud=0;
     this.institucion=new Institucion();
     this.paciente=new Paciente();
-    this.doctor_solicitante=new Persona();
- 
+    //this.doctor_solicitante=new Persona();
+
     this.estado='';
     this.examenes_solicitados=[];
     this.gestion=new Date().getFullYear();

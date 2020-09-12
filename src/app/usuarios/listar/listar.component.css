@@ -94,8 +94,11 @@
         border-color: #f8f9fa;
       }
 
-      @import "../../../assets/plugins/sweetalert/sweetalert.css";
       
 input{
     width:100%
 }
+.titulo{
+   
+    text-transform: capitalize;
+  }

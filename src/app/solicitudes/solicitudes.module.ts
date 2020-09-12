@@ -7,7 +7,7 @@ import {SolicitudesRoutingModule} from './solicitudes.routing.module';
 import { NgSelectModule } from '@ng-select/ng-select';
 
 import {FormsModule,  ReactiveFormsModule } from '@angular/forms';
-import { ReporteComponent } from './reporte/reporte.component';
+
 import { ModificarComponent } from './modificar/modificar.component';
 ;
 import {NgxPrintModule} from 'ngx-print';
@@ -25,6 +25,7 @@ import {ButtonModule} from 'primeng/button';
 import { FacturaComponent } from './factura/factura.component';
 
 import { QRCodeModule } from 'angularx-qrcode';
+
 @NgModule({
   imports: [CalendarModule,
     InputTextModule,
@@ -44,7 +45,7 @@ ButtonModule,
    QRCodeModule
 
   ],
-  declarations: [RegistrarComponent, ListarComponent, ReporteComponent, ModificarComponent, FacturaComponent],
+  declarations: [RegistrarComponent, ListarComponent, ModificarComponent, FacturaComponent],
   
   providers: [SolicitudesService, DatePipe, TitleCasePipe]
 })

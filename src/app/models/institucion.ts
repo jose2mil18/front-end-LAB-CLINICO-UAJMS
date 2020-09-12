@@ -1,7 +1,7 @@
 export class Institucion {
-    cod_institucion:String;
-    nombre:String;
-    cod_institucion_padre:String;
+    cod_institucion:string;
+    nombre:string;
+    cod_institucion_padre:string;
    
 constructor(){
     this.cod_institucion_padre=''

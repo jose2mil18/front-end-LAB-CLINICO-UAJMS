@@ -7,6 +7,8 @@ import { routerNgProbeToken } from '@angular/router/src/router_module';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Variable } from '@angular/compiler/src/render3/r3_ast';
 import { NgForm } from '@angular/forms';
+import { ExamenesService } from '../../examenes/examenes.service';
+import { SolicitudesService } from '../../solicitudes/solicitudes.service';
 
 declare const $: any;
 @Component({
@@ -47,8 +49,10 @@ coment;
 
 currentUser:Usuario
 indice:number=0;
-    constructor(private resultadosService:ResultadosService, private router:Router) { 
-      
+personas:any[]
+    constructor(private resultadosService:ResultadosService, private examenesService: ExamenesService, private router:Router,private solicitudesService:SolicitudesService) { 
+      this.personas=[{nombre:'Adultos', valor:'A.'}, {nombre:'Niños', valor:'N.'}, {nombre:'Masculino', valor:'M.'}, {nombre:'Femenino', valor:'F.'}]
+    
     this.currentUser = JSON.parse(localStorage.getItem('currentUser'));
       this.array=[]
       this.array[0]=''
@@ -66,11 +70,18 @@ indice:number=0;
     
      console.log( new Date())
       this.solicitudSinResultado = JSON.parse(localStorage.getItem('solicitudesConResultadosaModificar'));
-      this.resultadosDeExam=this.solicitudSinResultado.resultados_examenes
+     
+      this.solicitudesService.obtenerSolicitud(this.solicitudSinResultado.cod_solicitud).subscribe(data=>{
+        console.log(data)
+          this.solicitudSinResultado=data
+          
     this.solicitudSinResultado.resultados_examenes=[]
-      console.log(this.solicitudSinResultado)
-     // this.form.examenes=this.solicitudSinResultado.examenes;
-     this.cod_examen="selecciona"
+    console.log(this.solicitudSinResultado)
+   // this.form.examenes=this.solicitudSinResultado.examenes;
+   this.cod_examen="selecciona"
+      })
+
+  
   
       //resultadosService.getAnalisisSinResultadosporcodigo(3).subscribe(data => {
       //  this.analisisSinResultado=data;
@@ -191,6 +202,31 @@ indice:number=0;
  
     this.router.navigate(['/resultados/ver']);
   }
+  examen:Examen=new Examen()
+  nombreexamen;
+  registrar(s:Examen){
+    this.examen=s
+    this.cod_examen=s.cod_examen
+    this.nombreexamen=s.nombre
+    console.log(this.examen.nombre)
+    /*
+    this.examenesService.modificar(this.examen).subscribe(data =>{
+      console.log(data);
+      alert("examen "+ data.nombre+" guardado")
+      
+      this.router.navigate(['/examenes/listar']);
+  })
+  */
   
+  }
+  guardarvalorreferencia(){
+    console.log(this.examen)
+    this.examenesService.modificar(this.examen).subscribe(data =>{
+      console.log(data);
+      alert("Examen "+ data.nombre+" actualizado")
+      
+      this.router.navigate(['/resultados/modificar']);
+  })
+}
   }
   

@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import * as jspdf from 'jsPDF';  
+import * as jsPDF from 'jsPDF';  
 import html2canvas from 'html2canvas';
-import { Solicitud } from '../../models';
+import { Solicitud, Usuario } from '../../models';
+import { DatePipe } from '@angular/common';
 @Component({
   selector: 'app-reporte-orina',
   templateUrl: './reporte-orina.component.html',
@@ -9,8 +10,13 @@ import { Solicitud } from '../../models';
 })
 export class ReporteOrinaComponent implements OnInit {
   solicitud:Solicitud;
-    constructor() { 
+  currentUser:Usuario;
   
+  fechita:string;
+      constructor(private datePipe:DatePipe) { 
+    
+        this.fechita=this.datePipe.transform(new Date(),"dd-MM-yyyy HH:mm")
+        this.currentUser = JSON.parse(localStorage.getItem('currentUser'));
       this.solicitud=JSON.parse(localStorage.getItem('solicitudaimprimir'));
       console.log(this.solicitud)
     }
@@ -36,7 +42,7 @@ export class ReporteOrinaComponent implements OnInit {
         var heightLeft = imgHeight;  
     
         const contentDataURL = canvas.toDataURL('image/png')  
-        let pdf = new jspdf('l', 'mm', [237, 160]),margin = 10;
+        let pdf = new jsPDF('l', 'mm', [237, 160]),margin = 10;
         var width = pdf.internal.pageSize.getWidth(); 
       console.log(pdf.internal.pageSize.getHeight())
       

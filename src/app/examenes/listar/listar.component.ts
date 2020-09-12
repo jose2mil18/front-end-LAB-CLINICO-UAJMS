@@ -2,12 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import {Examen} from '../../models/examen';
 import {Area, Valor_referencia, Usuario} from '../../models';
 import {ExamenesService} from '../examenes.service'
-import * as jspdf from 'jsPDF'; 
-import jsPDF from 'jspdf';
-import html2canvas from 'html2canvas';
+
 import{SolicitudesService } from '../../solicitudes/solicitudes.service'
-import 'jspdf-autotable';
+
 import { SelectItem } from 'primeng/primeng';
+import { Precio_examen } from '../../models/precio_examen';
 @Component({
   selector: 'app-listar',
   templateUrl: './listar.component.html',
@@ -16,14 +15,16 @@ import { SelectItem } from 'primeng/primeng';
 export class ListarComponent implements OnInit {
   
   areas:Area[]
-examenes:Examen[];
+examenes:Examen[]=[];
 brands:SelectItem[];
+precios:Precio_examen[]=[]
 area:Area;
 currentUser:Usuario;
 cols:any[];
 form
 e:Examen=new Examen();
   constructor(private solicitudesService:SolicitudesService, public examenesService:ExamenesService) { 
+    this.e.precios=[]
     this.solicitudesService.getAllAreas().subscribe(data=>{
       this.areas=data;
       console.log(this.areas)
@@ -43,6 +44,8 @@ console.log(this.currentUser)
       
     
       this.examenes=data;
+      console.log(data);
+      
       for(let i=0; i<this.examenes.length; i++)
       {
         this.examenes[i].valor_referencia="";
@@ -121,5 +124,6 @@ console.log(this.currentUser)
 
    ver(e){
      this.e=e;
+     this.precios=this.e.precios;
    }
 }

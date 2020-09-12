@@ -31,9 +31,14 @@ bandera:boolean
 fecha_minima_solicitud:String
 rowGroupMetadata: any;
 grupo
+grupos : any[];
   constructor(private reportesService:ReportesService, private solicitudesService:SolicitudesService, private datePipe:DatePipe, private router:Router) {
  
-    
+    this.grupo={
+      label:'Agrupar',
+      seleccionador:'',
+      agrupador:''
+    }
     this.grupo = JSON.parse(localStorage.getItem('grupo'));
   
     this.solicitudesService.minimaFecha().subscribe(data=>{
@@ -74,6 +79,14 @@ this.solicitudesService.getAllAreas().subscribe(data=>{
    }
  
   ngOnInit() {
+
+    this.grupos = [
+      { label: 'Examen', seleccionador: 'e.nombre', agrupador: 'nombre'},
+      { label: 'Area', seleccionador: 'a.nombre' , agrupador: 'nombre'},
+      { label: 'Paciente', seleccionador: 's.cedula_paciente' , agrupador: 'cedula_paciente'},
+      { label: 'Estado', seleccionador: 's.estado_solicitud' , agrupador: 'estado_solicitud'}
+   
+  ];
     this.brands = [
       { label: 'Todos', value: "" },
       { label: 'Entregado', value: 'Entregado' },
@@ -204,9 +217,26 @@ a.nombre like  '%%'
 GROUP BY 1,2
   */
 
-   klp(){
+ klp(value){
+  console.log(value)
+  if(value==null)
+  {
+    
+this.router.navigate(['/examenes/listar-examenes-solicitados'])
+  }
+  else
+  {
+  localStorage.setItem('grupo', JSON.stringify(this.grupo));
+  console.log(this.grupo.seleccionador)
 this.router.navigate(['/reportes/examenes-solicitados'])
-   }
+this.reportesService.getReporteExamenesSolicitados(this.form.cedula, this.form.nombre_area, this.form.caracter_nombre_examen, this.form.fech, this.form.fecha_inicio, this.form.fecha_fin, this.form.estado_solicitud, this.grupo.agrupador, this.grupo.seleccionador).subscribe(data => {
+  this.reporte_examenes_solicitados=data
+  console.log(data)
+ // this.reporte_examenes_solicitados.grupo=this.grupo;
+
+        })
+      }
+}
    
    /*
    updateRowGroupMetaData() {
@@ -231,4 +261,5 @@ this.router.navigate(['/reportes/examenes-solicitados'])
 }
 
 */
+
 }

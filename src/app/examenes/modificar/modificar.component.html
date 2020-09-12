@@ -3,7 +3,7 @@
   <div class="block-header m_img_btn">
     <div class="row">
       <div class="col-lg-7 col-md-6 col-sm-12">
-        <h2>Modificar examen
+        <h2>Exámenes
           <small></small>
         </h2>
       </div>
@@ -65,7 +65,7 @@
               </div>
               <div class="col-lg-10 col-md-10 col-sm-8">
                 <div class="form-group">
-                    <input  type="text" id="nombre"   name="nombre" [(ngModel)]="examen.nombre" class="form-control titulo" placeholder="Entra  nombre" required>
+                    <input  type="text" id="nombre"   name="nombre" [(ngModel)]="examen.nombre" class="form-control" placeholder="Entra  nombre" required>
              
                     <!--- <input  type="text" id="nombre" [(ngModel)]="form.persona.nombre" name="nombre" #nombre="ngModel"  class="form-control" placeholder="Entra tu nombre" required>
                 </div>
@@ -166,22 +166,27 @@
                     <ng-container *ngIf="v.estado" >  
                   <div class="row clearfix"  >
                   
-                    <div class="col-sm-4" >
+                    <div class="col-sm-3" >
                       <div class="form-group">
                         <input type="text"  [(ngModel)]="examen.valores_referencia[i].valor_inicial" [name]="'valor_incial' +i" class="form-control" placeholder="valor inicial"  required/>
                       </div>
                     </div>
-                    <div class="col-sm-4">
+                    <div class="col-sm-3">
                       <div class="form-group">
                         <input type="text"   [(ngModel)]="examen.valores_referencia[i].valor_final" [name]="'valor_final' + i" class="form-control" placeholder="valor final"  required/>
                       </div>
                     </div>
-                    <div class="col-sm-4">
+                    <div class="col-sm-3">
                       <div >
                         <select  class="form-control" [(ngModel)]="examen.valores_referencia[i].tipo_persona" [name]="'tipo_persona' + i"   >
                           <option  [value]="e.valor" *ngFor=" let e of personas">{{e.nombre}}</option>
                          
                          </select>
+                      </div>
+                    </div>
+                    <div class="col-sm-3">
+                      <div class="form-group">
+                        <input type="text" [(ngModel)]="examen.valores_referencia[i].fecha " [name]="'fecha' +i" disabled  class="form-control" placeholder="fecha"/>
                       </div>
                     </div>
                   </div>
@@ -270,10 +275,9 @@
                   
                      
                
-                <div *ngIf="examen.precios==0 && form.valid" class="alert alert-danger"> Agregue precio al examen</div>
             </div>
             <!--fin-->
-            
+            <!--   
             <div style="display:none"  class="row clearfix">
             <div class="col-lg-2 col-md-2 col-sm-4 form-control-label">
              
@@ -358,14 +362,15 @@
             </ng-container>
             </ng-container>
             </div>
+          -->
             <!-- subexamen-->
             <div class="row clearfix" style="display:block" *ngIf="examen.area.cod_area!=0">
-              <div class="col-lg-2 col-md-2 col-sm-4 form-control-label">
+              <div class="col-lg-2 ">
                
               
                 <div class="row clearfix">
                   <div class="col-sm-8">
-                    <div class="form-group"><label for="ap">Incluir examenes</label>
+                    <div class="form-group"><label for="ap">Incluir exámenes</label>
                     </div>
                   </div>
                   <div class="col-sm-4">
@@ -379,7 +384,7 @@
                 </div>
               </div>
     
-                <div class="col-lg-10 col-md-10 col-sm-8"  >
+                <div class="col-lg-10">
                   <ng-container  *ngFor="let subexamen of examen.subexamenes; let i = index;">
                     <ng-container *ngIf="subexamen.estado">
                     <div class="row clearfix"  >
@@ -403,7 +408,7 @@
                             </div>
                             <div class="col-md-10">
                               <div class="form-group">
-                                <input type="text"  [(ngModel)]="subexamen.nombre"  [name]="'nombre' + i" class="form-control nombre"  list="valores_examen" (input)="cambio($event,i)" placeholder="" required/>
+                                <input type="text"  [(ngModel)]="subexamen.nombre"  [name]="'nombre' + i" class="form-control nombre titulo"  list="valores_examen" (input)="cambio($event,i)" placeholder="" required/>
                               </div>
                             </div>
                           </div>
@@ -462,17 +467,17 @@
                                       <ng-container *ngIf="v.estado">
                                          <!-- valor referencia de subexamen-->
                                          <div class="row clearfix"  >
-                                             <div class="col-sm-4" >
+                                             <div class="col-sm-3" >
                                                <div class="form-group">
                                                  <input type="text"    [(ngModel)]="subexamen.valores_referencia[in].valor_inicial"  [name]="'valor_inicial' + in+'de subexamen'+i"  class="form-control" placeholder="" required />
                                                </div>
                                              </div>
-                                             <div class="col-sm-4">
+                                             <div class="col-sm-3">
                                                <div class="form-group">
                                                  <input type="text" [(ngModel)]="subexamen.valores_referencia[in].valor_final"  [name]="'valor_final' + in+'de subexamen'+i" class="form-control" placeholder="" required/>
                                                </div>
                                              </div>
-                                             <div class="col-sm-4">
+                                             <div class="col-sm-3">
                                                <div class="form-group">
                                                  <ng-select [(ngModel)]="subexamen.valores_referencia[in].tipo_persona"  [name]="'tipo_persona' + in+'de subexamen'+i"  >
                                                    <ng-option  [value]="e.valor" *ngFor=" let e of personas">{{e.nombre}}</ng-option>
@@ -480,6 +485,11 @@
                                                   </ng-select>
                                                </div>
                                              </div>
+                                             <div class="col-sm-3">
+                                              <div class="form-group">
+                                                <input type="text" [(ngModel)]="subexamen.valores_referencia[in].fecha " [name]="'fecha' +in+'de subexamen'+i" disabled  class="form-control" placeholder="fecha"/>
+                                              </div>
+                                            </div>
                                            </div>
                                            </ng-container>
                                          </ng-container>
@@ -594,17 +604,17 @@
                                                           <ng-container *ngIf="v2.estado">
                                                              <!-- valor referencia de subexamen desubexamen-->
                                                              <div class="row clearfix"  >
-                                                                 <div class="col-sm-4" >
+                                                                 <div class="col-sm-3" >
                                                                    <div class="form-group">
                                                                      <input type="text"    [(ngModel)]="subexamen2.valores_referencia[inin].valor_inicial"  [name]="'valor_inicial' + inin+'de subexamen2'+ii+'de subexamen'+i"  class="form-control" placeholder="" required />
                                                                    </div>
                                                                  </div>
-                                                                 <div class="col-sm-4">
+                                                                 <div class="col-sm-3">
                                                                    <div class="form-group">
                                                                      <input type="text" [(ngModel)]="subexamen2.valores_referencia[inin].valor_final"  [name]="'valor_final' + inin+'de subexamen2'+ii+'de subexamen'+i" class="form-control" placeholder="" required/>
                                                                    </div>
                                                                  </div>
-                                                                 <div class="col-sm-4">
+                                                                 <div class="col-sm-3">
                                                                    <div class="form-group">
                                                                      <ng-select [(ngModel)]="subexamen2.valores_referencia[inin].tipo_persona"  [name]="'tipo_persona' + inin+'de subexamen2'+ii+'de subexamen'+i"  >
                                                                        <ng-option  [value]="e.valor" *ngFor=" let e of personas">{{e.nombre}}</ng-option>
@@ -612,6 +622,11 @@
                                                                       </ng-select>
                                                                    </div>
                                                                  </div>
+                                                                 <div class="col-sm-3">
+                                                                  <div class="form-group">
+                                                                    <input type="text" [(ngModel)]="subexamen2.valores_referencia[inin].fecha " [name]="'fecha' +inin+'de subexamen2'+ii+'de subexamen'+i" disabled  class="form-control" placeholder="fecha"/>
+                                                                  </div>
+                                                                </div>
                                                                </div>
                                                              </ng-container>
                                                              </ng-container>
@@ -659,11 +674,14 @@
 
               <div class="row clearfix">
                 <div class="col-sm-8 offset-sm-2">
-                  
+                  <button type="button"  id="guarda"  class="btn btn-raised btn-secondary btn-round waves-effect"  (click)="salir()" >Salir</button>
+             
+                  <button   data-type="autoclose-timer" type="submit" (click)="onSubmit(form)"  class="btn btn-raised btn-primary btn-round waves-effect"   >Guardar</button>
+               
                 </div>
-                <div class="col-sm-8 offset-sm-2">
-                  <button   data-type="autoclose-timer" type="submit" (click)="onSubmit(form)" [disabled]="examen.precios==0" class="btn btn-raised btn-primary btn-round waves-effect"   >Guardar</button>
-                </div>
+                <div class="action" style="float:left">
+
+                 </div>
               </div>
 
 

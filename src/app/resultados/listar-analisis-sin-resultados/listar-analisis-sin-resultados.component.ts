@@ -9,10 +9,6 @@ import { DatePipe,  TitleCasePipe, UpperCasePipe } from '@angular/common';
 import {PacientesService} from '../../pacientes/pacientes.service';
 
 
-import 'jspdf-autotable';
-import * as jspdf from 'jsPDF'; 
-import jsPDF from 'jspdf';
-import html2canvas from 'html2canvas';
 
 import {FormControl, FormBuilder, FormGroup, Validators, NgForm } from '@angular/forms';
 declare const validatefechas:any;
@@ -63,7 +59,7 @@ solicitudes:Solicitud[];
       
       { field: "nombres_paciente", header: 'Paciente' },
    
-      { field: 'estado', header: 'Estado' }
+      { field: 'estado', header: 'Resultados' }
   ];
     $(function () {
       $('.js-basic-example').dataTable(

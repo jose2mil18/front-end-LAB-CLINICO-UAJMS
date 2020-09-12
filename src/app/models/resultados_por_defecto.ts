@@ -1,6 +1,6 @@
 export class Resultados_por_defecto {
     cod:number;
-    valor:String;
+    valor:string;
     cod_examen:number;
     constructor(){
         this.cod=0;

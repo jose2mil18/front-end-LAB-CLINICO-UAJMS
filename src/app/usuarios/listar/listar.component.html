@@ -51,6 +51,7 @@
                           {{col.header}}
                       </th>
                       
+                      <th>Estado</th>
                       <th>Rol</th>
                       <th style="width:120px">Acciones</th>
                   </tr>
@@ -61,12 +62,13 @@
                           <input *ngSwitchCase="'cedula'" [(ngModel)]="form.cedula" pInputText type="text" (input)="filtro_completo()">
                           <input  *ngSwitchCase="'nombres'" [(ngModel)]="form.nombres" pInputText type="text" (input)="filtro_completo()">
                         
-                          <ng-select  *ngSwitchCase="'estado'" placeholder="Selecciona un estado"   [(ngModel)]="form.estado" class="" (ngModelChange)="filtro_completo()"   name="estado" required>
-                            <ng-option  *ngFor=" let rol of brands" [value]="rol.value" >{{rol.label}}</ng-option>
-                           
-                           </ng-select>  
-                      </th>
                      
+                      </th>
+                      <th> <ng-select   placeholder="Selecciona un estado"   [(ngModel)]="form.estado" class="" (ngModelChange)="filtro_completo()"   name="estado" required>
+                        <ng-option  *ngFor=" let rol of brands" [value]="rol.value" >{{rol.label}}</ng-option>
+                       
+                       </ng-select>
+                       </th>
                       <th>  
                         <ng-select  placeholder="Selecciona un rol"   [(ngModel)]="form.rol" class="" (ngModelChange)="filtro_completo()"   name="estado" required>
                         <ng-option  *ngFor=" let rol of roles" [value]="rol" >{{rol.nombre}}</ng-option>
@@ -79,11 +81,14 @@
                   <tr>
                     <td>
                             {{i+1}}
-                    
+                    <!-- pas-->
                     </td>
                       <td *ngFor="let col of cols; index as i" [style]="{'width':'100%'}">
                           {{usuario[col.field]}}
                       </td>
+                      <td class="titulo">
+                        {{usuario.estado}}
+                        </td>
                       <td>
                       {{usuario.rol.nombre}}
                       </td>
@@ -203,7 +208,7 @@
     </div>
     <div class="row">
       <div class="col ">
-          <p class="font-weight-bold">Profesion: 
+          <p class="font-weight-bold">Profesión: 
               <span class="font-weight-normal">{{usuario.personal_laboratorio.profesion}}</span>
           </p>
       </div>

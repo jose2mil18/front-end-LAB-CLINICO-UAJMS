@@ -2,10 +2,12 @@ export class Valor_referencia {
     cod_examen:number;
     valor_inicial: number;
     valor_final:number;
-    tipo_persona: String
+    tipo_persona: string
    estado:boolean;
    cod_valor_referencia:number;
+   fecha:string
 constructor(){
+    this.fecha=''
     this.cod_valor_referencia=0
     this.estado=true;
     this.cod_examen=0;

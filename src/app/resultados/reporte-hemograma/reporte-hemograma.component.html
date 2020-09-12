@@ -4,14 +4,12 @@
     <div class="block-header">
       <div class="row">
         <div class="col-lg-7 col-md-6 col-sm-12">
-          <h2>Reporte de hemograma completo
+          <h2>Reporte de Análisis Hematologico
             <small></small>
           </h2>
         </div>
         <div class="col-lg-5 col-md-6 col-sm-12">
-          <button class="btn btn-white btn-icon btn-round hidden-sm-down float-right m-l-10" type="button">
-            <i class="zmdi zmdi-plus"></i>
-          </button>
+         
           <ul class="breadcrumb float-md-right">
             <li class="breadcrumb-item"><a routerLink="/dashboard/main"><i class="zmdi zmdi-home"></i> </a></li>
             <li class="breadcrumb-item"><a href="javascript:void(0);">resultados</a></li>
@@ -32,8 +30,8 @@
                        
                                      <div class="text-center">
                                    
-                <h3 style="margin:10px"><pre>A N Á L I S I S  H E M A T O L O G I C O</pre></h3>
-              </div>
+                                <h3 style="margin:10px"><pre>A N Á L I S I S  H E M A T O L O G I C O</pre></h3>
+                                  </div>
               
   
               <div  style="border-bottom : 1px solid black" class="row">
@@ -44,7 +42,7 @@
                   <div class="col-md-4"><strong>:</strong>   {{solicitud.paciente.persona.nombre}} {{solicitud.paciente.persona.ap}} {{solicitud.paciente.persona.am}}</div>
 
                   <div class="col-md-2"><Strong>Institucion  </Strong>        </div>
-                  <div class="col-md-4"><strong>:</strong>  <span *ngIf="solicitud.institucion.cod_institucion !='PAR'"> {{solicitud.institucion.cod_institucion_padre}} </span><span *ngIf="solicitud.institucion.cod_institucion=='PAR'">{{solicitud.institucion.nombre}}</span></div>
+                  <div class="col-md-4"><strong>: </strong>  <span *ngIf="solicitud.institucion.cod_institucion !='PAR'"> {{solicitud.institucion.cod_institucion_padre}} </span><span *ngIf="solicitud.institucion.cod_institucion=='PAR'">{{solicitud.institucion.nombre}}</span></div>
 
                   <div class="col-md-2"><Strong>Edad  </Strong>        </div>
                   <div class="col-md-2"><strong>:</strong>   {{solicitud.paciente.edad}}</div>
@@ -53,7 +51,7 @@
                   <div class="col-md-1"><strong>:</strong>   {{solicitud.paciente.sexo}}</div>
                 
                   <div class="col-md-2"><Strong>Indicaciones del Dr.  </Strong>        </div>
-                  <div class="col-md-4"><strong>:</strong>   {{solicitud.doctor_solicitante.nombre}} {{solicitud.doctor_solicitante.ap}} {{solicitud.doctor_solicitante.am}}</div>
+                  <div class="col-md-4"><strong>: </strong> <span *ngIf="solicitud.doctor_solicitante != null">{{solicitud.doctor_solicitante.nombre}} {{solicitud.doctor_solicitante.ap}} {{solicitud.doctor_solicitante.am}}</span><span *ngIf="solicitud.doctor_solicitante==null">A QUIEN CORRESPONDA</span></div>
 
                   <div class="col-md-2"><Strong>Procedencia  </Strong>        </div>
                   <div class="col-md-4"><strong>:</strong>   {{solicitud.paciente.procedencia}}</div> 
@@ -79,32 +77,31 @@
 <h3><pre>SERIE ROJA</pre> </h3>
 </div>
 </div>
-
-
-  <div class="container" style="border-bottom: 1px solid black"> 
-                     
+  <div class="container" style="border-bottom: 1px solid black">                
       <div class="text-center">
-      
           <div class="" style="width: 100%">
-              <div class="text-center"  >
-                  <ng-container *ngFor="let resultado of ex.resultados_examen.resultados_examenes"><ng-container *ngIf="resultado.examen.cod_examen===26"> 
-                                      <div class="row text-center">
-                               <span  *ngFor="let resultad of resultado.resultados_examenes">    
-                                
-    <span class="col-md-6">
-                                  <strong>{{resultad.examen.nombre}}</strong>: <span *ngFor="let v of resultad.valores">{{v.valor}}</span> <span *ngFor="let v of resultad.examen.valores_referencia">{{v.tipo_persona}} <span *ngIf="v.valor_inicial != v.valor_final">{{v.valor_inicial}} - {{v.valor_final}} .</span><span *ngIf="v.valor_inicial == v.valor_final">{{v.valor_inicial}}.</span> </span>  {{resultad.examen.unidades}} 
-                                 
-    </span>     
-                               </span>  
-                              </div>
-                    </ng-container   ></ng-container>
-
+              <div class="text-left"  >
+                  <ng-container *ngFor="let resultado of ex.resultados_examen.resultados_examenes">
+                      <ng-container *ngIf="resultado.examen.cod_examen===26"> 
+                           <div class="row">
+                               <ng-container  *ngFor="let resultad of resultado.resultados_examenes">    
+                                  <span class="col-md-4">
+                                    
+                                      <strong>{{resultad.examen.nombre}}:&nbsp;</strong> 
+                                      <span *ngFor="let v of resultad.valores">{{v.valor}} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                         <span *ngFor="let v of resultad.examen.valores_referencia">{{v.tipo_persona}} 
+                                            <span *ngIf="v.valor_inicial != v.valor_final">{{v.valor_inicial}} - {{v.valor_final}}.</span>
+                                            <span *ngIf="v.valor_inicial == v.valor_final">{{v.valor_inicial}}.</span><span *ngIf="resultad.examen.cod_examen==27">x 10<sup>5</sup></span>
+                                         </span>  {{resultad.examen.unidades}} 
+                                      </span>
+                                  </span>
+                                </ng-container>     
+                            </div>
+                      </ng-container>
+                  </ng-container>
               </div>
-
-
-         
             </div>
-</div>
+       </div>
 </div>
 <!-- serie blanca-->
 <div class="container">
@@ -115,28 +112,33 @@
 </div>
 </div>
 <!--leucocitos-->
-<div class="container" > 
-                   
-    <div >
-    
-        <div class="row " style="width: 100%">
-            <div class="col-xs-12 col-md-12 "  >
-                <ng-container *ngFor="let resultado of ex.resultados_examen.resultados_examenes">
+
+<div class="container" >                
+  <div class="text-center">
+      <div class="" style="width: 100%">
+          <div class="text-left"  >
+              <ng-container *ngFor="let resultado of ex.resultados_examen.resultados_examenes">
                   <ng-container *ngIf="resultado.examen.cod_examen===30"> 
-
-                             <ng-container  *ngFor="let resultad of resultado.resultados_examenes">    
-                              <ng-container *ngIf="resultad.examen.cod_examen== 31">
-                                <strong>{{resultad.examen.nombre}}</strong>: <span *ngFor="let v of resultad.valores">    {{v.valor}}</span> <span *ngFor="let v of resultad.examen.valores_referencia">   {{v.tipo_persona}} <span *ngIf="v.valor_inicial != v.valor_final">{{v.valor_inicial}} - {{v.valor_final}} .</span><span *ngIf="v.valor_inicial == v.valor_final">{{v.valor_inicial}}.</span> </span>  {{resultad.examen.unidades}} 
+                       <div class="row">
+                           <ng-container  *ngFor="let resultad of resultado.resultados_examenes"> 
+                           <ng-container *ngIf="resultad.examen.cod_examen===31">   
+                              <span class="col-md-7 text-left">
+                                  <strong>{{resultad.examen.nombre}}:&nbsp;</strong> 
+                                  <span *ngFor="let v of resultad.valores">{{v.valor}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                     <span *ngFor="let v of resultad.examen.valores_referencia">{{v.tipo_persona}} 
+                                        <span *ngIf="v.valor_inicial != v.valor_final">{{v.valor_inicial}} - {{v.valor_final}}.</span>
+                                        <span *ngIf="v.valor_inicial == v.valor_final">{{v.valor_inicial}}.</span>.x10<sup>2</sup>/&nbsp;&nbsp;{{resultad.examen.unidades}} &nbsp;&nbsp;&nbsp;&nbsp;
+                                     </span> 
+                                  </span>
+                              </span>
                               </ng-container>
-                            </ng-container>  
-                  </ng-container   ></ng-container>
-
-            </div>
-
-
-       
+                            </ng-container>     
+                        </div>
+                  </ng-container>
+              </ng-container>
           </div>
-</div>
+        </div>
+   </div>
 </div>
 
 <!--fin-->
@@ -179,7 +181,7 @@
     <tr>
 
 
-        <td style="border-right:1px solid black">%NORMALES</td>
+        <td style="border-right:1px solid black">% NORMALES</td>
 
         <ng-container *ngFor="let resultado of ex.resultados_examen.resultados_examenes">
             <ng-container *ngIf="resultado.examen.cod_examen===30"> 
@@ -241,6 +243,8 @@
 </div>
 </div>
 <!--fin-->
+  
+       
 
 <div class="row">
     <div class="col-md-2">      </div>
@@ -265,6 +269,15 @@
         </ng-container>
     </ng-container>
 
+</div>
+
+<br>
+<div class="row">
+  <div class="col-md-8"></div>
+  <div class="col-md-4" >
+<strong  style="font-size: 14px;">Usuario: </strong><span style="font-size: 14px;">{{currentUser.personal_laboratorio.persona.nombre}} {{currentUser.personal_laboratorio.persona.ap}} {{currentUser.personal_laboratorio.persona.am}}</span><br>
+<strong style="font-size: 14px;">Fecha: </strong> <span style="font-size: 14px;">{{fechita}}</span>
+</div>
 </div>
 
 

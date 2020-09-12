@@ -4,10 +4,7 @@ import { Solicitud , Paciente, Persona, Usuario} from '../../models';
 import {Router} from '@angular/router'
 import {SolicitudesService} from '../../solicitudes/solicitudes.service'
 import {PacientesService} from '../../pacientes/pacientes.service'
-import 'jspdf-autotable';
-import * as jspdf from 'jsPDF'; 
-import jsPDF from 'jspdf';
-import html2canvas from 'html2canvas';
+
 import { DatePipe } from '@angular/common';
 declare const $: any;
 @Component({
@@ -49,7 +46,7 @@ analisisSinResultados:Solicitud[];
       
       { field: "nombres_paciente", header: 'Paciente' },
    
-      { field: 'estado', header: 'Estado' }
+      { field: 'estado', header: 'Resultados' }
   ];
     $(function () {
       $('.js-basic-exam').dataTable();
@@ -87,7 +84,7 @@ analisisSinResultados:Solicitud[];
   
   }
   exportPdf() {
-    window.location.href = 'http://localhost:8080/jasperserver/rest_v2/reports/reports/solicitudes.pdf?am_usuario='+this.currentUser.personal_laboratorio.persona.am+'&cedula='+this.form.cedula+'&ap_usuario='+this.currentUser.personal_laboratorio.persona.ap+'&nombre_usuario='+this.currentUser.personal_laboratorio.persona.nombre+'&fecha_inicio='+this.form.fecha_inicio+'&fecha_fin='+this.form.fecha_fin+'&estado_solicitud='+this.form.estado_solicitud+'&resultados='+this.form.resultados+'&j_username='+'jasperadmin'+'&j_password='+'jasperadmin';
+    window.location.href = 'http://localhost:8080/jasperserver/rest_v2/reports/reports/solicitudes_con_resultados.pdf?am_usuario='+this.currentUser.personal_laboratorio.persona.am+'&cedula='+this.form.cedula+'&ap_usuario='+this.currentUser.personal_laboratorio.persona.ap+'&nombre_usuario='+this.currentUser.personal_laboratorio.persona.nombre+'&fecha_inicio='+this.form.fecha_inicio+'&fecha_fin='+this.form.fecha_fin+'&estado_solicitud='+this.form.estado_solicitud+'&resultados='+this.form.resultados+'&j_username='+'jasperadmin'+'&j_password='+'jasperadmin';
 
     /*
     let examenes=""

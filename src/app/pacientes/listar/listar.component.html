@@ -19,8 +19,9 @@
   <input type="date" #myDate [value]="fechaklp | date:'yyyy-MM-dd'" (input)="fechaklp.date=parseDate($event.target.value)" />
 {{fechaklp}}
 -->
+<!-- 
 <input id="procedencia" placeholder="procedencia" type="text" (input)="filtro_procedencia($event)" >
-                       
+-->                   
   <div class="container-fluid">
     <!-- Basic Examples -->
     <div class="row clearfix">
@@ -47,8 +48,7 @@
 
       
     
- 
-  <!-- 
+<!-- 
   <input type="text" [formControl]="control">
 -->
 
@@ -80,20 +80,20 @@
                   <tr>
                     <th></th>
                       <th   *ngFor="let col of cols" [ngSwitch]="col.field">
-                        <input  style="width: 100%;" *ngSwitchCase="'cedula'" pInputText type="text" (input)="dd.filter($event.target.value, col.field, col.filterMatchMode)">
+                        <input  style="width: 100%;" [formControl]="controlCedula" name="cedula" *ngSwitchCase="'cedula'" pInputText type="text" autocomplete="off">
                          
-                          <input *ngSwitchCase="'nombres'" pInputText type="text" (input)="dd.filter($event.target.value, col.field, col.filterMatchMode)">
-                          <input  [(ngModel)]="edad" name="edad" *ngSwitchCase="'edad'" pInputText type="text" (input)="filtro_completo()">
+                          <input *ngSwitchCase="'nombres'"  name="nombres" [formControl]="control" pInputText type="text" >
+                          <input  id="edad" name="edad" *ngSwitchCase="'edad'" [formControl]="controlEdad" pInputText type="text" >
                         
                           <!--  <input  *ngSwitchCase="'procedencia'" pInputText type="text" (input)="filtro_procedencia()" (input)="dd.filter($event.target.value, col.field, col.filterMatchMode)">
                         -->
-                        <input id="procedencia" [(ngModel)]="procedencia" name="procedencia" [formControl]="control" *ngSwitchCase="'procedencia'" pInputText type="text"  >
+                        <input id="procedencia"  *ngSwitchCase="'procedencia'"  [formControl]="controlProcedencia"  pInputText type="text"  >
                        
                          <!--  <p-dropdown *ngSwitchCase="'sexo'" [(ngModel)]="sexo" name="sexo" [options]="brands"  (onChange)="dd.filter($event.value, col.field, 'equals')"></p-dropdown>
                       -->
                       <!--<input *ngSwitchCase="'sexo'" [(ngModel)]="sexo" name="sexo"   (input)="filtro_completo($event.target.value)">
                       -->
-                      <ng-select  *ngSwitchCase="'sexo'" placeholder="Selecciona un sexo"   [(ngModel)]="sexo" class="" (ngModelChange)="filtro_completo()"   name="sexo" required>
+                      <ng-select  *ngSwitchCase="'sexo'" placeholder="Selecciona un sexo" id="sexo"  [(ngModel)]="sexo" class="" (ngModelChange)="filtro_completo()"   name="sexo" required>
                         <ng-option  *ngFor=" let rol of brands" [value]="rol.value" >{{rol.label}}</ng-option>
                        
                        </ng-select>
@@ -363,7 +363,7 @@
       
   <div class="row">
     <div class="col ">
-        <p class="font-weight-bold">Genero: 
+        <p class="font-weight-bold">Sexo: 
             <span class="font-weight-normal" *ngIf="paciente.sexo =='M'">Masculino</span>
             <span class="font-weight-normal" *ngIf="paciente.sexo =='F'">Femenino</span>
         </p>

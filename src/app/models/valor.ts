@@ -1,7 +1,7 @@
 export class Valor
 {
     cod_resultados_examen:number;
-    valor:String;
+    valor:string;
     cod:number
     constructor(){
         this.cod=0

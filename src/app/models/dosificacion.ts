@@ -6,6 +6,7 @@ export class Dosificacion{
     fecha_limite_emision:string
     fecha_registro:string
     leyenda:string;
+    nit:string
     constructor(){
         this.leyenda=''
         this.fecha_limite_emision=''

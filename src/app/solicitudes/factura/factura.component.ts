@@ -3,11 +3,11 @@ import { Component, OnInit } from '@angular/core';
 import {Examen, Solicitud,Examen_solicitado, Persona, Usuario, Area, Paciente,Factura} from '../../models'
 import { DatePipe,  TitleCasePipe, UpperCasePipe } from '@angular/common';
 import {Utils} from '../../utilidades/utils'
-
-import html2canvas from 'html2canvas';
+import {NavigationStart, Router} from '@angular/router';
 declare const $: any;
-import * as jsPDF from 'jsPDF'; 
 import { SolicitudesService } from '../solicitudes.service';
+
+import * as global from '../../shared/variables_global'; //<== HERE
 @Component({
   selector: 'app-factura',
   templateUrl: './factura.component.html',
@@ -21,7 +21,8 @@ u:Utils=new Utils()
 datetime:Date;
 fechita:string;
  solicitud:Solicitud=new Solicitud();
-  constructor(private datePipe:DatePipe , private solicitudesService:SolicitudesService) {
+ codigoQr:string="";
+  constructor(private datePipe:DatePipe , private solicitudesService:SolicitudesService,private router: Router) {
  
     this.costo_total_en_letras=''
     this.datetime=new Date();
@@ -30,38 +31,44 @@ fechita:string;
 
     this.solicitud=JSON.parse(localStorage.getItem('solicitudfacturar'))
     console.log(this.solicitud)
+    let letras;
     if(this.solicitud.factura.cod_factura==0)
     {
     this.solicitudesService.generarFactura(this.solicitud).subscribe(data=>{
       console.log(data)
       this.form=data;
+      this.codigoQr=this.form.factura.dosificacion.nit+this.form.factura.cod_factura+this.form.factura.dosificacion.autorizacion+this.form.factura.dosificacion.fecha_limite_emision+this.form.costoTotal+this.form.factura.cod_control+this.form.paciente.cedula
+      let letras = this.u.numeroALetras(this.solicitud.costoTotal, {
+       plural: "BOLIVIANOS",
+       singular: "BOLIVIANO",
+       centPlural: "CENTAVOS",
+       centSingular: "CENTAVO"
+   });
+     
+   this.costo_total_en_letras=letras
+    
     })
     
   }
   else{
-    console.log("klp")
-    this.form=JSON.parse(localStorage.getItem('solicitudfacturar'));
-  }
-    let letras = this.u.numeroALetras(this.solicitud.costoTotal, {
-      plural: "BOLIVIANOS",
-      singular: "BOLIVIANO",
-      centPlural: "CENTAVOS",
-      centSingular: "CENTAVO"
-  });
-   this.costo_total_en_letras=letras
 
- console.log(letras)
+    this.form=JSON.parse(localStorage.getItem('solicitudfacturar'));
+    this.codigoQr=this.form.factura.dosificacion.nit+this.form.factura.cod_factura+this.form.factura.dosificacion.autorizacion+this.form.factura.dosificacion.fecha_limite_emision+this.form.costoTotal+this.form.factura.cod_control+this.form.paciente.cedula
+    letras = this.u.numeroALetras(this.solicitud.costoTotal, {
+     plural: "BOLIVIANOS",
+     singular: "BOLIVIANO",
+     centPlural: "CENTAVOS",
+     centSingular: "CENTAVO"
+ });
+ 
+ this.costo_total_en_letras=letras
+  }
+
+ 
 
    }
 klp(){
-  var printContents = document.getElementById('body').innerHTML;
-            let w = window.open();
-            w.document.write(printContents);
-            w.document.close(); // necessary for IE >= 10
-            w.focus(); // necessary for IE >= 10
-        w.print();
-        w.close();
-            return true;
+ window.print()
   /*
   $('#buttons_panel').hide();
   var data = document.getElementById('body');  
@@ -85,7 +92,7 @@ klp(){
         margin = 10;
         var width = pdf.internal.pageSize.getWidth(); 
       console.log(pdf.internal.pageSize.getHeight())
-      
+      fdfd
         console.log("asfestewidth"+width+" " )
         console.log(pdf.internal.pageSize.getHeight())
   pdf.text(45, 45, 'letter');
@@ -107,9 +114,7 @@ klp(){
   imprim1(imp1){
     var printContents = document.getElementById('body').innerHTML;
             let w = window.open();
-            w.document.write(printContents);
-            w.document.close(); // necessary for IE >= 10
-            w.focus(); // necessary for IE >= 10
+          
         w.print();
         w.close();
             return true;
@@ -123,5 +128,8 @@ klp(){
     })
           }
         
+salir(){
 
+  window.location.href='http://localhost:4200/solicitudes/listar'
+}
 }

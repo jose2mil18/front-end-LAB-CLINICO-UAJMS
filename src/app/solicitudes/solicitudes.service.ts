@@ -4,6 +4,7 @@ import { Solicitud, Area, Examen,Posta, Paciente, Institucion, Examen_solicitado
 
 import * as global from '../shared/variables_global'; //<== HERE
 import { Observable } from 'rxjs';
+import { Persona } from '../models/persona';
 @Injectable({
     providedIn : 'root'
 })
@@ -69,7 +70,7 @@ usuario={};
             return this.http.post<Precio_examen>(`${''+global.server+'api/precio-examen'}`,{cod_precio_examen},  {headers: this.httpHeaders});
         }
     modificar(solicitud) {
-        return this.http.put<Paciente>(`${''+global.server+'api/solicitud'}`, solicitud, {headers: this.httpHeaders});
+        return this.http.put<Solicitud>(`${''+global.server+'api/solicitud'}`, solicitud, {headers: this.httpHeaders});
     }
     quitar_examen(cod_solicitud, cod_examen) {
         return this.http.post<Examen_solicitado[]>(`${''+global.server+'api/eliminar-examen-de-solicitud'}`,{cod_solicitud, cod_examen},  {headers: this.httpHeaders});
@@ -81,7 +82,7 @@ usuario={};
 
      guardar(solicitud) {
       
-                return this.http.post<Paciente>(`${''+global.server+'api/solicitud'}`, solicitud, {headers: this.httpHeaders});
+                return this.http.post<Solicitud>(`${''+global.server+'api/solicitud'}`, solicitud, {headers: this.httpHeaders});
      }
 
 
@@ -114,6 +115,10 @@ usuario={};
             generarFactura(solicitud){
                 
                 return this.http.post<Solicitud>(`${''+global.server+'api/generar-factura'}`, solicitud, {headers: this.httpHeaders});
+            }
+
+            public listarDoctorSolicitante() {
+                return this.http.get<Persona[]>(`${''+global.server+'api/listar-doctor-solicitante'}`,  {headers: this.httpHeaders});
             }
 
         

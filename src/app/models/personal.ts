@@ -1,11 +1,12 @@
 import {Persona} from './persona';
 export class Personal{
-   cedula:String;
+   cedula:string;
    profesion:string;
    persona:Persona;
    cod_persona:number
    foto:string;
    archivo:File;
+   link_foto:string
    constructor(){
      this.archivo=null;
      this.foto='';

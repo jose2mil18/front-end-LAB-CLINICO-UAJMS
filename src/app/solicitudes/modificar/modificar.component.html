@@ -2,7 +2,7 @@
   <div class="block-header">
     <div class="row">
       <div class="col-lg-7 col-md-6 col-sm-12">
-        <h2>Modificar Solicitud
+        <h2>Solicitudes
         </h2>
       </div>
       <div class="col-lg-5 col-md-6 col-sm-12">
@@ -39,7 +39,7 @@
 
 
           
-            <form class="needs-validation" ngNativeValidate  #formsolicitud="ngForm" >
+            <form class="needs-validation" ngNativeValidate  #formsolicitud="ngForm" autocomplete="off" >
 
                 <div class="row clearfix">
                     <div class="col-lg-2 col-md-2 col-sm-4 form-control-label">
@@ -100,10 +100,10 @@
 
 <div class="row clearfix">
   <div class="col-lg-2 col-md-2 col-sm-4 form-control-label">
-    <label for="nombre">Institucion</label>
+    <label for="nombre">Institución</label>
   </div>
   <div class="col-lg-10 col-md-10 col-sm-8">
-    <div class="form-group">
+    <div class="">
      
       <select class="form-control " [(ngModel)]="form.institucion.cod_institucion" name="institucion" class="form-control" placeholder="buscar institucion"  (ngModelChange)="institucionbuscar($event)" required>
        
@@ -113,16 +113,52 @@
         </optgroup>
         <optgroup label="SIS">
           
-          <option *ngFor="let posta of instituciones" [value]="posta.cod_institucion"  >{{posta.nombre}}</option>
+          <option *ngFor="let posta of instituciones" [value]="posta.cod_institucion"  >Posta de {{posta.nombre}}</option>
         </optgroup>
       </select>
       </div>
   </div>
 </div> 
-
-<div class="row clearfix">
+<br>
+<ng-container *ngIf="form.institucion.cod_institucion_padre!=''">
+  <div class="row clearfix" *ngIf="form.institucion.cod_institucion_padre!='LABORATORIO UNIVERSIDAD'" >
   <div class="col-lg-2 col-md-2 col-sm-4 form-control-label">
-    <label for="ap">Doctor Solicitante</label>
+  
+
+
+    <div class="row clearfix" style="padding-top:2px" >
+      <div class="col-sm-8">
+        <div class="form-group"  ><label for="ap">Doctor Solicitante </label>
+        </div>
+      </div>
+      <div class="col-sm-2">
+        <div class="form-group"  >  <a  (click)="agregarDoctor()" class="link">
+       
+          <i class="material-icons col-purple">add_circle</i> <span class="icon-name"></span>
+        </a>
+        </div>
+      </div>
+    
+    
+      <div class="col-sm-2" >
+        <ng-container >
+          <ng-container >
+        <div class="form-group" style="padding-top:2px;"  > 
+          <a  class="link" (click)="removerDoctor()"> 
+        
+            <i class="material-icons col-purple">clear</i> <span class="icon-name"></span>
+          </a>
+          </div>
+        </ng-container>
+      </ng-container>
+      </div>
+    
+    
+    
+    </div>
+
+
+
   </div>
   <!---
   <div class="col-lg-10 col-md-10 col-sm-8">
@@ -134,7 +170,7 @@
 
 <div class="col-lg-10 col-md-10 col-sm-8">
   
-<div class="row clearfix">
+    <div class="row clearfix"  *ngIf="form.doctor_solicitante!=null">
   <div class="col-sm-4">
     <div class="form-group">
       <input type="text" [(ngModel)]="form.doctor_solicitante.nombre" name="nombre" class="form-control titulo" placeholder="nombre" required />
@@ -151,9 +187,11 @@
     </div>
   </div>
 </div>
+
 </div>
 </div>
 
+</ng-container>
 <div class="row clearfix">
   <div class="col-lg-2 col-md-2 col-sm-4 form-control-label">
     <label for="login">Fecha</label>
@@ -175,13 +213,13 @@
     <div class="form-group">
      
     <!--  <input [(ngModel)]="form.fecha_entrega" name="fecha_entrega" type="date" id="fecha_entrega" class="form-control" placeholder="Entra tu procedencia">-->
-    <input type="date" [(ngModel)]="fecha_entrega" id="fecha_entrega" name="fecha_entrega" class="form-control" placeholder="Fecha de entreg"  size="12" required />
+    <input type="date" [(ngModel)]="fecha_entrega" id="fecha_entrega" name="fecha_entrega" class="form-control" placeholder="Fecha de entreg"  size="12" required [min]="fecha"/>
   </div>
   </div>
 </div>
 <div class="row clearfix">
     <div class="col-lg-2 col-md-2 col-sm-4 form-control-label">
-      <label for="login">Examenes Solicitados</label>
+      <label for="login">Exámenes Solicitados</label>
     </div>
   
   </div>
@@ -191,7 +229,7 @@
   </div>
     <div class="col-lg-10 col-md-10 col-sm-8" >
    
-        <ng-select  class="" placeholder="seleccione el area donde esta el examen"  style="width:100%" [(ngModel)]="cod_area" (ngModelChange)="listarExamenesdeArea()"  name="cod_area">
+        <ng-select  class="" placeholder="Seleccione el area donde esta el examen"  style="width:100%" [(ngModel)]="cod_area" (ngModelChange)="listarExamenesdeArea()"  name="cod_area">
        
           <ng-option *ngFor="let area of areas" [value]="area.cod_area"  >{{area.nombre}}</ng-option>
         
@@ -212,7 +250,7 @@
   </div>
     <div class="col-lg-10 col-md-10 col-sm-8">
      
-        <ng-select  id="cod_precio_examen" class="" [(ngModel)]="cod_precio_examen" #e="ngModel"  placeholder="seleccione un examen" (ngModelChange)="examenseleccionar()"   name="cod_examen" >
+        <ng-select  id="cod_precio_examen" class="" [(ngModel)]="cod_precio_examen" #e="ngModel"  placeholder="Seleccione el examen" (ngModelChange)="examenseleccionar()"   name="cod_examen" >
       
        
             <ng-option [value]="e.cod_precio_examen"  *ngFor="let e of examenes" >{{e.examen.nombre}}</ng-option>

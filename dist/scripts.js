@@ -2,12 +2,19 @@ console.log("hola")
 function fun(e){
 	alert(e)
 }
+$('form').attr('autocomplete','off');
+
+$('input').attr('autocomplete','off');
+
+$('form input').on('keypress', function(e) {
+    return e.which !== 13;
+});
 
 function validatePassword() {
 	console.log(document.getElementById("password").value)
 	var pass1 = document.getElementById("password").value;
 	var pass2 = document.getElementById("password_confirmation").value;
-	pass1 != pass2 ? document.getElementById("password_confirmation").setCustomValidity("las contraseñas no coinciden") : document.getElementById("password_confirmation").setCustomValidity('');
+	pass1 != pass2 ? document.getElementById("password_confirmation").setCustomValidity("Las contraseñas no coinciden") : document.getElementById("password_confirmation").setCustomValidity('');
 	}
 	function validatefechas() {
 		var pass1 = document.getElementById("fecha_inicio").value;
@@ -16,7 +23,7 @@ function validatePassword() {
 		}
 
 	function    validateCedulaUnica(){
-		
+		console.log("validando cedula")
 		document.getElementById("cedula").setCustomValidity("esa cedula ya existe")
 	}
 	

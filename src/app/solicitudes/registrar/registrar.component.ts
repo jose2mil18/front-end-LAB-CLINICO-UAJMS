@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import {Paciente, Solicitud, Usuario,Institucion, Persona, Examen_solicitado} from '../../models'
 import {Examen} from '../../models/examen'
+
 import {Precio_examen} from '../../models/precio_examen'
 import {PacientesService} from '../../pacientes/pacientes.service';
 import {Http} from '@angular/http'
@@ -24,6 +25,7 @@ declare const Swal: any;
   encapsulation: ViewEncapsulation.None
 })
 export class RegistrarComponent implements OnInit {
+  doctores_solicitantes : Persona[]=[]
   control:FormControl=new FormControl('')
   
   public show:boolean = false;
@@ -199,8 +201,14 @@ quitar_examen(cod_examen, i){
 
   constructor(private usuariosService :UsuariosService, private datePipe: DatePipe,private pacientesService:PacientesService, private solicitudesService:SolicitudesService, private router:Router, private titleCasePipe:TitleCasePipe) { 
     console.log(this.precio_examen)
+    this.solicitudesService.listarDoctorSolicitante().subscribe(data=>{
+      this.doctores_solicitantes=data
+      console.log(data);
+      
+    })
 
     this.form=new Solicitud()
+    this.form.fecha=this.datePipe.transform(new Date(),"yyyy-MM-dd"),
   this.solicitudesService.getFecha(this.form).subscribe(data=>{
 
   })
@@ -212,6 +220,9 @@ quitar_examen(cod_examen, i){
   if(this.form.institucion.cod_institucion_padre== 'SIS'){
     console.log("sis")
   this.precio_examen.cod_institucion= this.form.institucion.cod_institucion_padre
+  }
+  else{
+    console.log("nada")
   }
   console.log(this.form)
      this.fecha=datePipe.transform(this.form.fecha, "yyyy-MM-dd")
@@ -236,7 +247,7 @@ quitar_examen(cod_examen, i){
    // this.listarExamenesdeArea()
    this.control.valueChanges.pipe(debounceTime(360)).subscribe(value=>{
     console.log(value)
-    this.buscar_paciente()
+    this.verificarSiExisteCedula(value)
 })
   }
 
@@ -349,6 +360,33 @@ quitar_examen(cod_examen, i){
         });
     }
 }
+
+verificarSiExisteCedula(cedula):boolean{
+  if(this.form.paciente.cedula!='')
+  {
+this.show=true
+  this.pacientesService.getByCedula(cedula).subscribe(data=>{
+   if(data.cedula!=null){
+    this.pacientebuscado=data;
+    this.form.paciente=this.pacientebuscado
+       this.show=true
+       this.bandera2=false
+       
+  $('#cedula').removeClass('is-invalid')
+   }
+   else{
+     $('#cedula').addClass('is-invalid')
+     this.bandera2=true
+     this.show=false
+   }
+  })
+}
+else{
+  this.bandera2=false
+  $('#cedula').removeClass('is-invalid')
+}
+  return this.bandera2;
+}
 bandera2:boolean=false;
   buscar_paciente(){
     if(this.form.paciente.cedula!='')
@@ -385,10 +423,14 @@ guardar_solicitud(formsolicitud:NgForm){
   //this.form.fecha_entrega=$('#datepicker2').val();
   console.log(this.form.fecha)
 
-  this.form.cedula_usuario=this.currentUser.cedula,
+  this.form.cedula_usuario=this.currentUser.cedula
+  if(this.form.doctor_solicitante!= undefined){
+
+ 
   this.form.doctor_solicitante.nombre=this.titleCasePipe.transform(this.form.doctor_solicitante.nombre)
   this.form.doctor_solicitante.ap=this.titleCasePipe.transform(this.form.doctor_solicitante.ap)
   this.form.doctor_solicitante.am=this.titleCasePipe.transform(this.form.doctor_solicitante.am)
+  }
 this.form.fecha=$('#fecha').val();
 this.form.fecha_entrega=$('#fecha_entrega').val();
 this.form.fecha=this.datePipe.transform(this.form.fecha,'dd-MM-yyyy')
@@ -397,11 +439,12 @@ this.form.fecha_entrega=this.datePipe.transform(this.form.fecha_entrega,'dd-MM-y
 //this.form.examenes_solicitados.splice(this.form.examenes_solicitados.length-1, 1);
   console.log(this.form)
   console.log(this.form.examenes_solicitados[this.form.examenes_solicitados.length-1].estado)
-  if( formsolicitud.valid && this.contar_examenes_no_eliminados()>0){
+  if( formsolicitud.valid && this.contar_examenes_no_eliminados()>0 && this.show){
     this.solicitudesService.guardar(this.form)
      .subscribe(data => {
      console.log(data)
-     this.router.navigate(['/solicitudes/listar']);
+     alert("solicitud guardada")
+    this.router.navigate(['/solicitudes/listar']);
  
       },
      error => {
@@ -420,6 +463,7 @@ this.form.fecha_entrega=this.datePipe.transform(this.form.fecha_entrega,'dd-MM-y
 
 }
 institucionbuscar(cod_institucion){
+  this.mostrar_doctor=false
   this.cod_area=null;
   this.cod_precio_examen=null;
   console.log(this.form.institucion.cod_institucion)
@@ -470,4 +514,14 @@ printDiv(divName){
   newWindow.document.close();
 
 }
+mostrar_doctor:boolean=false;
+agregarDoctor(){
+  this.mostrar_doctor=true
+  this.form.doctor_solicitante=new Persona()
+}
+removerDoctor(){
+  this.mostrar_doctor=false
+  this.form.doctor_solicitante=null
+}
+
 }

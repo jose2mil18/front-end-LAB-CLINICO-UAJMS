@@ -1,3 +1,7 @@
+.titulo{
+   
+  text-transform: capitalize;
+}
 @media print{
     .doNotPrint{display:none !important;}
   }

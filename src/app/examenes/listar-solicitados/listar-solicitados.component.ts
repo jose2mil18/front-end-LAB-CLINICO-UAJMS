@@ -7,6 +7,8 @@ import { DatePipe,  TitleCasePipe, UpperCasePipe } from '@angular/common';
 
 import {FormControl, FormBuilder, FormGroup, Validators, NgForm } from '@angular/forms';
 declare const validatefechas:any;
+
+import {debounceTime} from 'rxjs/operators'
 @Component({
   selector: 'app-listar-solicitados',
   templateUrl: './listar-solicitados.component.html',
@@ -29,10 +31,12 @@ bandera:boolean
 item:string="Agrupar"
 grupos:any[];
 grupo
+
+control=new FormControl('')
   constructor(private solicitudesService:SolicitudesService, private datePipe:DatePipe, private router:Router) {
     this.bandera=true;
     this.grupo={
-      label:'',
+      label:'Agrupar',
       seleccionador:'',
       agrupador:''
     }
@@ -40,7 +44,11 @@ grupo
     this.currentUser = JSON.parse(localStorage.getItem('currentUser'));
     this.date=new Date();
     this.fechita=this.datePipe.transform(this.date,"dd-MM-yyyy")
-   
+    this.control.valueChanges.pipe(debounceTime(450)).subscribe(value=>{
+      console.log("hola"+value)
+      this.form.caracter_nombre_examen=value
+      
+  }) 
     this.area=new Area;
 
 this.solicitudesService.getAllAreas().subscribe(data=>{
@@ -57,6 +65,12 @@ this.solicitudesService.getAllAreas().subscribe(data=>{
       prueba:'Agrupar',
       nombre_area:''
     }
+    this.control.valueChanges.pipe(debounceTime(450)).subscribe(value=>{
+      console.log("hola"+value)
+      this.form.caracter_nombre_examen=value
+      this.filtro_completo2()
+      
+  }) 
     this.paciente= JSON.parse(localStorage.getItem('paciente'));
     this.examenes_solicitados=this.paciente.examenes_solicitados
     this.solicitudesService.filtrarSolicitudes_de_Paciente(this.form.cedula, this.area.nombre, this.form.caracter_nombre_examen, this.form.fech, this.form.fecha_inicio, this.form.fecha_fin, this.form.estado_solicitud).subscribe(data => {
@@ -104,6 +118,35 @@ console.log(this.solicitudes)
      console.log(this.form.estado_solicitud)
      validatefechas()
      if(formu.valid && ($('#fecha_inicio').val() <=$('#fecha_fin').val()) )
+     {
+       
+    $('#addevent').removeClass('show');
+    console.log(this.form.fech)
+    console.log(this.area.nombre+" "+this.area.cod_area)
+    this.solicitudesService.filtrarSolicitudes_de_Paciente(this.form.cedula, this.form.nombre_area, this.form.caracter_nombre_examen, this.form.fech, this.form.fecha_inicio, this.form.fecha_fin, this.form.estado_solicitud).subscribe(data=>{
+      this.examenes_solicitados=data
+    })
+  }
+  
+  }
+  filtro_completo2(){
+    //console.log(this.form.fech)
+  if(this.form.resultados == null)
+  {
+   this.form.resultados=""
+  }
+  if(this.form.estado_solicitud == null)
+  {
+   this.form.estado_solicitud=""
+  }
+  if(this.form.nombre_area==null)
+  {
+    this.form.nombre_area=""
+  }
+  
+     console.log(this.form.estado_solicitud)
+     validatefechas()
+     if( ($('#fecha_inicio').val() <=$('#fecha_fin').val()) )
      {
        
     $('#addevent').removeClass('show');

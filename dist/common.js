@@ -1,5 +1,51 @@
 (window["webpackJsonp"] = window["webpackJsonp"] || []).push([["common"],{
 
+/***/ "./node_modules/primeng/accordion.js":
+/*!*******************************************!*\
+  !*** ./node_modules/primeng/accordion.js ***!
+  \*******************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* Shorthand */
+
+function __export(m) {
+    for (var p in m) if (!exports.hasOwnProperty(p)) exports[p] = m[p];
+}
+Object.defineProperty(exports, "__esModule", { value: true });
+__export(__webpack_require__(/*! ./components/accordion/accordion */ "./node_modules/primeng/components/accordion/accordion.js"));
+
+/***/ }),
+
+/***/ "./node_modules/webpack/buildin/amd-define.js":
+/*!***************************************!*\
+  !*** (webpack)/buildin/amd-define.js ***!
+  \***************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = function() {
+	throw new Error("define cannot be used indirect");
+};
+
+
+/***/ }),
+
+/***/ "./node_modules/webpack/buildin/amd-options.js":
+/*!****************************************!*\
+  !*** (webpack)/buildin/amd-options.js ***!
+  \****************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+/* WEBPACK VAR INJECTION */(function(__webpack_amd_options__) {/* globals __webpack_amd_options__ */
+module.exports = __webpack_amd_options__;
+
+/* WEBPACK VAR INJECTION */}.call(this, {}))
+
+/***/ }),
+
 /***/ "./src/app/examenes/examenes.service.ts":
 /*!**********************************************!*\
   !*** ./src/app/examenes/examenes.service.ts ***!

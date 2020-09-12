@@ -8,10 +8,8 @@ import { httpFactory } from '@angular/http/src/http_module';
 import { SelectItem } from 'primeng/primeng';
 
 import {FormControl, FormBuilder, FormGroup, Validators, NgForm } from '@angular/forms';
-import 'jspdf-autotable';
-import * as jspdf from 'jsPDF'; 
-import jsPDF from 'jspdf';
-import html2canvas from 'html2canvas';
+
+import * as global from '../../shared/variables_global'; //<== HERE
 declare const $: any;
 declare const addFooters: any;
 declare const validatefechas:any;
@@ -139,7 +137,8 @@ listar(){
     });
     this.brands = [
       { label: 'Registrado', value: 'Registrado' },
-      { label: 'Sin Registrar', value: 'Sin Registrar' }
+      { label: 'Sin Registrar', value: 'Sin Registrar' },
+      { label: 'Pendiente', value: 'Pendiente' }
    
   ];
   this.brands2 = [
@@ -433,6 +432,7 @@ buscar_por_rango_fechas(){
 });
 */
 }
+/*
 public captureScreen()  
 {  
 
@@ -486,13 +486,7 @@ pdf.text(10, 55, this.texto);
      //tabla
     
 
-pdf.autoTable({
-  head: [col],
-  body: rows,
-  margin: {top: 60},
-  pageNumber: 1
-  
-});
+
 /*
 for(let i = 0; i < pageCount; i++) { 
 
@@ -506,10 +500,12 @@ for(let i = 0; i < pageCount; i++) {
   //pdf.text(10,10, pdf.internal.getCurrentPageInfo().pageNumber + "/" + pageCount);
   
   }
-  */
+  
 pdf.save("pdf.pdf");
 
 } 
+*/
+/*
 b(){
   var doc = new jsPDF('p', 'pt', 'letter');
         doc.page = 1; // use this as a counter.
@@ -538,6 +534,7 @@ doc.text(10, 55, this.texto);
      
         doc.save("footer.pdf");
 }
+*/
 prueba() { 
 alert(this.form.fech)
 }
@@ -571,6 +568,8 @@ if(this.solicitudes[i].paciente.persona.nombre == this.form.caracter_nombre){
 }
 ver(s){
   this.solicitud=s
+  this.fecha_entregas=s.fecha_entrega
+
 }
 enviar(formsolicitud:NgForm){
 if(formsolicitud.valid)
@@ -585,5 +584,24 @@ keyPressHandler(e) {
 
       // Perform your custom logic here if any
   }
+}
+fecha_entregas:string=""
+cambiar_estado(solicitud){
+  
+let e=$('#fecha_entregas').val();
+
+solicitud.fecha_entrega=this.datePipe.transform(e,'dd-MM-yyyy')
+
+  solicitud.fecha=this.datePipe.transform(solicitud.fecha,'dd-MM-yyyy')
+
+this.solicitudesService.modificar(solicitud).subscribe(data=>{
+this.fecha_entregas=data.fecha_entrega
+this.solicitud=data
+ this.listar()
+
+})
+}
+cerrar(){
+ this.listar()
 }
 }

@@ -29,7 +29,7 @@ currentUser:Usuario;
   addForm: FormGroup;
  fecha_nacimiento:string=''
   form:Paciente;
- cadena:string;
+ fechahoy:string;
   fecha:Date
   formulario:FormGroup;
   control=new FormControl('')
@@ -81,7 +81,7 @@ currentUser:Usuario;
                 $.datepicker.setDefaults($.datepicker.regional['es']);
           });
 this.fecha=new Date("2013-09-02");
-      this.cadena=this.datePipe.transform(this.fecha,"dd-MM-yyyy")
+      this.fechahoy=this.datePipe.transform(new Date(),"yyyy-MM-dd"),
 
       this.addForm = this.formBuilder.group({
         id: [],
@@ -375,14 +375,28 @@ get am(){
     return this.formulario.get("persona").get("am");
 
 }
-
+bandera:boolean=false;
+verificarSiExisteCedula(cedula):boolean{
+ 
+  this.pacienteService.getByCedula(cedula).subscribe(data=>{
+   if(data.cedula!=null){
+       this.bandera=true;
+   }
+   else{
+     this.bandera=false
+   }
+  })
+  return this.bandera;
+}
   constructor(  private titleCasePipe:TitleCasePipe ,private datePipe: DatePipe,private formBuilder: FormBuilder, private pacienteService : PacientesService, private router:Router) { 
+  
   
     this.currentUser = JSON.parse(localStorage.getItem('currentUser'));
     this.construir_formulario()
   
     this.cedula.valueChanges.pipe(debounceTime(360)).subscribe(value=>{
         console.log(value)
+        this.verificarSiExisteCedula(value);
     })
    this.control.valueChanges.pipe(debounceTime(360)).subscribe(value=>{
        console.log(value)
@@ -416,20 +430,23 @@ this.form.cedula_usuario=this.currentUser.cedula;
     this.formulario.get("procedencia").setValue(this.titleCasePipe.transform(this.procedencia.value))
     console.log(this.formulario.get("persona").value)
     console.log(this.fnac.value)
-    if(this.formulario.valid){
+    console.log(this.formulario)
+    if(this.formulario.valid && this.bandera==false){
       
     console.log(this.formulario.value)
     this.pacienteService.register(this.formulario.value)
     .subscribe(data => {
       console.log(data)
+      alert("Paciente registrado")
       this.router.navigate(['/pacientes/listar']);
-    
     },
     error => {
        
       this.router.navigate(['/pacientes/registrar']);
     });
-   
+    }
+    else{
+     
     }
     
     

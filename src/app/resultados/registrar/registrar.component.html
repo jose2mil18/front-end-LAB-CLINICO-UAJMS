@@ -36,7 +36,7 @@
             </ul>
           </div>
           <div class="body">
-<!--  
+<!--     
             <form ngNativeValidate >
 
               <div class="">
@@ -96,11 +96,11 @@
               <button class="btn btn-primary" type="submit">Submit form</button>
             </form>
           -->
-            <form   ngNativeValidate  #form="ngForm">
+            <form   ngNativeValidate  #form="ngForm" autocomplete="off">
     
 <div class="row clearfix">
   <div class="col-lg-2 col-md-2 col-sm-2 form-control-label">
-    <label for="login">Examenes</label>
+    <label for="login">Exámenes</label>
   </div>
     <div class="col-lg-4 col-md-4 col-sm-4">
    
@@ -125,14 +125,14 @@
 
 <div class="body">
     <div class="">
-<table class="table  " >
+<table class="table  table-bordered table-striped" >
                       <thead>
                         <tr>
                             <th>Examen</th>
                             
-                            <th>RESULTADO</th>
-                            <th>UNIDADES</th>
-                            <th>VALOR DE REFERENCIA</th>
+                            <th>Resultado</th>
+                            <th>Unidades</th>
+                            <th>Valor de referencia</th>
                           
                         </tr>
                       </thead>
@@ -155,11 +155,11 @@
       </datalist>
                                                 <p-autoComplete (ngModelChange)="k(s.cod_examen, i)" [(ngModel)]="form.resultados[i]" name="resultados[i]" class="form-control" [suggestions]="filteredCountriesSingle" (completeMethod)="buscaValorExamen($event, s.cod_examen, i)" field="valor" [size]="30" placeholder="Countries" [minLength]="1"></p-autoComplete>-->
                                               <ng-container *ngIf="solicitudSinResultado.examenes_solicitados[indice].precio_examen.examen.valores_referencia.length==0">
-                                                <input    type="text"   list="valores_examen" [(ngModel)]="solicitudSinResultado.examenes_solicitados[indice].resultados_examen.valores[0].valor" name="resultado"  class="form-control " (input)="kambio_valor(solicitudSinResultado.examenes_solicitados[indice].precio_examen.examen.cod_examen, $event.target.value)" required>
+                                                <input  autocomplete="off"  type="text"   list="valores_examen" [(ngModel)]="solicitudSinResultado.examenes_solicitados[indice].resultados_examen.valores[0].valor" name="resultado"  class="form-control " (input)="kambio_valor(solicitudSinResultado.examenes_solicitados[indice].precio_examen.examen.cod_examen, $event.target.value)" required >
                                               
                                               </ng-container>
                                               <ng-container *ngIf="solicitudSinResultado.examenes_solicitados[indice].precio_examen.examen.valores_referencia.length!=0">
-                                                <input    oninput="validity.valid||(value='');" type="number" min="0" step="0.01" list="valores_examen" [(ngModel)]="solicitudSinResultado.examenes_solicitados[indice].resultados_examen.valores[0].valor" name="resultado"  class="form-control" (input)="kambio_valor(solicitudSinResultado.examenes_solicitados[indice].precio_examen.examen.cod_examen, $event.target.value)" required>
+                                                <input  autocomplete="off"  oninput="validity.valid||(value='');" type="number" min="0" step="0.01" list="valores_examen" [(ngModel)]="solicitudSinResultado.examenes_solicitados[indice].resultados_examen.valores[0].valor" name="resultado"  class="form-control" (input)="kambio_valor(solicitudSinResultado.examenes_solicitados[indice].precio_examen.examen.cod_examen, $event.target.value)" required>
                                               
                                               </ng-container>
       <datalist id="valores_examen">
@@ -173,7 +173,7 @@
                                    </td>
                              <td class="text-center">   
                                
-                              <a *ngIf="solicitudSinResultado.examenes_solicitados[indice].precio_examen.examen.valores_referencia.length >0" (click)="registrar(solicitudSinResultado.examenes_solicitados[indice].precio_examen.examen)" data-toggle="modal" data-target="#addevent"  class=" waves-effect waves-float waves-green"><i class="zmdi zmdi-edit"></i></a> 
+                              <a *ngIf="solicitudSinResultado.examenes_solicitados[indice].precio_examen.examen.valores_referencia.length >0" (click)="registrar(solicitudSinResultado.examenes_solicitados[indice].precio_examen.examen)" data-toggle="modal"  class=" waves-effect waves-float waves-green"><i class="zmdi zmdi-edit"></i></a> 
                                    <span *ngFor="let v of solicitudSinResultado.examenes_solicitados[indice].precio_examen.examen.valores_referencia">
                                   {{v.tipo_persona}} {{v.valor_inicial}}-{{v.valor_final}} .
                                 </span>
@@ -194,14 +194,14 @@
                                        <!-- <p-autoComplete (ngModelChange)="k(s.cod_examen, i)" [(ngModel)]="form.resultados[i]" name="resultados[i]" class="form-control" [suggestions]="filteredCountriesSingle" (completeMethod)="buscaValorExamen($event, s.cod_examen, i)" field="valor" [size]="30" placeholder="Countries" [minLength]="1"></p-autoComplete>-->
                                                  <ng-container *ngIf="s.valores_referencia.length ==0">                    
    
-                                                 <input  *ngIf="s.nombre !='Otros'"  type="text"  list="valores_examen" [(ngModel)]="solicitudSinResultado.examenes_solicitados[indice].resultados_examen.resultados_examenes[i].valores[0].valor" [name]="'a'+i"  class="form-control " (input)="kambio_valores(s.cod_examen,$event.target.value,i)" required>
+                                                 <input autocomplete="off" *ngIf="s.nombre !='Otros' && s.nombre !='NOTA'"  type="text"  list="valores_examen" [(ngModel)]="solicitudSinResultado.examenes_solicitados[indice].resultados_examen.resultados_examenes[i].valores[0].valor" [name]="'a'+i"  class="form-control " (input)="kambio_valores(s.cod_examen,$event.target.value,i)" required>
 
-                                                 <input *ngIf="s.nombre =='Otros'"  type="text"  list="valores_examen" [(ngModel)]="solicitudSinResultado.examenes_solicitados[indice].resultados_examen.resultados_examenes[i].valores[0].valor" [name]="'a'+i"  class="form-control" (input)="kambio_valores(s.cod_examen, $event.target.value,i)" > 
+                                                 <input  autocomplete="off" *ngIf="s.nombre =='Otros' || s.nombre =='NOTA'"  type="text"  list="valores_examen" [(ngModel)]="solicitudSinResultado.examenes_solicitados[indice].resultados_examen.resultados_examenes[i].valores[0].valor" [name]="'a'+i"  class="form-control" (input)="kambio_valores(s.cod_examen, $event.target.value,i)" > 
                                                  </ng-container>
 
                                                  <ng-container *ngIf="s.valores_referencia.length !=0">                    
    
-                                                  <input oninput="validity.valid||(value='');"  min="0" type="number" step="0.01"  list="valores_examen" [(ngModel)]="solicitudSinResultado.examenes_solicitados[indice].resultados_examen.resultados_examenes[i].valores[0].valor" [name]="'a'+i" [ngClass]="borde" class="form-control " (input)="kambio_valores(s.cod_examen, $event.target.value,i)" required>
+                                                  <input autocomplete="off" oninput="validity.valid||(value='');"  min="0" type="number" step="0.01"  list="valores_examen" [(ngModel)]="solicitudSinResultado.examenes_solicitados[indice].resultados_examen.resultados_examenes[i].valores[0].valor" [name]="'a'+i" class="form-control " (input)="kambio_valores(s.cod_examen, $event.target.value,i)" required>
  
                                                   </ng-container>
 
@@ -216,7 +216,7 @@
                              </td>
                        <td class="text-center">   
                          
-                        <a  *ngIf="s.valores_referencia.length>0" (click)="registrar(s)" data-toggle="modal" data-target="#addevent"  class=" waves-effect waves-float waves-green"><i class="zmdi zmdi-edit"></i></a> 
+                        <a  *ngIf="s.valores_referencia.length>0" (click)="registrar(s)"   class=" waves-effect waves-float waves-green"><i class="zmdi zmdi-edit"></i></a> 
                              <span *ngFor="let v of s.valores_referencia">
                             {{v.tipo_persona}} {{v.valor_inicial}}-{{v.valor_final}} .
                           </span>
@@ -224,11 +224,12 @@
 
                               </tr>
                         </ng-container>
+                        <!---nivel tres-->
          <ng-container  *ngIf="s.num_subexamenes != 0">
            <tr>
              <td><strong>{{s.nombre}}  </strong></td>
              <td>
-              <input *ngIf="s.nombre !='Otros'" style="display:none" type="text"  list="valores_examen" [(ngModel)]="array[i]" [name]="s.nombre" [ngClass]="borde" class="form-control" (ngModelChange)="kambio_valor(s.cod_examen, i)">
+              <input *ngIf="s.nombre !='Otros'" style="display:none" type="text"  list="valores_examen" [(ngModel)]="array[i]" [name]="s.nombre"  class="form-control" (ngModelChange)="kambio_valor(s.cod_examen, i)">
             
              </td>
              <td></td>
@@ -243,13 +244,23 @@
                                               <div class="form-group">
                                                  <!-- <p-autoComplete (ngModelChange)="k(s.cod_examen, i)" [(ngModel)]="form.resultados[i]" name="resultados[i]" class="form-control" [suggestions]="filteredCountriesSingle" (completeMethod)="buscaValorExamen($event, s.cod_examen, i)" field="valor" [size]="30" placeholder="Countries" [minLength]="1"></p-autoComplete>-->
                                                <ng-container *ngIf="s.valores_referencia.length==0">
-                                                 <input type="text"  list="valores_examen" [(ngModel)]="solicitudSinResultado.examenes_solicitados[indice].resultados_examen.resultados_examenes[i].resultados_examenes[in].valores[0].valor" [name]="s.nombre" [ngClass]="borde" class="form-control " (input)="kambio_valor(s.cod_examen,$event.target.value)" required>
+                                                 <input autocomplete="off" type="text"  list="valores_examen" [(ngModel)]="solicitudSinResultado.examenes_solicitados[indice].resultados_examen.resultados_examenes[i].resultados_examenes[in].valores[0].valor" [name]="s.nombre"  class="form-control " (input)="kambio_valor(s.cod_examen,$event.target.value)" required>
         
                                                 </ng-container>
                                                 <ng-container *ngIf="s.valores_referencia.length!=0">
-                                                  <input  oninput="validity.valid||(value='');"  type="number" min="0" step="0.01" list="valores_examen" [(ngModel)]="solicitudSinResultado.examenes_solicitados[indice].resultados_examen.resultados_examenes[i].resultados_examenes[in].valores[0].valor" [name]="s.nombre" class="form-control " (input)="kambio_valor(s.cod_examen, $event.target.value)" required>
-         
-                                                 </ng-container>
+                                                  <ng-container *ngIf="s.nombre != 'Leucocitos' || s.cod_area !=6">
+                                                    <input  autocomplete="off" oninput="validity.valid||(value='');"  type="number" min="0" step="0.01" list="valores_examen" [(ngModel)]="solicitudSinResultado.examenes_solicitados[indice].resultados_examen.resultados_examenes[i].resultados_examenes[in].valores[0].valor" [name]="s.nombre" class="form-control " (input)="kambio_valor(s.cod_examen, $event.target.value)" required>
+
+
+                                                  </ng-container>
+                                                
+                                                  <ng-container *ngIf=" s.cod_area==6">
+                                                    <input  autocomplete="off" type="text" list="valores_examen" [(ngModel)]="solicitudSinResultado.examenes_solicitados[indice].resultados_examen.resultados_examenes[i].resultados_examenes[in].valores[0].valor" [name]="s.nombre" class="form-control " (input)="kambio_valor(s.cod_examen, $event.target.value)" required>
+
+
+
+                                                  </ng-container>
+                                                </ng-container>
                                               <datalist id="valores_examen">
                                                  <option *ngFor="let c of examenesfiltradosporcaracter" [value]="c.valor" ></option>
                                                </datalist>                
@@ -261,7 +272,7 @@
                                        </td>
                                  <td class="text-center">   
                                    
-                                  <a *ngIf="s.valores_referencia.length>0" (click)="registrar(s)" data-toggle="modal" data-target="#addevent"  class=" waves-effect waves-float waves-green"><i class="zmdi zmdi-edit"></i></a> 
+                                  <a *ngIf="s.valores_referencia.length>0" (click)="registrar(s)" class=" waves-effect waves-float waves-green"><i class="zmdi zmdi-edit"></i></a> 
                                        <span *ngFor="let v of s.valores_referencia">
                                       {{v.tipo_persona}} {{v.valor_inicial}}-{{v.valor_final}} .
                                     </span>
@@ -277,6 +288,10 @@
                     </tbody>
                     </table>
 
+                    <div class="form-group">
+                      <label for="exampleFormControlTextarea1">Nota:</label>
+                      <textarea class="form-control titulo" id="exampleFormControlTextarea1" rows="1" [(ngModel)]="solicitudSinResultado.examenes_solicitados[indice].nota" name="nota"></textarea>
+                    </div>
 
 
 
@@ -285,15 +300,11 @@
                   
                 </div>
               </div>
-              
 
-              
-
+          
 
 
 
-{{form.valid}}
-            
 
       <div style="margin:20px" class="row">    
 <div class="row clearfix col-md-3">
@@ -352,12 +363,12 @@
                     <ng-container *ngIf="v.estado" >  
                     <div class="col-sm-4" >
                       <div class="form-group">
-                        <input type="text"  [(ngModel)]="examen.valores_referencia[i].valor_inicial" [name]="'valor_incial' +i" class="form-control" placeholder="valor inicial"  required/>
+                        <input oninput="validity.valid||(value='');" type="number" min="0" step="0.01"  [(ngModel)]="examen.valores_referencia[i].valor_inicial" [name]="'valor_incial' +i" class="form-control" placeholder="valor inicial"  required/>
                       </div>
                     </div>
                     <div class="col-sm-4">
                       <div class="form-group">
-                        <input type="text"   [(ngModel)]="examen.valores_referencia[i].valor_final" [name]="'valor_final' + i" class="form-control" placeholder="valor final"  required/>
+                        <input oninput="validity.valid||(value='');" type="number" min="0" step="0.01"   [(ngModel)]="examen.valores_referencia[i].valor_final" [name]="'valor_final' + i" class="form-control" placeholder="valor final"  required/>
                       </div>
                     </div>
                     <div class="col-sm-4">
@@ -378,7 +389,7 @@
             
         <div class="modal-footer">
           <button type="button" (click)="guardarvalorreferencia()" id="ana" class="btn btn-primary btn-round waves-effect" data-dismiss="modal">Guardar</button>
-          <button type="button" class="btn btn-simple btn-round waves-effect" data-dismiss="modal">Salir</button>
+          <button type="button" (click)="recuperarExamen(examen)" class="btn btn-simple btn-round waves-effect" data-dismiss="modal">Salir</button>
         </div>
       </div>
     </div>

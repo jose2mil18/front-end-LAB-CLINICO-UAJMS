@@ -42,7 +42,7 @@
     
 <div class="row clearfix">
   <div class="col-lg-2 col-md-2 col-sm-2 form-control-label">
-    <label for="login">Examenes</label>
+    <label for="login">Exámenes</label>
   </div>
     <div class="col-lg-4 col-md-4 col-sm-4">
    
@@ -68,11 +68,11 @@
 <table class="table table-bordered table-striped table-hover js-basic-example dataTable" >
                       <thead>
                         <tr>
-                            <th>PRUEBA</th>
+                            <th>Examen</th>
                             
-                            <th>RESULTADO</th>
-                            <th>UNIDADES</th>
-                            <th>VALOR DE REFERENCIA</th>
+                            <th>Resultado</th>
+                            <th>Unidades</th>
+                            <th>Valor de referencia</th>
                           
                         </tr>
                       </thead>
@@ -91,7 +91,7 @@
   <datalist id="valores_examen">
         <option *ngFor="let c of examenesfiltradosporcaracter" [value]="c" >{{c.valor}}</option>
       </dat                                        <p-autoComplete (ngModelChange)="k(s.cod_examen, i)" [(ngModel)]="form.resultados[i]" name="resultados[i]" class="form-control" [suggestions]="filteredCountriesSingle" (completeMethod)="buscaValorExamen($event, s.cod_examen, i)" field="valor" [size]="30" placeholder="Countries" [minLength]="1"></p-autoComplete>-->
-      <input  disabled type="text"  list="valores_examen" [(ngModel)]="examenSolicitado.resultados_examen.valores[0].valor" name="resultado" [ngClass]="borde" class="form-control" (ngModelChange)="kambio_valor(examenSolicitado.precio_examen.examen.cod_examen, examenSolicitado.resultados_examen.valores[0].valor)">
+      <input  disabled type="text"  list="valores_examen" [(ngModel)]="examenSolicitado.resultados_examen.valores[0].valor" name="resultado" class="form-control" (ngModelChange)="kambio_valor(examenSolicitado.precio_examen.examen.cod_examen, examenSolicitado.resultados_examen.valores[0].valor)">
       <datalist id="valores_examen">
         <option *ngFor="let c of examenesfiltradosporcaracter" [value]="c.valor" ></option>
       </datalist>                
@@ -103,7 +103,7 @@
                                    </td>
                              <td class="text-center">   
                                
-                              <a  (click)="registrar(s)" data-toggle="modal" data-target="#addevent"  class=" waves-effect waves-float waves-green"><i class="zmdi zmdi-edit"></i></a> 
+                              <a   data-toggle="modal" data-target="#addevent"  class=" waves-effect waves-float waves-green"></a> 
                                    <span *ngFor="let v of examenSolicitado.precio_examen.examen.valores_referencia">
                                   {{v.tipo_persona}} {{v.valor_inicial}}-{{v.valor_final}} .
                                 </span>
@@ -135,7 +135,7 @@
                              
                        <td class="text-center">   
                          
-                        <a  (click)="registrar(s)" data-toggle="modal" data-target="#addevent"  class=" waves-effect waves-float waves-green"><i class="zmdi zmdi-edit"></i></a> 
+                        <a   data-toggle="modal" data-target="#addevent"  class=" waves-effect waves-float waves-green"></a> 
                              <span *ngFor="let v of s.valores_referencia">
                             {{v.tipo_persona}} {{v.valor_inicial}}-{{v.valor_final}} .
                           </span>
@@ -147,7 +147,7 @@
            <tr>
              <td><strong>{{s.nombre}}  </strong></td>
              <td>
-              <input style="display:none" type="text"  list="valores_examen" [ngClass]="borde" class="form-control" (ngModelChange)="kambio_valor(s.cod_examen, i)">
+              <input style="display:none" type="text"  list="valores_examen"  class="form-control" (ngModelChange)="kambio_valor(s.cod_examen, i)">
             
              </td>
              <td></td>
@@ -161,7 +161,7 @@
                                             <div class="col-lg-10 col-md-10 col-sm-8">
                                               <div class="form-group">
                                                  <!-- <p-autoComplete (ngModelChange)="k(s.cod_examen, i)" [(ngModel)]="form.resultados[i]" name="resultados[i]" class="form-control" [suggestions]="filteredCountriesSingle" (completeMethod)="buscaValorExamen($event, s.cod_examen, i)" field="valor" [size]="30" placeholder="Countries" [minLength]="1"></p-autoComplete>-->
-          <input disabled type="text"  list="valores_examen" [(ngModel)]="examenSolicitado.resultados_examen.resultados_examenes[i].resultados_examenes[in].valores[0].valor" name="examenSolicitado.resultados_examen.resultados_examenes[i].resultados_examenes[in]" [attr.id]="indice+''+i+''+ in" [ngClass]="borde" class="form-control" (ngModelChange)="kambio_valor(s.cod_examen, examenSolicitado.resultados_examen.resultados_examenes[i].resultados_examenes[in].valores[0].valor)">
+          <input disabled type="text"  list="valores_examen" [(ngModel)]="examenSolicitado.resultados_examen.resultados_examenes[i].resultados_examenes[in].valores[0].valor" name="examenSolicitado.resultados_examen.resultados_examenes[i].resultados_examenes[in]" [attr.id]="indice+''+i+''+ in"  class="form-control" (ngModelChange)="kambio_valor(s.cod_examen, examenSolicitado.resultados_examen.resultados_examenes[i].resultados_examenes[in].valores[0].valor)">
          <datalist id="valores_examen">
             <option *ngFor="let c of examenesfiltradosporcaracter" [value]="c.valor" ></option>
           </datalist>                
@@ -173,7 +173,7 @@
                                        </td>
                                  <td class="text-center">   
                                    
-                                  <a  (click)="registrar(s)" data-toggle="modal" data-target="#addevent"  class=" waves-effect waves-float waves-green"><i class="zmdi zmdi-edit"></i></a> 
+                                  <a data-toggle="modal" data-target="#addevent"  class=" waves-effect waves-float waves-green"></a> 
                                        <span *ngFor="let v of s.valores_referencia">
                                       {{v.tipo_persona}} {{v.valor_inicial}}-{{v.valor_final}} .
                                     </span>

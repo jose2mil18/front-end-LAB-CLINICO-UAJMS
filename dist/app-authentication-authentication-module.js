@@ -561,6 +561,7 @@ var SingInComponent = /** @class */ (function () {
         this.yearold = new Date("2013-09-02").getFullYear();
         this.mivariable = 'd3';
         console.log(this.mivariable);
+        window.location.href;
     }
     SingInComponent.prototype.recargar = function () {
         return true;

@@ -114,16 +114,12 @@ from solicitud s, pacientes pa, persona pe where s.cedula_paciente=pa.cedula and
       <option *ngFor="let p of pacientes" [value]="p.nombres" ></option>
     </datalist> 
   -->
+  
   <datalist id="valores_paciente">
     <option *ngFor="let p of pacientes" [value]="p.nombres" ></option>
   </datalist> 
   
-  <form   #fo="ngForm" ngNativeValidate>
-    <input type="text" required>
-    <input type="number" step="0.01" />
-    {{fo.valid}}
-    <input type="submit" (click)="enviar(fo)" >
-  </form>
+  
     
 <p-table id="table" #dd [value]="solicitudes" [columns]="cols" [paginator]="true" [rows]="10" [pageLinks]="2" [rowsPerPageOptions]="[5,10,20]" >
   
@@ -143,7 +139,7 @@ from solicitud s, pacientes pa, persona pe where s.cedula_paciente=pa.cedula and
           
           <th style="width:200px"> Fecha</th>
           <th>Estado</th>
-          <th  >Examenes</th>
+          <th  >Exámenes</th>
           
           <th style="width:115px">Acciones</th>
      
@@ -197,11 +193,21 @@ from solicitud s, pacientes pa, persona pe where s.cedula_paciente=pa.cedula and
           <td>
             {{solicitud.fecha | date: 'dd-MM-yyyy'}}
           </td>
-          <td>
-            {{solicitud.estado_solicitud}}
-          </td>
+          <td pEditableColumn>
+            <p-cellEditor>
+                <ng-template pTemplate="input">
+                  <ng-select   placeholder=""  [(ngModel)]="solicitud.estado_solicitud" class="" (ngModelChange)="cambiar_estado(solicitud)"   name="estado" required>
+                    <ng-option  *ngFor=" let rol of brands2" [value]="rol.value" >{{rol.label}}</ng-option>
+                   
+                   </ng-select>
+                </ng-template>
+                <ng-template pTemplate="output">
+                    {{solicitud.estado_solicitud}}
+                </ng-template>
+            </p-cellEditor>
+        </td>
           <td>  
-              <ng-select  placeholder="mostrar examenes">
+              <ng-select  placeholder="Mostrar exámenes">
                 <ng-option *ngFor="let e of solicitud.examenes_solicitados" [value]="e"  >{{e.precio_examen.examen.nombre}}</ng-option>
               
               </ng-select>
@@ -220,7 +226,7 @@ from solicitud s, pacientes pa, persona pe where s.cedula_paciente=pa.cedula and
             <button  rel="tooltip" data-placement="top" title="Modificar" (click)="actualizar(solicitud)" routerLink="/solicitudes/modificar"  class="btn btn-warning btn-pequeño  btn-icon-mini btn-round">
               <i class="zmdi zmdi-edit col-white" style="color:white; font-size:17px"></i></button>
             </ng-container>
-            <ng-container  *ngIf="solicitud.estado=='Registrado'">
+            <ng-container  *ngIf="solicitud.estado=='Registrado' || solicitud.estado=='Pendiente'">
               <button  rel="tooltip" data-placement="top" title="Modificar" (click)="actualizar(solicitud)" routerLink="/solicitudes/modificar"  class="btn btn-warning btn-pequeño  btn-icon-mini btn-round" disabled>
                 <i class="zmdi zmdi-edit col-white" style="color:white; font-size:17px"></i></button>
               </ng-container>
@@ -231,7 +237,7 @@ from solicitud s, pacientes pa, persona pe where s.cedula_paciente=pa.cedula and
             <ng-container  *ngIf="solicitud.estado=='Registrado'">
             <button rel="tooltip" data-placement="top" title="Ver factura" (click)="facturar(solicitud)" routerLink="/solicitudes/factura" class="btn btn-secondary btn-pequeño  btn-icon-mini btn-round"><i class="zmdi zmdi-assignment col-white" style="color:white; font-size:17px"></i></button>
           </ng-container>
-          <ng-container  *ngIf="solicitud.estado=='Sin Registrar'">
+          <ng-container  *ngIf="solicitud.estado=='Sin Registrar' || solicitud.estado=='Pendiente'">
             <button rel="tooltip" data-placement="top" title="Ver factura" (click)="facturar(solicitud)" routerLink="/solicitudes/factura" class="btn btn-secondary btn-pequeño  btn-icon-mini btn-round" disabled><i class="zmdi zmdi-assignment col-white" style="color:white; font-size:17px"></i></button>
           </ng-container>
             </div>
@@ -362,13 +368,13 @@ from solicitud s, pacientes pa, persona pe where s.cedula_paciente=pa.cedula and
         
     <div class="row">
       <div class="col ">
-          <p class="font-weight-bold">Institucion: 
+          <p class="font-weight-bold">Institución: 
               <span class="font-weight-normal">{{solicitud.institucion.nombre}}</span>
           </p>
       </div>
   </div>
       
-  <div class="row">
+  <div class="row" *ngIf="solicitud.doctor_solicitante!=null">
     <div class="col ">
         <p class="font-weight-bold">Doctor solicitante: 
             <span class="font-weight-normal">{{solicitud.doctor_solicitante.nombre}} {{solicitud.doctor_solicitante.ap}} {{solicitud.doctor_solicitante.am}}</span>
@@ -386,7 +392,7 @@ from solicitud s, pacientes pa, persona pe where s.cedula_paciente=pa.cedula and
 <div class="row">
   <div class="col ">
       <p class="font-weight-bold">Fecha de entrega:  
-          <span class="font-weight-normal" >{{solicitud.fecha_entrega  | date: 'dd-MM-yyyy'}}</span>
+          <span  class="font-weight-normal" ><input  style="width: 140px;" type="date" id="fecha_entregas" [(ngModel)]="fecha_entregas" (change)="cambiar_estado(solicitud)"></span>
       </p>
   </div>
 </div>
@@ -399,7 +405,7 @@ from solicitud s, pacientes pa, persona pe where s.cedula_paciente=pa.cedula and
       </p>
   </div>
 </div>
-<div class="row" style="display:none">
+<div class="row" >
   <div class="col ">
       <p class="font-weight-bold">Resultados: 
           <span class="font-weight-normal" >{{solicitud.estado}}</span>
@@ -408,29 +414,37 @@ from solicitud s, pacientes pa, persona pe where s.cedula_paciente=pa.cedula and
 </div>
 
 <div class="row">
+  <div class="col-md-6 "style="padding: 0px;" > <p class="font-weight-bold">Exámenes: 
+  
+</p></div>
+  <div class="col-md-3 " style="padding: 0px;">  <p class="font-weight-bold">Resultados: 
+</p></div>
+  
+  <div class="col-md-3 " style="padding: 0px;"> <p class="font-weight-bold">Fecha: 
+  
+</p></div>
+</div>
+<div class="row" *ngFor="let e of solicitud.examenes_solicitados" > 
   <div class="col-md-6 "style="padding: 0px;">
-      <p class="font-weight-bold">Examenes: 
+    
           <span class="font-weight-normal" >
-            <div *ngFor="let e of solicitud.examenes_solicitados" >{{e.precio_examen.examen.nombre}} </div>
-          
+            <div  >{{e.precio_examen.examen.nombre}} </div>
         </span>
-      </p>
+   
   </div>
   <div class="col-md-3 " style="padding: 0px;">
-    <p class="font-weight-bold">Resultados: 
+   
         <span class="font-weight-normal" >
-          <div *ngFor="let e of solicitud.examenes_solicitados"  >{{e.estado}}</div>
-        
+          <div  >{{e.estado}}</div>
       </span>
-    </p>
+
 </div>
 <div class="col-md-3 " style="padding: 0px;">
-  <p class="font-weight-bold">Fecha: 
+ 
       <span class="font-weight-normal" >
-        <div *ngFor="let e of solicitud.examenes_solicitados"  >{{e.fecha | date: 'dd-MM-yyyy'}}</div>
-      
+        <div  >{{e.fecha | date: 'dd-MM-yyyy'}}</div>
     </span>
-  </p>
+ 
 </div>
 </div>
 
@@ -439,7 +453,7 @@ from solicitud s, pacientes pa, persona pe where s.cedula_paciente=pa.cedula and
 </div>
        </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-danger btn-round waves-effect" data-dismiss="modal">CERRAR</button>
+        <button type="button" (click)="cerrar()" class="btn btn-danger btn-round waves-effect" data-dismiss="modal">CERRAR</button>
        
       </div>
     </div>

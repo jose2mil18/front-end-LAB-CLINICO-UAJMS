@@ -3,14 +3,12 @@
     <div class="block-header">
       <div class="row">
         <div class="col-lg-7 col-md-6 col-sm-12">
-          <h2>Reporte de analisis
+          <h2>Reporte de Análisis
             <small></small>
           </h2>
         </div>
         <div class="col-lg-5 col-md-6 col-sm-12">
-          <button class="btn btn-white btn-icon btn-round hidden-sm-down float-right m-l-10" type="button">
-            <i class="zmdi zmdi-plus"></i>
-          </button>
+        
           <ul class="breadcrumb float-md-right">
             <li class="breadcrumb-item"><a routerLink="/dashboard/main"><i class="zmdi zmdi-home"></i> </a></li>
             <li class="breadcrumb-item"><a href="javascript:void(0);">resultados</a></li>
@@ -22,8 +20,9 @@
     <div class="container-fluid">
       <div class="row clearfix">
         <div class="col-lg-12">
-          <div class="card">
-            <div class="body"><div style="margin:40px; padding:10px" id="contentToConvert" align-text="text-center">
+          <div class="card" style="margin:40px; padding:10px" id="contentToConvert" align-text="text-center">
+            <div class="body">
+              <div >
   
               <div >
                   <div  class=""  >
@@ -44,7 +43,7 @@
                     <div class="col-md-4"><strong>:</strong>   {{solicitud.paciente.persona.nombre}} {{solicitud.paciente.persona.ap}} {{solicitud.paciente.persona.am}}</div>
   
                     <div class="col-md-2"><Strong>Institucion  </Strong>        </div>
-                    <div class="col-md-4"><strong>:</strong>   <span *ngIf="solicitud.institucion.cod_institucion !='PAR'"> {{solicitud.institucion.cod_institucion_padre}} </span><span *ngIf="solicitud.institucion.cod_institucion=='PAR'">{{solicitud.institucion.nombre}}</span></div>
+                    <div class="col-md-4"><strong>: </strong>   <span *ngIf="solicitud.institucion.cod_institucion !='PAR'"> {{solicitud.institucion.cod_institucion_padre}} </span><span *ngIf="solicitud.institucion.cod_institucion=='PAR'">{{solicitud.institucion.nombre}}</span></div>
   
                     <div class="col-md-2"><Strong>Edad  </Strong>        </div>
                     <div class="col-md-2"><strong>:</strong>   {{solicitud.paciente.edad}}</div>
@@ -53,7 +52,7 @@
                     <div class="col-md-1"><strong>:</strong>   {{solicitud.paciente.sexo}}</div>
                   
                     <div class="col-md-2"><Strong>Indicaciones del Dr.  </Strong>        </div>
-                    <div class="col-md-4"><strong>:</strong>   {{solicitud.doctor_solicitante.nombre}} {{solicitud.doctor_solicitante.ap}} {{solicitud.doctor_solicitante.am}}</div>
+                    <div class="col-md-4"><strong>: </strong>  <span *ngIf="solicitud.doctor_solicitante != null">{{solicitud.doctor_solicitante.nombre}} {{solicitud.doctor_solicitante.ap}} {{solicitud.doctor_solicitante.am}}</span><span *ngIf="solicitud.doctor_solicitante==null">A QUIEN CORRESPONDA</span></div>
   
                     <div class="col-md-2"><Strong>Procedencia  </Strong>        </div>
                     <div class="col-md-4"><strong>:</strong>   {{solicitud.paciente.procedencia}}</div> 
@@ -113,9 +112,9 @@
                   </ng-container>
 
                   <ng-container  *ngFor="let re of ex.resultados_examen.resultados_examenes">
-                    <div class="row">
+                    <div class="row" *ngIf="re.valores[0].valor !=''">
    
-                     <div class="col-md-3"><strong >{{re.examen.nombre}} </strong>      </div>
+                     <div class="col-md-3">{{re.examen.nombre}}    </div>
                  <div class="col-md-3"><span *ngIf="re.examen.num_subexamenes==0">:</span>  <span *ngFor="let v of re.valores">{{v.valor}}</span></div>
                
                  <div class="col-md-3"> 
@@ -131,7 +130,7 @@
                 <ng-container  *ngFor="let re of re.resultados_examenes">
                   <div class="row">
  
-                   <div class="col-md-3"><strong >{{re.examen.nombre}} </strong>      </div>
+                   <div class="col-md-3">{{re.examen.nombre}}    </div>
                <div class="col-md-3"><strong >:</strong>  <span *ngFor="let v of re.valores">{{v.valor}}</span></div>
              
                <div class="col-md-3"> <span *ngFor="let v of re.examen.valores_referencia">
@@ -144,15 +143,32 @@
                   </div>
               </ng-container>
             </ng-container>
-            </ng-container>
-     
+                  </ng-container>
+                   
                   
           
           
                     </ng-container>
+                    
           
           
-          </div>
+                  </div>
+                  <div class="row">
+     
+                    <div class="col-md-1" *ngIf="notaFinal != ''">
+                      <strong>Nota:</strong>
+                      </div>
+                      <div class="col-md-11">
+                        <div  *ngFor="let ex of solicitud.examenes_solicitados">
+                          {{ex.nota}}
+                          <br>
+                   
+
+
+                        </div>
+                      </div>
+                  </div>
+                  
 
 
 <!--
@@ -174,14 +190,24 @@
                </div>
 -->
 
-
              </div>
+            
   
             </div>
             </div>
               </div>
             </div>
             </div>
+            <div class="container card-footer" style="background-color: white; border-top:0px solid " align-text="text-center">
+            
+              <div class="row">
+                <div class="col-md-9"></div>
+                <div class="col-md-3" >
+              <strong  style="font-size: 14px;">Usuario: </strong><span style="font-size: 14px;">{{currentUser.personal_laboratorio.persona.nombre}} {{currentUser.personal_laboratorio.persona.ap}} {{currentUser.personal_laboratorio.persona.am}}</span><br>
+          <strong style="font-size: 14px;">Fecha: </strong> <span style="font-size: 14px;">{{fechita}}</span>
+        </div>
+          </div>
+          </div>
           </div>
         </div>
       </div>

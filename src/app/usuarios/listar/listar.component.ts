@@ -3,14 +3,10 @@ import {NavigationStart, Router} from '@angular/router';
 import {UsuariosService} from '../usuarios.service'
 import {Paciente, Usuario, Rol} from '../../models'
 import { SelectItem } from 'primeng/primeng';
-import * as jspdf from 'jsPDF'; 
-import jsPDF from 'jspdf';
-import html2canvas from 'html2canvas';
-//import swal from 'sweetalert2'
-import 'jspdf-autotable';
+
 declare const $: any;
 declare const showConfirmMessage:any
-declare var Stimulsoft: any;
+
 
 declare const Swal: any;
 @Component({
@@ -66,8 +62,7 @@ this.rootNode=node;
  
     this.cols = [
       { field: 'cedula', header: 'Cedula' },
-      { field: 'nombres', header: 'Usuario' },
-      { field: 'estado', header: 'Estado' }
+      { field: 'nombres', header: 'Usuario' }
   ];
   this.brands = [
     { label: 'Habilitado', value: 'habilitado' },

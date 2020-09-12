@@ -14,3 +14,8 @@ select:required:invalid {
    
     text-transform: capitalize;
   }
+  .link{
+ 
+  
+    cursor: pointer
+  }

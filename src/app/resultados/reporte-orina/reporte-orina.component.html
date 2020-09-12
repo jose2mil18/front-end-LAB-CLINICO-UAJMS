@@ -5,14 +5,12 @@
     <div class="block-header">
       <div class="row">
         <div class="col-lg-7 col-md-6 col-sm-12">
-          <h2>Reporte de orina
+          <h2>Reporte de Análisis de Orina
             <small></small>
           </h2>
         </div>
         <div class="col-lg-5 col-md-6 col-sm-12">
-          <button class="btn btn-white btn-icon btn-round hidden-sm-down float-right m-l-10" type="button">
-            <i class="zmdi zmdi-plus"></i>
-          </button>
+          
           <ul class="breadcrumb float-md-right">
             <li class="breadcrumb-item"><a routerLink="/dashboard/main"><i class="zmdi zmdi-home"></i> </a></li>
             <li class="breadcrumb-item"><a href="javascript:void(0);">resultados</a></li>
@@ -32,8 +30,7 @@
                       <div class="container">
                        
                                      <div class="text-center">
-                                    <br>
-                                    <br>
+                                   
                 <h3 style="margin:10px"><pre>A N Á L I S I S   D E   O R I N A</pre></h3>
               </div>
               
@@ -54,8 +51,8 @@
                   <div class="col-md-1"><Strong>Sexo  </Strong>        </div>
                   <div class="col-md-1"><strong>:</strong>   {{solicitud.paciente.sexo}}</div>
                 
-                  <div class="col-md-2"><Strong>Indicaciones del Dr.  </Strong>        </div>
-                  <div class="col-md-4"><strong>:</strong>   {{solicitud.doctor_solicitante.nombre}} {{solicitud.doctor_solicitante.ap}} {{solicitud.doctor_solicitante.am}}</div>
+                  <div class="col-md-2"><Strong style="padding:0px; width:100%; margin:0px">Indicaciones del Dr.</Strong>        </div>
+                  <div class="col-md-4"><strong>: </strong> <span *ngIf="solicitud.doctor_solicitante != null">{{solicitud.doctor_solicitante.nombre}} {{solicitud.doctor_solicitante.ap}} {{solicitud.doctor_solicitante.am}}</span><span *ngIf="solicitud.doctor_solicitante==null">A QUIEN CORRESPONDA</span></div>
 
                   <div class="col-md-2"><Strong>Procedencia  </Strong>        </div>
                   <div class="col-md-4"><strong>:</strong>   {{solicitud.paciente.procedencia}}</div> 
@@ -272,16 +269,11 @@
                       
                       </table>
                      
-                         <br>
 
-
+<div><strong>EXÁMEN MICROSCÓPICO DEL SEDIMENTO</strong></div>
 
                          <div class="row">
-                            <div class="col-md-3">      </div>
-                            <div class="col-md-3"></div>
-                            
-                            <div class="col-md-3">      </div>
-                            <div class="col-md-3"></div>
+                         
                         
                         
                             <ng-container *ngFor="let resultado of ex.resultados_examen.resultados_examenes">
@@ -337,7 +329,14 @@
         </ng-container>
         </ng-container></ng-container>
 </div>
-
+<br>
+<div class="row">
+  <div class="col-md-8"></div>
+  <div class="col-md-4" >
+<strong  style="font-size: 14px;">Usuario: </strong><span style="font-size: 14px;">{{currentUser.personal_laboratorio.persona.nombre}} {{currentUser.personal_laboratorio.persona.ap}} {{currentUser.personal_laboratorio.persona.am}}</span><br>
+<strong style="font-size: 14px;">Fecha: </strong> <span style="font-size: 14px;">{{fechita}}</span>
+</div>
+</div>
                        
              </div>
   </ng-container>

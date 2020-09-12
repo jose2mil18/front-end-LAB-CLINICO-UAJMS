@@ -163,8 +163,11 @@ console.log(this.roles)
 }
  bandera:boolean=true;
 onSubmit(formulario:NgForm) {
-  console.log(this.form)
+  console.log($('#password_confirmation').val())
+  if($('#password').val()!='' && $('#password_confirmation').val()!='')
+  {
   validatePassword()
+  }
 this.usuarioService.verificarCedula(this.form.cedula).subscribe(
   data => {
       console.log(data);
@@ -176,7 +179,7 @@ this.bandera=false
   error => {
     this.bandera=true;
     validateCedula();
-    console.log('cedularepetidad');
+    console.log('cedula no esta registrado en el sistema');
  
     this.form.personal_laboratorio.persona.nombre=(this.titleCasePipe.transform(this.form.personal_laboratorio.persona.nombre))
     this.form.personal_laboratorio.persona.ap=(this.titleCasePipe.transform(this.form.personal_laboratorio.persona.ap))
@@ -196,6 +199,7 @@ this.bandera=false
   }
     this.usuarioService.register( this.form )
     .subscribe(data => {
+      alert("Usuario guardado")
       this.router.navigate(['/usuarios/listar']);
     },
     error => {  
@@ -226,9 +230,7 @@ console.log(file.item.length)
   this.form.personal_laboratorio.foto=this.fileToUpload.name;
   console.log(this.form.personal_laboratorio.foto)
 }
-rolseleccionar(d){
-console.log($('#rol').val())
-}
+
 photoSelected:string | ArrayBuffer//muestra la imagen que el usuario sube
 
 file: File=null;

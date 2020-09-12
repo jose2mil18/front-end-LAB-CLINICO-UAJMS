@@ -13,9 +13,9 @@ usuario={};
   
   private httpHeaders = new HttpHeaders({'Content-Type': 'application/json'});
     constructor(private http: HttpClient) { }
-filtro(procedencia:String, sexo:String, edad:number){
+filtro(procedencia:String, sexo:String, edad:number, cedula:string, nombres:string){
     //'+global.server+'
-    return this.http.get<Paciente[]>(`${''+global.server+'api/paciente?procedencia='}`+procedencia+'&sexo='+sexo+'&edad='+edad,  {headers: this.httpHeaders}); 
+    return this.http.get<Paciente[]>(`${''+global.server+'api/paciente?procedencia='}`+procedencia+'&sexo='+sexo+'&edad='+edad+'&cedula='+cedula+'&nombres='+nombres,  {headers: this.httpHeaders}); 
  }
     getAll() {
         return this.http.get<Paciente[]>(`${''+global.server+'api/pacientes'}`,  {headers: this.httpHeaders});

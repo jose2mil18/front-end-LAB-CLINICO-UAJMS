@@ -2,12 +2,12 @@ import {Persona} from './persona';
 import {Examen_solicitado} from './examen_solicitado'
 export class Paciente {
     examenes_solicitados:Examen_solicitado[]
-    cedula : String;
+    cedula : string;
     
     procedencia:string;
     sexo:string;
     edad:number;
-    cedula_usuario:String;
+    cedula_usuario:string;
     fnac:'';
     correo_electronico : string;
    nombres:string;

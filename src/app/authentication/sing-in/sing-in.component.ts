@@ -31,8 +31,7 @@ export class SingInComponent implements OnInit {
       this.mivariable='d3'
       console.log(this.mivariable);
       
-       
-
+       window.location.href
     
     }
 

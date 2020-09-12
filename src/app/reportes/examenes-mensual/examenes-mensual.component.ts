@@ -53,6 +53,12 @@ constructor(public reportesService :ReportesService) {
     
       this.reportes_mensual=reportes;
       
+      if(this.reportes_mensual.mes==null)
+      {
+        const mes=(new Date()).getMonth()+1;
+        this.reportes_mensual.mes=(new Date()).getMonth()+1
+
+      }
       this.Reportes_examen_mensual=this.reportes_mensual.reportes_examenes_mensual
       console.log(reportes)
           },

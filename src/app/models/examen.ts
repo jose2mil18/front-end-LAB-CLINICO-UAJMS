@@ -9,8 +9,8 @@ export class Examen{
     nombre:string;
     cod_examen_padre:number;
     cod_area:number;
-    valor_referencia:String;
-    unidades:String;
+    valor_referencia:string;
+    unidades:string;
     subexamenes: Examen[];
     area:Area;
     valores_referencia:Valor_referencia[];

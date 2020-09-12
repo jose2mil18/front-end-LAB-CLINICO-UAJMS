@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import * as jspdf from 'jsPDF';  
 import html2canvas from 'html2canvas';
-import { Solicitud } from '../../models';
+import { Solicitud , Usuario, Institucion} from '../../models';
+import { DatePipe } from '@angular/common';
 @Component({
   selector: 'app-reporte-analisis',
   templateUrl: './reporte-analisis.component.html',
@@ -9,9 +10,19 @@ import { Solicitud } from '../../models';
 })
 export class ReporteAnalisisComponent implements OnInit {
   solicitud:Solicitud;
-    constructor() { 
+  currentUser:Usuario;
+  notaFinal:string="";
+fechita:string;
+    constructor(private datePipe:DatePipe) { 
   
+      this.fechita=this.datePipe.transform(new Date(),"dd-MM-yyyy HH:mm")
+      this.currentUser = JSON.parse(localStorage.getItem('currentUser'));
       this.solicitud=JSON.parse(localStorage.getItem('solicitudaimprimir'));
+
+      for(let i=0; i<this.solicitud.examenes_solicitados.length;i++)
+      {
+        this.notaFinal=this.notaFinal+this.solicitud.examenes_solicitados[i].nota;
+      }
       console.log(this.solicitud)
     }
   

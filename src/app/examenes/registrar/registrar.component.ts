@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation, ViewChild, ElementRef } from '@angular/core';
 
 import {Router} from '@angular/router'
 import {ExamenesService} from '../examenes.service'
@@ -17,6 +17,7 @@ declare const $: any;
 })
 export class RegistrarComponent implements OnInit {
   
+@ViewChild('nombre') nombre :ElementRef;
 
   control=new FormControl('')
 index:number=0
@@ -54,6 +55,22 @@ console.log(this.subexamenes)
  
 		// Add an initial pet form-entry.
     this.examen=new Examen()
+    this.control.valueChanges.pipe(debounceTime(450)).subscribe(value=>{
+      console.log("hola"+value)
+      this.examen.nombre=value;
+      if(!this.examen.nombre) return;
+  // almacenamos la mayuscula
+  var mayuscula = this.examen.nombre.substring(0,1).toUpperCase();
+  //si la palabra tiene más de una letra almacenamos las minúsculas
+  if (this.examen.nombre.length > 0) {
+    var minuscula = this.examen.nombre.substring(1).toLowerCase();
+  }
+  //escribimos la palabra con la primera letra mayuscula
+  this.examen.nombre = mayuscula.concat(minuscula);
+  console.log(this.examen.nombre);
+  
+  }) 
+            
     this.examensito.valores_referencia=[]
     this.examensito.valores_referencia[0]=new Valor_referencia()
  
@@ -77,7 +94,28 @@ console.log(this.subexamenes)
       this.areas=data;
     });
   }
-
+colocar_en_mayuscula(){
+  /*
+  let minuscula="";
+  let nombre_examen=this.nombre.nativeElement
+  console.log(nombre_examen.value);
+  if(!this.examen.nombre) return;
+  // almacenamos la mayuscula
+  var mayuscula = this.examen.nombre.substring(0,1).toUpperCase();
+  console.log(mayuscula);
+  this.examen.nombre = mayuscula.concat(minuscula);
+  //si la palabra tiene más de una letra almacenamos las minúsculas
+  if (this.examen.nombre.length > 0) {
+  minuscula = this.examen.nombre.substring(1).toLowerCase();
+  }
+  //escribimos la palabra con la primera letra mayuscula
+  this.examen.nombre = mayuscula.concat(minuscula);
+  */
+ 
+ this.examen.nombre=this.capitalize(this.examen.nombre)
+  console.log(this.examen.nombre);
+  
+}
   ngOnInit() {
 
     this.formGroup = this.fb.group({
@@ -135,15 +173,18 @@ console.log(this.otroFormGroup.value)
   }
   i_valor_r:number=0;
   agregarValoresReferencia() {
+  
     this.examen.valores_referencia.push(new Valor_referencia())
     this.examen.valores_referencia[this.examen.valores_referencia.length-1].cod_examen=this.examen.cod_examen
 
+    this.examen.valores_referencia[this.examen.valores_referencia.length-1].fecha=this.datePipe.transform(new Date(),"dd-MM-yyyy")
    
   }
   removerValoresReferencia(indice) {
 
   // this.examen.valores_referencia.splice(indice,1)
    this.examen.valores_referencia[indice].estado=false;
+   
    //this.examen.valores_referencia.push(this.examen.valores_referencia[indice])
   // this.examen.valores_referencia.splice(indice,1);
 
@@ -225,15 +266,7 @@ removerValoresReferencia_de_subexamen_de_subexamen(i,ii, indice_valor_referencia
       }
     }
     console.log(this.examen);
-    if(form.valid){
-      this.examenesService.registrar(this.examen).subscribe(data =>{
-        console.log(data);
-        alert("examen "+ data.nombre+" guardado")
-        
-        this.router.navigate(['/examenes/listar']);
-    })
     
-  }
 }
 
 // I remove the pet at the given index.  indice_valor_referencia_de_subexamen

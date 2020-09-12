@@ -21,8 +21,8 @@
       <div class="col-lg-12">
         <div class="card">
           <div class="header">  
-            <h2 *ngIf="reporte.institucion.cod_institucion!=''"><strong>Reporte </strong> Del Mes de <span></span>{{reportes_mensual.mes}} Año {{reporte.anio}} De La Institucion {{reporte.institucion.nombre}}</h2>
-         
+            <h2 *ngIf="reporte.institucion.cod_institucion!=''"><strong>Reporte </strong> Del Mes de <span></span>{{meses[reporte.mes-1]}} Del Año {{reporte.anio}} De La Institucion {{reporte.institucion.nombre}}</h2>
+     
             <ul class="header-dropdown">
               <li class="dropdown"> <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"> <i class="zmdi zmdi-more"></i> </a>
                 <ul class="dropdown-menu dropdown-menu-right slideUp float-right">
@@ -48,7 +48,7 @@
                       </ng-select>
                  </div>
                  <div class="col-md-2">
-                    <ng-select  placeholder="año"   name="año"  [(ngModel)]="reporte.anio" (ngModelChange)="anio($event)"    >
+                    <ng-select  placeholder="año"   name="año"  [(ngModel)]="reporte.anio" (ngModelChange)="anio()"    >
                         <ng-option [value]="2018">2018</ng-option>
                         <ng-option [value]="2019" >2019</ng-option>
                       
@@ -121,7 +121,7 @@
               </tbody>
               </table>
             -->
-              <p-table  #dd [responsive]="true" [value]="Reportes_examen_mensual" [columns]="cols" [paginator]="true" [rows]="5" [pageLinks]="2" [rowsPerPageOptions]="[5,10,20]"  >
+              <p-table  #dd [responsive]="true" [value]="Reportes_examen_mensual"  [paginator]="true" [rows]="5" [pageLinks]="2" [rowsPerPageOptions]="[5,10,20]"  >
               
                 <ng-template pTemplate="caption">
                   <div class="ui-helper-clearfix" style="text-align: left">
