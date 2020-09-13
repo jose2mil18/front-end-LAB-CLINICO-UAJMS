@@ -4665,7 +4665,7 @@ var Factura = /** @class */ (function () {
 /*!*********************************!*\
   !*** ./src/app/models/index.ts ***!
   \*********************************/
-/*! exports provided: Usuario, Paciente, Area, Solicitud, Examen, Posta, Resultado, Persona, Personal, Rol, Proceso, Menu, Institucion, Valor, Resultados_examen, Examen_solicitado, Valor_referencia, Precio_examen, Resultados_por_defecto, Reporte_examen_mensual, Reporte_mensual, Reporte_anual, Reporte_examenes_solicitados, Factura, Dosificacion */
+/*! exports provided: Usuario, Paciente, Area, Solicitud, Examen, Posta, Resultado, Persona, Personal, Proceso, Menu, Rol, Institucion, Valor, Resultados_examen, Examen_solicitado, Valor_referencia, Precio_examen, Resultados_por_defecto, Reporte_examen_mensual, Reporte_mensual, Reporte_anual, Reporte_examenes_solicitados, Factura, Dosificacion */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -4698,11 +4698,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "Personal", function() { return _personal__WEBPACK_IMPORTED_MODULE_8__["Personal"]; });
 
 /* harmony import */ var _rol__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./rol */ "./src/app/models/rol.ts");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "Rol", function() { return _rol__WEBPACK_IMPORTED_MODULE_9__["Rol"]; });
-
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "Proceso", function() { return _rol__WEBPACK_IMPORTED_MODULE_9__["Proceso"]; });
 
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "Menu", function() { return _rol__WEBPACK_IMPORTED_MODULE_9__["Menu"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "Rol", function() { return _rol__WEBPACK_IMPORTED_MODULE_9__["Rol"]; });
 
 /* harmony import */ var _menu__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./menu */ "./src/app/models/menu.ts");
 /* empty/unused harmony star reexport *//* harmony import */ var _proceso__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./proceso */ "./src/app/models/proceso.ts");
@@ -5125,7 +5125,7 @@ var Resultados_por_defecto = /** @class */ (function () {
 /*!*******************************!*\
   !*** ./src/app/models/rol.ts ***!
   \*******************************/
-/*! exports provided: Rol, Proceso, Menu */
+/*! exports provided: Proceso, Menu, Rol */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
