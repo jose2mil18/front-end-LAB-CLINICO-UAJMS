@@ -26,15 +26,12 @@
               "./node_modules/primeicons/primeicons.css",
               "./node_modules/font-awesome/css/font-awesome.css",
               "./node_modules/sweetalert2/dist/sweetalert2.css",
-              
               "src/assets/plugins/bootstrap-select/css/bootstrap-select.css"
             ],
             "scripts": [
               "src/assets/js/funciones.js",
-              
               "src/assets/plugins/bootstrap-select/js/bootstrap-select.js",
               "./node_modules/sweetalert2/dist/sweetalert2.js"
-
             ]
           },
           "configurations": {
@@ -103,6 +100,10 @@
               "**/node_modules/**"
             ]
           }
+        },
+        "deploy": {
+          "builder": "angular-cli-ghpages:deploy",
+          "options": {}
         }
       }
     },

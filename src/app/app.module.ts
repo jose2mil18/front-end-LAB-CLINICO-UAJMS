@@ -13,12 +13,13 @@ import {FormBuilder, FormGroup, Validators, FormsModule, ReactiveFormsModule } f
 
 import { CommonModule, DatePipe, TitleCasePipe} from '@angular/common';
 import { ServicioService } from './servicio.service';
-
+import {MatSidenavModule} from '@angular/material/sidenav';
 @NgModule({
   declarations: [
     AppComponent
   ],
   imports: [
+    MatSidenavModule,
     NgSelectModule,
     FormsModule,
     ReactiveFormsModule,

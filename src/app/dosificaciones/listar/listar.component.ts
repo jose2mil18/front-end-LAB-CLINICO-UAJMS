@@ -7,7 +7,7 @@ import * as jspdf from 'jsPDF';
 import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
 //import swal from 'sweetalert2'
-import 'jspdf-autotable';
+
 declare const $: any;
 declare const showConfirmMessage:any
 declare var Stimulsoft: any;

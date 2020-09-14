@@ -127,7 +127,10 @@ imageUrl: string = "";
      $('body').addClass('main');
            
     }
-    
+    openMenu(){
+        $("#hola").toggleClass("rojo");
+        $('body').toggleClass('overlay-open');
+    }
   Logout() {
  
   
