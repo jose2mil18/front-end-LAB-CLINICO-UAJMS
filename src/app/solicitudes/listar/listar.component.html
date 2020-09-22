@@ -133,9 +133,12 @@ from solicitud s, pacientes pa, persona pe where s.cedula_paciente=pa.cedula and
 </ng-template>
   <ng-template pTemplate="header" let-solicitud="rowData">
       <tr><th style="width:45px" class="text-center">#</th>
-          <th *ngFor="let col of cols" >
-              {{col.header}}
+          <th >
+              Paciente
           </th>
+          <th >
+            Resultados
+        </th>
           
           <th style="width:200px"> Fecha</th>
           <th>Estado</th>
@@ -146,19 +149,21 @@ from solicitud s, pacientes pa, persona pe where s.cedula_paciente=pa.cedula and
       </tr>
       <tr>
         <th></th>
-          <th  style="width:auto" *ngFor="let col of cols" [ngSwitch]="col.field">
-            <ng-container  *ngSwitchCase="'nombres_paciente'">
-           
-              <input   pInputText  [(ngModel)]="form.caracter_nombre" list="valores_paciente" (input)="busca_pacientes()"  name="caracter_nombre" type="text"  placeholder="">
+          <th  style="width:auto" >
+            <input   pInputText   [formControl]="control" list="valores_paciente" (input)="busca_pacientes()"  name="caracter_nombre" type="text"  placeholder="">
       
-             </ng-container>
-              <ng-select  *ngSwitchCase="'estado'"  placeholder=""  [(ngModel)]="form.resultados" class="" (ngModelChange)="filtro_completo(formulario)"   name="resultados" required>
-                <ng-option  *ngFor=" let rol of brands" [value]="rol.value" >{{rol.label}}</ng-option>
-               
-               </ng-select>
+           
              
 
            
+          </th>
+          <th>
+          <ng-select  placeholder=""  [(ngModel)]="form.resultados" class="" (ngModelChange)="filtro_completo(formulario)"   name="resultados" required>
+            <ng-option  *ngFor=" let rol of brands" [value]="rol.value" >{{rol.label}}</ng-option>
+           
+           </ng-select>
+         
+
           </th>
           <th>
               <div class="ui-inputgroup">
@@ -187,16 +192,19 @@ from solicitud s, pacientes pa, persona pe where s.cedula_paciente=pa.cedula and
                 {{i+1}}
         
         </td>
-          <td *ngFor="let col of cols; index as i" [style]="{'width':'100%'}">
-              {{solicitud[col.field]}}
+          <td  [style]="{'width':'100%'}">
+              {{solicitud.paciente.nombres}}
           </td>
           <td>
+            {{solicitud.estado}}
+          </td>
+          <td  id="fecha">
             {{solicitud.fecha | date: 'dd-MM-yyyy'}}
           </td>
           <td pEditableColumn>
             <p-cellEditor>
                 <ng-template pTemplate="input">
-                  <ng-select   placeholder=""  [(ngModel)]="solicitud.estado_solicitud" class="" (ngModelChange)="cambiar_estado(solicitud)"   name="estado" required>
+                  <ng-select   placeholder=""  [(ngModel)]="solicitud.estado_solicitud" class="" (ngModelChange)="cambiar_estado(solicitud,i)"   name="estado" required>
                     <ng-option  *ngFor=" let rol of brands2" [value]="rol.value" >{{rol.label}}</ng-option>
                    
                    </ng-select>
@@ -217,7 +225,7 @@ from solicitud s, pacientes pa, persona pe where s.cedula_paciente=pa.cedula and
               <div class="row">
                           
                 <div class="col-md-1" >
-              <button  rel="tooltip" data-placement="top" title="Ver Datos" (click)="ver(solicitud)"  data-toggle="modal" data-target="#defaultModal" class="btn btn-info btn-pequeño  btn-icon-mini btn-round">
+              <button  rel="tooltip" data-placement="top" title="Ver Datos" (click)="ver(solicitudes[i])"  data-toggle="modal" data-target="#defaultModal" class="btn btn-info btn-pequeño  btn-icon-mini btn-round">
                 <i class="zmdi zmdi-eye col-white" style="color:white; font-size:17px"></i></button>
           </div>
         
@@ -241,6 +249,8 @@ from solicitud s, pacientes pa, persona pe where s.cedula_paciente=pa.cedula and
             <button rel="tooltip" data-placement="top" title="Ver factura" (click)="facturar(solicitud)" routerLink="/solicitudes/factura" class="btn btn-secondary btn-pequeño  btn-icon-mini btn-round" disabled><i class="zmdi zmdi-assignment col-white" style="color:white; font-size:17px"></i></button>
           </ng-container>
             </div>
+
+          
        
           </div>
               
@@ -320,7 +330,7 @@ from solicitud s, pacientes pa, persona pe where s.cedula_paciente=pa.cedula and
             </div>
             
   <div class="col-lg-8">
-            <input id="fecha_inicio" class="form-control" [(ngModel)]="form.fecha_inicio" name="fecha_inicio" type="date" placeholder="fecha_inicio" required max="form.fecha_fin">
+            <input id="fecha_inicio" class="form-control" [(ngModel)]="form.fecha_inicio" name="fecha_inicio" type="date" placeholder="fecha_inicio" required [max]="form.fecha_fin">
         
                   </div>
 <br>
@@ -330,12 +340,12 @@ from solicitud s, pacientes pa, persona pe where s.cedula_paciente=pa.cedula and
                       </div>
                       
             <div class="col-lg-8">
-                      <input  class="form-control"  id="fecha_fin" [(ngModel)]="form.fecha_fin"  name="fecha_fin" type="date"  placeholder="fecha_final" required>
+                      <input  class="form-control"  id="fecha_fin" [(ngModel)]="form.fecha_fin" [min]="form.fecha_inicio" name="fecha_fin" type="date"  placeholder="fecha_final" required>
                   
                             </div>
               </div>
       <div class="modal-footer">
-        <button type="submit" (click)="filtro_completo(formulario)" id="a" class="btn btn-primary btn-round waves-effect" >Guardar</button>
+        <button type="submit" (click)="cerrarModalsito()"  (click)="filtro_completo(formulario)" id="a" class="btn btn-primary btn-round waves-effect" >Guardar</button>
         <button type="button" class="btn btn-simple btn-round waves-effect" data-dismiss="modal">Salir</button>
       </div>
       </form>

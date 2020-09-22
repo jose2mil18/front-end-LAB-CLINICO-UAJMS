@@ -41,7 +41,7 @@
               <div class="container">
                   <div class="row">
                     <div class="col-md-2">
-                        <ng-select  placeholder="institucion"  name="instiucion"  [(ngModel)]="reporte.institucion" (ngModelChange)="insti($event)"   >
+                        <ng-select  placeholder="institucion"  name="instiucion"  [(ngModel)]="reporte.institucion" (ngModelChange)="insti()"   >
                          
                             <ng-option *ngFor="let i of instituciones" [value]="i">{{i.nombre}}</ng-option>
                           

@@ -50,9 +50,10 @@ coment;
 currentUser:Usuario
 indice:number=0;
 personas:any[]
+cadena2:string="esta es una fiesta"
     constructor(private resultadosService:ResultadosService, private examenesService: ExamenesService, private router:Router,private solicitudesService:SolicitudesService) { 
       this.personas=[{nombre:'Adultos', valor:'A.'}, {nombre:'Niños', valor:'N.'}, {nombre:'Masculino', valor:'M.'}, {nombre:'Femenino', valor:'F.'}]
-    
+
     this.currentUser = JSON.parse(localStorage.getItem('currentUser'));
       this.array=[]
       this.array[0]=''
@@ -131,12 +132,14 @@ personas:any[]
   
   
       guardarresultados(form: NgForm){
+        this.solicitudSinResultado.examenes_solicitados[this.indice].nota=this.solicitudSinResultado.examenes_solicitados[this.indice].nota.toLowerCase()
+        this.solicitudSinResultado.examenes_solicitados[this.indice].nota=this.capitalize(this.solicitudSinResultado.examenes_solicitados[this.indice].nota)
         this.solicitudSinResultado.examenes_solicitados[this.indice].cedula_usuario=this.currentUser.cedula
         console.log(this.solicitudSinResultado.examenes_solicitados[this.indice])
         if( form.valid && (this.solicitudSinResultado.examenes_solicitados[this.indice].estado =='Registrado' || this.solicitudSinResultado.examenes_solicitados[this.indice].estado =='Actualizado')){
           this.resultadosService.modificarResultados(this.solicitudSinResultado.examenes_solicitados[this.indice]).subscribe(
             solicitud => {
-              alert("resultados actualizados")
+              alert("Resultados actualizados")
               this.router.navigate(['/resultados/ver']);
               console.log(solicitud)
               this.solicitudSinResultado=solicitud
@@ -227,6 +230,10 @@ personas:any[]
       
       this.router.navigate(['/resultados/modificar']);
   })
+}
+capitalize(s){
+  if (typeof s !== 'string') return ''
+  return s.charAt(0).toUpperCase() + s.slice(1)
 }
   }
   

@@ -24,6 +24,10 @@ usuario={};
    public getAll() {
         return this.http.get<Solicitud[]>(`${''+global.server+'api/solicitudes'}`,  {headers: this.httpHeaders});
     }
+
+    public actualizarEstado(solicitud:Solicitud) {
+        return this.http.post<Solicitud[]>(`${''+global.server+'api/actualizar-estado'}`,solicitud, {headers: this.httpHeaders});
+    }
     obtenerSolicitud(cod_solicitud){
         console.log(cod_solicitud)
         return this.http.get<Solicitud>(`${''+global.server+'api/solicitud/'}`+cod_solicitud, {headers: this.httpHeaders});

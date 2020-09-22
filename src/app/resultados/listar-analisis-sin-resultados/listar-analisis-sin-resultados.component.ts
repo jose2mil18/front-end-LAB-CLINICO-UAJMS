@@ -13,6 +13,7 @@ import {PacientesService} from '../../pacientes/pacientes.service';
 import {FormControl, FormBuilder, FormGroup, Validators, NgForm } from '@angular/forms';
 declare const validatefechas:any;
 declare const $: any;
+declare const cerrarModal:any;
 @Component({
   selector: 'app-listar-analisis-sin-resultados',
   templateUrl: './listar-analisis-sin-resultados.component.html',
@@ -41,18 +42,16 @@ solicitudes:Solicitud[];
     this.currentUser = JSON.parse(localStorage.getItem('currentUser'));
   
   
-    resultadosService.getAnalisisSinResultados().subscribe(data => {
-      this.solicitudes=data;
-      for(let i=0;i<this.solicitudes.length; i++){
-        this.solicitudes[i].nombres_paciente=this.solicitudes[i].paciente.persona.nombre+" "+this.solicitudes[i].paciente.persona.ap+" "+this.solicitudes[i].paciente.persona.am
-      }
-    });
+    
+    this.filtro_completo2()
 
   }
 
   ngOnInit() {
     this.brands = [
-      { label: 'Sin Registrar', value: 'Sin Registrar' }
+      { label: 'Sin Registrar', value: 'Sin Registrar' },
+      
+      { label: 'Pendiente', value: 'Pendiente' }
    
   ];
     this.cols = [
@@ -162,6 +161,37 @@ busca_pacientes(){
 
 
 }
+filtro_completo2(){
+  //console.log(this.form.fech)
+  console.log("ete es filtro 2"+this.form.cedula)
+if(this.form.resultados == null)
+{
+ this.form.resultados=""
+}
+if(this.form.estado_solicitud == null)
+{
+ this.form.estado_solicitud=""
+}
+
+   console.log(this.form.resultados)
+   
+   if( true )
+   {
+     
+  this.solicitudesService.filtrarPaciente(this.form.cedula,  this.form.fech, this.form.fecha_inicio, this.form.fecha_fin, this.form.estado_solicitud, this.form.resultados).subscribe(data => {
+    console.log(data);
+    console.log(this.form.cedula)
+    this.solicitudes=data;
+
+    for(let i=0;i<this.solicitudes.length; i++){
+      this.solicitudes[i].nombres_paciente=this.solicitudes[i].paciente.persona.nombre+" "+this.solicitudes[i].paciente.persona.ap+" "+this.solicitudes[i].paciente.persona.am
+    }
+  
+ 
+  });
+}
+  
+}
 filtro_completo(formu : NgForm){
   //console.log(this.form.fech)
 if(this.form.resultados == null)
@@ -202,6 +232,9 @@ if(this.form.estado_solicitud == null)
   });
 }
   
+}
+ab(){
+ cerrarModal() 
 }
 
 }

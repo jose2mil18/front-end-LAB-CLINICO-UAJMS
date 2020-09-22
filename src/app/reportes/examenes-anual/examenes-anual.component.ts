@@ -25,10 +25,16 @@ reportes_mensual:Reporte_mensual[]=[]
   }
 
   ngOnInit() {
+    this.insti()
   }
 
-  insti(m){
+  insti(){
     console.log(this.reporte)
+    if(this.reporte.institucion==null)
+    {
+      this.reporte=new Reporte_anual();
+      this.reporte.institucion.cod_institucion="";
+    }
     this.reportesService.getReportesAnual(this.reporte).subscribe(reportes => {
       console.log(reportes)
       this.reportes_anual=reportes;

@@ -60,7 +60,7 @@
                  <hr>
                 
                 
-                 <br>
+  
             </div>
   
   
@@ -81,18 +81,18 @@
       <div class="text-center">
           <div class="" style="width: 100%">
               <div class="text-left"  >
-                  <ng-container *ngFor="let resultado of ex.resultados_examen.resultados_examenes">
+                  <ng-container *ngFor="let resultado of ex.resultados_examen.resultados_examenes; let i = index;">
                       <ng-container *ngIf="resultado.examen.cod_examen===26"> 
                            <div class="row">
-                               <ng-container  *ngFor="let resultad of resultado.resultados_examenes">    
+                               <ng-container  *ngFor="let resultad of resultado.resultados_examenes; let j = index;">    
                                   <span class="col-md-4">
                                     
                                       <strong>{{resultad.examen.nombre}}:&nbsp;</strong> 
-                                      <span *ngFor="let v of resultad.valores">{{v.valor}} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                         <span *ngFor="let v of resultad.examen.valores_referencia">{{v.tipo_persona}} 
+                                      <span *ngFor="let v of resultad.valores">{{v.valor}} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                         <span *ngFor="let v of ex.precio_examen.examen.subexamenes[i].subexamenes[j].valores_referencia">{{v.tipo_persona}} 
                                             <span *ngIf="v.valor_inicial != v.valor_final">{{v.valor_inicial}} - {{v.valor_final}}.</span>
                                             <span *ngIf="v.valor_inicial == v.valor_final">{{v.valor_inicial}}.</span><span *ngIf="resultad.examen.cod_examen==27">x 10<sup>5</sup></span>
-                                         </span>  {{resultad.examen.unidades}} 
+                                         </span>  mm<sup>3</sup>
                                       </span>
                                   </span>
                                 </ng-container>     
@@ -117,17 +117,17 @@
   <div class="text-center">
       <div class="" style="width: 100%">
           <div class="text-left"  >
-              <ng-container *ngFor="let resultado of ex.resultados_examen.resultados_examenes">
+              <ng-container *ngFor="let resultado of ex.resultados_examen.resultados_examenes; let i = index;">
                   <ng-container *ngIf="resultado.examen.cod_examen===30"> 
                        <div class="row">
-                           <ng-container  *ngFor="let resultad of resultado.resultados_examenes"> 
+                           <ng-container  *ngFor="let resultad of resultado.resultados_examenes; let j = index;"> 
                            <ng-container *ngIf="resultad.examen.cod_examen===31">   
                               <span class="col-md-7 text-left">
                                   <strong>{{resultad.examen.nombre}}:&nbsp;</strong> 
                                   <span *ngFor="let v of resultad.valores">{{v.valor}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                     <span *ngFor="let v of resultad.examen.valores_referencia">{{v.tipo_persona}} 
+                                     <span *ngFor="let v of ex.precio_examen.examen.subexamenes[i].subexamenes[j].valores_referencia">{{v.tipo_persona}} 
                                         <span *ngIf="v.valor_inicial != v.valor_final">{{v.valor_inicial}} - {{v.valor_final}}.</span>
-                                        <span *ngIf="v.valor_inicial == v.valor_final">{{v.valor_inicial}}.</span>.x10<sup>2</sup>/&nbsp;&nbsp;{{resultad.examen.unidades}} &nbsp;&nbsp;&nbsp;&nbsp;
+                                        <span *ngIf="v.valor_inicial == v.valor_final">{{v.valor_inicial}}.</span>.x10<sup>2</sup>/&nbsp;&nbsp;mm<sup>3</sup> &nbsp;&nbsp;&nbsp;&nbsp;
                                      </span> 
                                   </span>
                               </span>
@@ -154,10 +154,10 @@
     <tr style="height: 40px">
        
         <td style="border-right:1px solid black">%</td>
-        <ng-container *ngFor="let resultado of ex.resultados_examen.resultados_examenes">
+        <ng-container *ngFor="let resultado of ex.resultados_examen.resultados_examenes; let i = index;">
             <ng-container *ngIf="resultado.examen.cod_examen===30"> 
 
-                       <ng-container  *ngFor="let resultad of resultado.resultados_examenes">    
+                       <ng-container  *ngFor="let resultad of resultado.resultados_examenes; let j = index;">    
                         <ng-container *ngIf="resultad.examen.cod_examen != 31 && resultad.examen.cod_examen != 40">
    <ng-container *ngIf="resultad.examen.cod_examen == 39" >  <td style="border-right:0px">
   
@@ -183,20 +183,20 @@
 
         <td style="border-right:1px solid black">% NORMALES</td>
 
-        <ng-container *ngFor="let resultado of ex.resultados_examen.resultados_examenes">
+        <ng-container *ngFor="let resultado of ex.resultados_examen.resultados_examenes; let i = index;">
             <ng-container *ngIf="resultado.examen.cod_examen===30"> 
 
-                       <ng-container  *ngFor="let resultad of resultado.resultados_examenes">    
+                       <ng-container  *ngFor="let resultad of resultado.resultados_examenes; let j = index;">    
                         <ng-container *ngIf="resultad.examen.cod_examen != 31 && resultad.examen.cod_examen != 40">
    <ng-container *ngIf="resultad.examen.cod_examen == 39" >  <td style="border-right:0px">
   
-      <span *ngFor="let v of resultad.examen.valores_referencia">{{v.tipo_persona}}
+      <span *ngFor="let v of ex.precio_examen.examen.subexamenes[i].subexamenes[j].valores_referencia">{{v.tipo_persona}}
          <span *ngIf="v.valor_inicial != v.valor_final">{{v.valor_inicial}} - {{v.valor_final}} .</span>
          <span *ngIf="v.valor_inicial == v.valor_final">{{v.valor_inicial}}.</span>
          </span>
     </td></ng-container>
     <ng-container *ngIf="resultad.examen.cod_examen != 39" >  <td style="border-right:1px solid black">
-        <span *ngFor="let v of resultad.examen.valores_referencia">{{v.tipo_persona}}
+        <span *ngFor="let v of ex.precio_examen.examen.subexamenes[i].subexamenes[j].valores_referencia">{{v.tipo_persona}}
             <span *ngIf="v.valor_inicial != v.valor_final">{{v.valor_inicial}} - {{v.valor_final}} .</span>
             <span *ngIf="v.valor_inicial == v.valor_final">{{v.valor_inicial}}.</span>
             </span>
@@ -254,7 +254,7 @@
     <div class="col-md-4"></div>
 
 
-    <ng-container *ngFor="let resultado of ex.resultados_examen.resultados_examenes">
+    <ng-container *ngFor="let resultado of ex.resultados_examen.resultados_examenes; let i = index;">
         <ng-container *ngIf="resultado.examen.cod_examen!=30 &&  resultado.examen.cod_examen!=26"> 
             <div class="col-md-2">      </div>
             <div class="col-md-4"></div>
@@ -263,7 +263,7 @@
                 <strong>{{resultado.examen.nombre}}</strong>: <span *ngFor="let v of resultado.valores">{{v.valor}}</span> 
                </div>
             <div class="col-md-4">
-                <span *ngFor="let v of resultado.examen.valores_referencia">{{v.tipo_persona}} <span *ngIf="v.valor_inicial != v.valor_final">{{v.valor_inicial}} - {{v.valor_final}} .</span><span *ngIf="v.valor_inicial == v.valor_final">{{v.valor_inicial}}.</span> </span>  {{resultado.examen.unidades}} 
+                <span *ngFor="let v of ex.precio_examen.examen.subexamenes[i].valores_referencia">{{v.tipo_persona}} <span *ngIf="v.valor_inicial != v.valor_final">{{v.valor_inicial}} - {{v.valor_final}} .</span><span *ngIf="v.valor_inicial == v.valor_final">{{v.valor_inicial}}.</span> </span>  mm<sup>3</sup><!--{{resultado.examen.unidades}} --> 
             </div>
 
         </ng-container>
@@ -271,7 +271,26 @@
 
 </div>
 
-<br>
+
+<ng-container  *ngFor="let ex of solicitud.examenes_solicitados">
+  <ng-container *ngIf="ex.precio_examen.examen.cod_examen ==25">
+<div class="row">
+     
+  <div class="col-md-1" *ngIf="ex.nota != ''">
+    <strong>Nota:</strong>
+    </div>
+    <div class="col-md-11">
+      <div  *ngFor="let ex of solicitud.examenes_solicitados">
+        {{ex.nota}}
+      
+ 
+
+
+      </div>
+    </div>
+</div>
+</ng-container>
+</ng-container>
 <div class="row">
   <div class="col-md-8"></div>
   <div class="col-md-4" >

@@ -308,6 +308,7 @@ this.form.persona.ap=this.titleCasePipe.transform(this.form.persona.ap)
 if(!(this.form.persona.am == '')){
 this.form.persona.am=this.titleCasePipe.transform(this.form.persona.am)
 }
+console.log(this.form)
     if(formpaciente.valid){
         console.log(formpaciente.value)
   this.pacienteService.update(this.form)

@@ -25,6 +25,7 @@
     "@angular/platform-browser-dynamic": "^6.1.9",
     "@angular/router": "^6.1.9",
     "@ng-select/ng-select": "^2.10.1",
+    "@sendgrid/mail": "^7.2.6",
     "@types/moment": "^2.13.0",
     "ajv": "^6.0.0",
     "angular-bootstrap-autocomplete": "^1.0.1",

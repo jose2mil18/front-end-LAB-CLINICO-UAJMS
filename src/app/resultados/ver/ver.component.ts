@@ -6,7 +6,11 @@ import {SolicitudesService} from '../../solicitudes/solicitudes.service'
 import {PacientesService} from '../../pacientes/pacientes.service'
 
 import { DatePipe } from '@angular/common';
+
+declare const enviarResultados:any;
 declare const $: any;
+
+declare const cerrarModal:any;
 @Component({
   selector: 'app-ver',
   templateUrl: './ver.component.html',
@@ -202,6 +206,10 @@ buscar_por_fecha(fech){
   }
 
   
-
-
+a(){
+  cerrarModal()
+}
+enviarEmail(solicitud){
+  enviarResultados(solicitud.paciente.correo_electronico)
+}
 }

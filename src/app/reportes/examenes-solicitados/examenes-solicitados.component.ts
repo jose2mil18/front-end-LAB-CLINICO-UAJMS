@@ -6,7 +6,9 @@ import {ReportesService} from '../reportes.service'
 import { DatePipe,  TitleCasePipe, UpperCasePipe } from '@angular/common';
 
 import {FormControl, FormBuilder, FormGroup, Validators, NgForm } from '@angular/forms';
+declare const cerrarModal:any;
 declare const validatefechas:any;
+
 @Component({
   selector: 'app-examenes-solicitados',
   templateUrl: './examenes-solicitados.component.html',
@@ -66,8 +68,6 @@ this.solicitudesService.getAllAreas().subscribe(data=>{
       nombre_area:'',
       resultados:''
     }
-    this.paciente= JSON.parse(localStorage.getItem('paciente'));
-    this.examenes_solicitados=this.paciente.examenes_solicitados
 
     this.reportesService.getReporteExamenesSolicitados(this.form.cedula, this.form.nombre_area, this.form.caracter_nombre_examen, this.form.fech, this.form.fecha_inicio, this.form.fecha_fin, this.form.estado_solicitud, this.grupo.agrupador, this.grupo.seleccionador).subscribe(data => {
     this.reporte_examenes_solicitados=data
@@ -121,7 +121,7 @@ this.solicitudesService.getAllAreas().subscribe(data=>{
      if(formu.valid && ($('#fecha_inicio').val() <=$('#fecha_fin').val()) )
      {
        
-    $('#addevent').removeClass('show');
+    cerrarModal()
     if(this.form.nombre_area==null)
     {
       this.form.nombre_area=""
@@ -147,10 +147,10 @@ if(this.grupo.label=='Examen')
 {
   if(this.form.nombre_area == '')
   {
-    window.location.href = 'http://localhost:8080/jasperserver/rest_v2/reports/reports/reporte_examnes_solicitados.html?am_usuario='+this.currentUser.personal_laboratorio.persona.am+'&cedula='+this.form.cedula+'&ap_usuario='+this.currentUser.personal_laboratorio.persona.ap+'&nombre_usuario='+this.currentUser.personal_laboratorio.persona.nombre+'&nombre_paciente='+'%%'+'&ap_paciente='+this.paciente.persona.ap+'&am_paciente='+this.paciente.persona.am+'&fecha_inicio='+this.form.fecha_inicio+'&fecha_fin='+this.form.fecha_fin+'&j_username='+'jasperadmin'+'&j_password='+'jasperadmin';
+    window.location.href = 'http://localhost:8080/jasperserver/rest_v2/reports/reports/reporte_examnes_solicitados.pdf?am_usuario='+this.currentUser.personal_laboratorio.persona.am+'&cedula='+this.form.cedula+'&ap_usuario='+this.currentUser.personal_laboratorio.persona.ap+'&nombre_usuario='+this.currentUser.personal_laboratorio.persona.nombre+'&fecha_inicio='+this.form.fecha_inicio+'&fecha_fin='+this.form.fecha_fin+'&j_username='+'jasperadmin'+'&j_password='+'jasperadmin';
    }
     else{
-      window.location.href = 'http://localhost:8080/jasperserver/rest_v2/reports/reports/reporte_examnes_solicitados.html?am_usuario='+this.currentUser.personal_laboratorio.persona.am+'&cedula='+this.form.cedula+'&ap_usuario='+this.currentUser.personal_laboratorio.persona.ap+'&nombre_usuario='+this.currentUser.personal_laboratorio.persona.nombre+'&nombre_paciente='+'%%'+'&ap_paciente='+this.paciente.persona.ap+'&am_paciente='+this.paciente.persona.am+'&nombre_area='+this.form.nombre_area+'&fecha_inicio='+this.form.fecha_inicio+'&fecha_fin='+this.form.fecha_fin+'&j_username='+'jasperadmin'+'&j_password='+'jasperadmin';
+      window.location.href = 'http://localhost:8080/jasperserver/rest_v2/reports/reports/reporte_examnes_solicitados.pdf?am_usuario='+this.currentUser.personal_laboratorio.persona.am+'&cedula='+this.form.cedula+'&ap_usuario='+this.currentUser.personal_laboratorio.persona.ap+'&nombre_usuario='+this.currentUser.personal_laboratorio.persona.nombre+'&nombre_area='+this.form.nombre_area+'&fecha_inicio='+this.form.fecha_inicio+'&fecha_fin='+this.form.fecha_fin+'&j_username='+'jasperadmin'+'&j_password='+'jasperadmin';
 
    }
 }
@@ -158,10 +158,10 @@ if(this.grupo.label=='Area')
 {
   if(this.form.nombre_area == '')
   {
-    window.location.href = 'http://localhost:8080/jasperserver/rest_v2/reports/reports/reporte_examnes_solicitados_por_are.html?am_usuario='+this.currentUser.personal_laboratorio.persona.am+'&cedula='+this.form.cedula+'&ap_usuario='+this.currentUser.personal_laboratorio.persona.ap+'&nombre_usuario='+this.currentUser.personal_laboratorio.persona.nombre+'&nombre_paciente='+'%%'+'&ap_paciente='+this.paciente.persona.ap+'&am_paciente='+this.paciente.persona.am+'&fecha_inicio='+this.form.fecha_inicio+'&fecha_fin='+this.form.fecha_fin+'&j_username='+'jasperadmin'+'&j_password='+'jasperadmin';
+    window.location.href = 'http://localhost:8080/jasperserver/rest_v2/reports/reports/reporte_examnes_solicitados_por_are.pdf?am_usuario='+this.currentUser.personal_laboratorio.persona.am+'&cedula='+this.form.cedula+'&ap_usuario='+this.currentUser.personal_laboratorio.persona.ap+'&nombre_usuario='+this.currentUser.personal_laboratorio.persona.nombre+'&fecha_inicio='+this.form.fecha_inicio+'&fecha_fin='+this.form.fecha_fin+'&j_username='+'jasperadmin'+'&j_password='+'jasperadmin';
    }
     else{
-      window.location.href = 'http://localhost:8080/jasperserver/rest_v2/reports/reports/reporte_examnes_solicitados_por_are.html?am_usuario='+this.currentUser.personal_laboratorio.persona.am+'&cedula='+this.form.cedula+'&ap_usuario='+this.currentUser.personal_laboratorio.persona.ap+'&nombre_usuario='+this.currentUser.personal_laboratorio.persona.nombre+'&nombre_paciente='+'%%'+'&ap_paciente='+this.paciente.persona.ap+'&am_paciente='+this.paciente.persona.am+'&nombre_area='+this.form.nombre_area+'&fecha_inicio='+this.form.fecha_inicio+'&fecha_fin='+this.form.fecha_fin+'&j_username='+'jasperadmin'+'&j_password='+'jasperadmin';
+      window.location.href = 'http://localhost:8080/jasperserver/rest_v2/reports/reports/reporte_examnes_solicitados_por_are.pdf?am_usuario='+this.currentUser.personal_laboratorio.persona.am+'&cedula='+this.form.cedula+'&ap_usuario='+this.currentUser.personal_laboratorio.persona.ap+'&nombre_usuario='+this.currentUser.personal_laboratorio.persona.nombre+'&nombre_area='+this.form.nombre_area+'&fecha_inicio='+this.form.fecha_inicio+'&fecha_fin='+this.form.fecha_fin+'&j_username='+'jasperadmin'+'&j_password='+'jasperadmin';
 
    }
 }
@@ -169,10 +169,10 @@ if(this.grupo.label=='Paciente')
 {
   if(this.form.nombre_area == '')
   {
-    window.location.href = 'http://localhost:8080/jasperserver/rest_v2/reports/reports/reporte_examnes_solicitados_por_paciente.html?am_usuario='+this.currentUser.personal_laboratorio.persona.am+'&cedula='+this.form.cedula+'&ap_usuario='+this.currentUser.personal_laboratorio.persona.ap+'&nombre_usuario='+this.currentUser.personal_laboratorio.persona.nombre+'&nombre_paciente='+'%%'+'&ap_paciente='+this.paciente.persona.ap+'&am_paciente='+this.paciente.persona.am+'&fecha_inicio='+this.form.fecha_inicio+'&fecha_fin='+this.form.fecha_fin+'&j_username='+'jasperadmin'+'&j_password='+'jasperadmin';
+    window.location.href = 'http://localhost:8080/jasperserver/rest_v2/reports/reports/reporte_examnes_solicitados_por_paciente.pdf?am_usuario='+this.currentUser.personal_laboratorio.persona.am+'&cedula='+this.form.cedula+'&ap_usuario='+this.currentUser.personal_laboratorio.persona.ap+'&nombre_usuario='+this.currentUser.personal_laboratorio.persona.nombre+'&fecha_inicio='+this.form.fecha_inicio+'&fecha_fin='+this.form.fecha_fin+'&j_username='+'jasperadmin'+'&j_password='+'jasperadmin';
    }
     else{
-      window.location.href = 'http://localhost:8080/jasperserver/rest_v2/reports/reports/reporte_examnes_solicitados_por_paciente.html?am_usuario='+this.currentUser.personal_laboratorio.persona.am+'&cedula='+this.form.cedula+'&ap_usuario='+this.currentUser.personal_laboratorio.persona.ap+'&nombre_usuario='+this.currentUser.personal_laboratorio.persona.nombre+'&nombre_paciente='+'%%'+'&ap_paciente='+this.paciente.persona.ap+'&am_paciente='+this.paciente.persona.am+'&nombre_area='+this.form.nombre_area+'&fecha_inicio='+this.form.fecha_inicio+'&fecha_fin='+this.form.fecha_fin+'&j_username='+'jasperadmin'+'&j_password='+'jasperadmin';
+      window.location.href = 'http://localhost:8080/jasperserver/rest_v2/reports/reports/reporte_examnes_solicitados_por_paciente.pdf?am_usuario='+this.currentUser.personal_laboratorio.persona.am+'&cedula='+this.form.cedula+'&ap_usuario='+this.currentUser.personal_laboratorio.persona.ap+'&nombre_usuario='+this.currentUser.personal_laboratorio.persona.nombre+'&nombre_area='+this.form.nombre_area+'&fecha_inicio='+this.form.fecha_inicio+'&fecha_fin='+this.form.fecha_fin+'&j_username='+'jasperadmin'+'&j_password='+'jasperadmin';
 
    }
 }
@@ -180,10 +180,10 @@ if(this.grupo.label=='Estado')
 {
   if(this.form.nombre_area == '')
   {
-    window.location.href = 'http://localhost:8080/jasperserver/rest_v2/reports/reports/reporte_examnes_solicitados_por_estado.html?am_usuario='+this.currentUser.personal_laboratorio.persona.am+'&cedula='+this.form.cedula+'&ap_usuario='+this.currentUser.personal_laboratorio.persona.ap+'&nombre_usuario='+this.currentUser.personal_laboratorio.persona.nombre+'&nombre_paciente='+'%%'+'&ap_paciente='+this.paciente.persona.ap+'&am_paciente='+this.paciente.persona.am+'&fecha_inicio='+this.form.fecha_inicio+'&fecha_fin='+this.form.fecha_fin+'&j_username='+'jasperadmin'+'&j_password='+'jasperadmin';
+    window.location.href = 'http://localhost:8080/jasperserver/rest_v2/reports/reports/reporte_examnes_solicitados_por_estado.pdf?am_usuario='+this.currentUser.personal_laboratorio.persona.am+'&cedula='+this.form.cedula+'&ap_usuario='+this.currentUser.personal_laboratorio.persona.ap+'&nombre_usuario='+this.currentUser.personal_laboratorio.persona.nombre+'&fecha_inicio='+this.form.fecha_inicio+'&fecha_fin='+this.form.fecha_fin+'&j_username='+'jasperadmin'+'&j_password='+'jasperadmin';
    }
     else{
-      window.location.href = 'http://localhost:8080/jasperserver/rest_v2/reports/reports/reporte_examnes_solicitados_por_estado.html?am_usuario='+this.currentUser.personal_laboratorio.persona.am+'&cedula='+this.form.cedula+'&ap_usuario='+this.currentUser.personal_laboratorio.persona.ap+'&nombre_usuario='+this.currentUser.personal_laboratorio.persona.nombre+'&nombre_paciente='+'%%'+'&ap_paciente='+this.paciente.persona.ap+'&am_paciente='+this.paciente.persona.am+'&nombre_area='+this.form.nombre_area+'&fecha_inicio='+this.form.fecha_inicio+'&fecha_fin='+this.form.fecha_fin+'&j_username='+'jasperadmin'+'&j_password='+'jasperadmin';
+      window.location.href = 'http://localhost:8080/jasperserver/rest_v2/reports/reports/reporte_examnes_solicitados_por_estado.pdf?am_usuario='+this.currentUser.personal_laboratorio.persona.am+'&cedula='+this.form.cedula+'&ap_usuario='+this.currentUser.personal_laboratorio.persona.ap+'&nombre_usuario='+this.currentUser.personal_laboratorio.persona.nombre+'&nombre_area='+this.form.nombre_area+'&fecha_inicio='+this.form.fecha_inicio+'&fecha_fin='+this.form.fecha_fin+'&j_username='+'jasperadmin'+'&j_password='+'jasperadmin';
 
    }
 }
@@ -261,5 +261,8 @@ this.reportesService.getReporteExamenesSolicitados(this.form.cedula, this.form.n
 }
 
 */
+a(){
+  cerrarModal();
+}
 
 }

@@ -7,11 +7,11 @@ import { routerNgProbeToken } from '@angular/router/src/router_module';
 
 //import { CompleterService, CompleterData } from 'ng2-completer';
 import { Router, ActivatedRoute } from '@angular/router';
-import { NgForm } from '@angular/forms';
+import { NgForm, FormControl } from '@angular/forms';
 import { createEmbeddedViewNode } from '@angular/core/src/render3/instructions';
 import { SolicitudesService } from '../../solicitudes/solicitudes.service';
 
-
+import {debounceTime} from 'rxjs/operators'
 declare const swal: any;
 declare const $: any;
 @Component({
@@ -21,6 +21,8 @@ declare const $: any;
   encapsulation: ViewEncapsulation.None
 })
 export class RegistrarComponent implements OnInit {
+  
+  control=new FormControl('')
   valores_referncia_nuevo:Valor_referencia[]=[];
   valores_referencia_antiguo:Valor_referencia[]=[]
   codeList=[];
@@ -58,7 +60,10 @@ personas:any[]
 estado:boolean=true
 examensito:Examen=new Examen();
   constructor(private resultadosService:ResultadosService,private examenesService:ExamenesService, private router:Router, private solicitudesService:SolicitudesService) { 
-
+    this.control.valueChanges.pipe(debounceTime(450)).subscribe(value=>{
+      console.log("hola"+value)
+    
+  }) 
     this.personas=[]
 
     this.personas=[{nombre:'Adultos', valor:'A.'}, {nombre:'Niños', valor:'N.'}, {nombre:'Masculino', valor:'M.'}, {nombre:'Femenino', valor:'F.'}]
@@ -228,7 +233,7 @@ this.subexamenes=this.solicitudSinResultado.examenes_solicitados[this.indice].pr
  
 }
 formulario:NgForm;
-guardarresultados(form: NgForm){
+guardarResultados(form: NgForm){
   this.formulario=form
   this.solicitudSinResultado.examenes_solicitados[this.indice].cedula_usuario=this.currentUser.cedula
   console.log(this.solicitudSinResultado.examenes_solicitados[this.indice])
@@ -443,5 +448,10 @@ if(valor.length>0)
 else{
   $("#a"+7).removeClass("is-valid").addClass("is-invalid");
 }
+}
+capitalize(s){
+  console.log(s)
+  if (typeof s !== 'string') return ''
+  return s.charAt(0).toUpperCase() + s.slice(1)
 }
 }

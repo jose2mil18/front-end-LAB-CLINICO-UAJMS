@@ -21,7 +21,10 @@ fechita:string;
 
       for(let i=0; i<this.solicitud.examenes_solicitados.length;i++)
       {
+        if((this.solicitud.examenes_solicitados[i].precio_examen.examen.cod_area != 3) && (this.solicitud.examenes_solicitados[i].precio_examen.examen.cod_area != 6))
+        {
         this.notaFinal=this.notaFinal+this.solicitud.examenes_solicitados[i].nota;
+        }
       }
       console.log(this.solicitud)
     }

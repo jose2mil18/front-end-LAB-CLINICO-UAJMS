@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, Input } from '@angular/core';
 import {NavigationStart, Router} from '@angular/router';
 import { Paciente, Solicitud , Area, Examen_solicitado, Usuario} from '../../models';
 import{SolicitudesService } from '../../solicitudes/solicitudes.service'
@@ -7,7 +7,7 @@ import { DatePipe,  TitleCasePipe, UpperCasePipe } from '@angular/common';
 
 import {FormControl, FormBuilder, FormGroup, Validators, NgForm } from '@angular/forms';
 declare const validatefechas:any;
-
+declare const cerrarModal:any;
 import {debounceTime} from 'rxjs/operators'
 @Component({
   selector: 'app-listar-solicitados',
@@ -67,15 +67,14 @@ this.solicitudesService.getAllAreas().subscribe(data=>{
     }
     this.control.valueChanges.pipe(debounceTime(450)).subscribe(value=>{
       console.log("hola"+value)
+
       this.form.caracter_nombre_examen=value
       this.filtro_completo2()
       
   }) 
-    this.paciente= JSON.parse(localStorage.getItem('paciente'));
-    this.examenes_solicitados=this.paciente.examenes_solicitados
     this.solicitudesService.filtrarSolicitudes_de_Paciente(this.form.cedula, this.area.nombre, this.form.caracter_nombre_examen, this.form.fech, this.form.fecha_inicio, this.form.fecha_fin, this.form.estado_solicitud).subscribe(data => {
 this.examenes_solicitados=data
-console.log(this.solicitudes)
+
     })
    
    }
@@ -100,6 +99,9 @@ console.log(this.solicitudes)
       
   ];
   }
+
+
+  @ViewChild('modal') modal:ElementRef
   filtro_completo(formu : NgForm){
     //console.log(this.form.fech)
   if(this.form.resultados == null)
@@ -119,11 +121,10 @@ console.log(this.solicitudes)
      validatefechas()
      if(formu.valid && ($('#fecha_inicio').val() <=$('#fecha_fin').val()) )
      {
-       
-    $('#addevent').removeClass('show');
     console.log(this.form.fech)
     console.log(this.area.nombre+" "+this.area.cod_area)
     this.solicitudesService.filtrarSolicitudes_de_Paciente(this.form.cedula, this.form.nombre_area, this.form.caracter_nombre_examen, this.form.fech, this.form.fecha_inicio, this.form.fecha_fin, this.form.estado_solicitud).subscribe(data=>{
+   
       this.examenes_solicitados=data
     })
   }
@@ -164,7 +165,7 @@ console.log(this.solicitudes)
   }
   
   exportPdf() {
-    window.location.href = 'http://localhost:8080/jasperserver/rest_v2/reports/reports/examenes_solicitados.pdf?am_usuario='+this.currentUser.personal_laboratorio.persona.am+'&cedula='+this.form.cedula+'&ap_usuario='+this.currentUser.personal_laboratorio.persona.ap+'&nombre_usuario='+this.currentUser.personal_laboratorio.persona.nombre+'&nombre_paciente='+this.paciente.persona.nombre+'&ap_paciente='+this.paciente.persona.ap+'&am_paciente='+this.paciente.persona.am+'&nombre_area='+this.form.nombre_area+'&fecha_inicio='+this.form.fecha_inicio+'&fecha_fin='+this.form.fecha_fin+'&j_username='+'jasperadmin'+'&j_password='+'jasperadmin';
+    window.location.href = 'http://localhost:8080/jasperserver/rest_v2/reports/reports/examenes_solicitados.pdf?am_usuario='+this.currentUser.personal_laboratorio.persona.am+'&cedula='+this.form.cedula+'&ap_usuario='+this.currentUser.personal_laboratorio.persona.ap+'&nombre_usuario='+this.currentUser.personal_laboratorio.persona.nombre+'&nombre_area='+this.form.nombre_area+'&fecha_inicio='+this.form.fecha_inicio+'&fecha_fin='+this.form.fecha_fin+'&j_username='+'jasperadmin'+'&j_password='+'jasperadmin';
    }
    klp(value){
      console.log(value)
@@ -172,6 +173,9 @@ console.log(this.solicitudes)
      localStorage.setItem('grupo', JSON.stringify(this.grupo));
      console.log(this.grupo.seleccionador)
 this.router.navigate(['/reportes/examenes-solicitados'])
+   }
+   ab(){
+     cerrarModal()
    }
 
 }

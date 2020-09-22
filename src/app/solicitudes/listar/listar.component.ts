@@ -13,6 +13,9 @@ import * as global from '../../shared/variables_global'; //<== HERE
 declare const $: any;
 declare const addFooters: any;
 declare const validatefechas:any;
+declare const cerrarModal:any;
+declare const enviarResultados:any;
+import {debounceTime} from 'rxjs/operators'
 @Component({
   selector: 'app-listar',
   templateUrl: './listar.component.html',
@@ -53,7 +56,11 @@ texto:string;
 areas:Area[]
 fecha_solicitud_minima:String
 
+control=new FormControl('')
+
   constructor(private datePipe: DatePipe,  private titleCasePipe: TitleCasePipe, public solicitudesService:SolicitudesService, public pacientesService:PacientesService,private node:ElementRef) { 
+    
+   // enviarResultados()
     this.form={
       fech:'',
       fecha_inicio:'',
@@ -88,6 +95,19 @@ this.form.fecha_inicio=this.fecha_solicitud_minima
 
 this.fecha='';
 
+this.control.valueChanges.pipe(debounceTime(450)).subscribe(value=>{
+  console.log("hola"+value)
+  this.form.caracter_nombre=value
+  this.busca_pacientes()
+  if(this.form.caracter_nombre=='')
+  {
+    this.filtro_completo2();
+  }
+})
+
+  }
+  enviarEmail(){
+    enviarResultados()
   }
 listar(){
   this. solicitudesService.getAll().subscribe(data => {
@@ -215,41 +235,80 @@ listar(){
   actualizar(solicitud:Solicitud){
     
     localStorage.removeItem('solicitudamodificar'); 
+    localStorage.setItem('cod_solicitud',solicitud.cod_solicitud.toString())
     localStorage.setItem('solicitudamodificar', JSON.stringify(solicitud));
   }
   facturar(solicitud:Solicitud){
+    
+    localStorage.setItem('cod_solicitud',solicitud.cod_solicitud.toString())
     
     localStorage.removeItem('solicitudamodificar'); 
     localStorage.setItem('solicitudfacturar', JSON.stringify(solicitud));
   }
 
   busca_pacientes(){
+    if(this.form.caracter_nombre !='' )
+    {
     console.log(this.form.caracter_nombre);
     this.pacientesService.buscarPacientePorCaracterDeNombres(this.form.caracter_nombre, this.form.resultados).subscribe(data=>{
       this.pacientes=data
-    
-      for(let i=0;i<this.pacientes.length; i++)
-      {
-        this.pacientes[i].nombres=this.pacientes[i].persona.nombre+" "+this.pacientes[i].persona.ap+" "+this.pacientes[i].persona.am
-     // this.pacientes[i].fnac=this.datePipe.transform(this.pacientes[i].fnac,"dd-MM-yyyy")
-       
-    }
-       
-      console.log(this.pacientes)
-    })//----------------------------------
+    console.log(this.pacientes)
+  
+
     for(let i=0;i<this.pacientes.length; i++)
     {
       if(this.pacientes[i].nombres==this.form.caracter_nombre){
+        this.pacientes[i].nombres=this.pacientes[i].nombres.trim()
         this.form.cedula=this.pacientes[i].cedula
+      
       }
       else{
         this.form.cedula=''
       }
      }
+       
+      console.log(this.pacientes)
+    })//----------------------------------
+   
   
      console.log(this.form.cedula)
-     if(this.form.cedula !='' || this.form.caracter_nombre == '')
+     if(this.form.cedula !='' )
      {
+       console.log("a")
+       this.filtro_completo2()
+   
+     }
+     console.log(this.form.caracter_nombre =='')
+     console.log(this.form.cedula =='')
+     if(this.form.caracter_nombre =='' && this.form.cedula ==''){
+       console.log("b")
+       this.filtro_completo2();
+     }
+    
+    }
+
+
+
+
+  }
+  filtro_completo2(){
+    //console.log(this.form.fech)
+    console.log("ete es filtro 2"+this.form.cedula)
+ if(this.form.resultados == null)
+ {
+   this.form.resultados=""
+ }
+ if(this.form.estado_solicitud == null)
+ {
+   this.form.estado_solicitud=""
+ }
+  
+     console.log(this.form.estado_solicitud)
+     validatefechas()
+     if( ($('#fecha_inicio').val() <=$('#fecha_fin').val()) )
+     {
+       
+    $('#addevent').removeClass('show');
     this.solicitudesService.filtrarPaciente(this.form.cedula,  this.form.fech, this.form.fecha_inicio, this.form.fecha_fin, this.form.estado_solicitud, this.form.resultados).subscribe(data => {
       console.log(data);
       console.log(this.form.cedula)
@@ -261,13 +320,8 @@ listar(){
     
    
     });
-     }
+  }
     
-
-
-
-
-
   }
   filtro_completo(formu : NgForm){
     //console.log(this.form.fech)
@@ -341,7 +395,6 @@ buscar_por_fecha(fech){
   });
 }
 funcion(event: any){
-  alert(event.target.value)
 }
 
 exportPdf() {
@@ -536,12 +589,11 @@ doc.text(10, 55, this.texto);
 }
 */
 prueba() { 
-alert(this.form.fech)
 }
 buscarPaciente(){
   for(let i=0; i<this.solicitudes.length; i++){
-if(this.solicitudes[i].paciente.persona.nombre == this.form.caracter_nombre){
-  this.solicitudes_paciente.push(this.solicitudes[i])
+    if(this.solicitudes[i].paciente.persona.nombre == this.form.caracter_nombre){
+     this.solicitudes_paciente.push(this.solicitudes[i])
 }
 
   }
@@ -567,8 +619,12 @@ if(this.solicitudes[i].paciente.persona.nombre == this.form.caracter_nombre){
   console.log(this.solicitudes)
 }
 ver(s){
-  this.solicitud=s
+  //this.solicitud=s
+  this.solicitudesService.obtenerSolicitud(s.cod_solicitud).subscribe(data=>{
+    this.solicitud=data;
+    
   this.fecha_entregas=s.fecha_entrega
+  })
 
 }
 enviar(formsolicitud:NgForm){
@@ -586,22 +642,23 @@ keyPressHandler(e) {
   }
 }
 fecha_entregas:string=""
-cambiar_estado(solicitud){
-  
-let e=$('#fecha_entregas').val();
+today;
+cambiar_estado(solicitud,i){
 
-solicitud.fecha_entrega=this.datePipe.transform(e,'dd-MM-yyyy')
-
-  solicitud.fecha=this.datePipe.transform(solicitud.fecha,'dd-MM-yyyy')
-
-this.solicitudesService.modificar(solicitud).subscribe(data=>{
-this.fecha_entregas=data.fecha_entrega
-this.solicitud=data
+this.solicitudesService.actualizarEstado(solicitud).subscribe(data=>{
+  console.log(data[i].estado_solicitud)
+  this.fecha_entregas=data[i].fecha_entrega
+this.solicitud=data[i]
  this.listar()
-
 })
+
+
+
 }
 cerrar(){
  this.listar()
+}
+cerrarModalsito(){
+  cerrarModal()
 }
 }

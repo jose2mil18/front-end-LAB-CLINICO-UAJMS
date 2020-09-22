@@ -220,7 +220,7 @@
                     
                     <div class="form-group">
                       <label for="exampleFormControlTextarea1">Nota:</label>
-                      <textarea class="form-control titulo" id="exampleFormControlTextarea1" rows="1" [(ngModel)]="solicitudSinResultado.examenes_solicitados[indice].nota" name="nota"></textarea>
+                      <textarea class="form-control titulo" id="exampleFormControlTextarea1" rows="1" [(ngModel)]="solicitudSinResultado.examenes_solicitados[indice].nota" name="nota" (input)="capitalize($event.target.value)"></textarea>
                     </div>
 
 

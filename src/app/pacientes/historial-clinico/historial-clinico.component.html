@@ -395,7 +395,7 @@ from solicitud s, pacientes pa, persona pe where s.cedula_paciente=pa.cedula and
             </div>
             
   <div class="col-lg-8">
-            <input id="fecha_inicio" class="form-control" [(ngModel)]="form.fecha_inicio" name="fecha_inicio" type="date" placeholder="fecha_inicio" required max="form.fecha_fin">
+            <input id="fecha_inicio" class="form-control" [(ngModel)]="form.fecha_inicio" name="fecha_inicio" type="date" placeholder="fecha_inicio" required [max]="form.fecha_fin">
         
                   </div>
 
@@ -404,12 +404,12 @@ from solicitud s, pacientes pa, persona pe where s.cedula_paciente=pa.cedula and
                       </div>
                       
             <div class="col-lg-8">
-                      <input id="fecha_fin" class="form-control" [(ngModel)]="form.fecha_fin"  name="fecha_fin" type="date"  placeholder="fecha_final" required>
+                      <input id="fecha_fin" class="form-control" [(ngModel)]="form.fecha_fin"  name="fecha_fin" type="date" [min]="form.fecha_inicio" placeholder="fecha_final" required>
                   
                             </div>
               </div>
       <div class="modal-footer">
-        <button type="submit" (click)="filtro_completo(formulario)" id="a" class="btn btn-primary btn-round waves-effect" >Guardar</button>
+        <button type="submit" (click)="cerrarModalsito()" (click)="filtro_completo(formulario)" id="a" class="btn btn-primary btn-round waves-effect" data-dismiss="modal" >Guardar</button>
         <button type="button" class="btn btn-simple btn-round waves-effect" data-dismiss="modal">Salir</button>
       </div>
       </form>

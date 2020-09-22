@@ -210,8 +210,10 @@ quitar_examen(cod_examen, i){
   constructor(private titleCasePipe: TitleCasePipe, private datePipe: DatePipe,private pacientesService:PacientesService, private solicitudesService:SolicitudesService, private router:Router) { 
     console.log(this.precio_examen)
   console.log(this.myBusinessList)
-    this.form=JSON.parse(localStorage.getItem('solicitudamodificar'));
- 
+  solicitudesService.obtenerSolicitud(localStorage.getItem('cod_solicitud')).subscribe(data=>{
+    this.form=data;
+
+
     this.i=this.form.examenes_solicitados.length-1;
     this.precio_examen.cod_institucion=this.form.institucion.cod_institucion
  this.cod_precio_examen=null
@@ -240,6 +242,10 @@ quitar_examen(cod_examen, i){
       this.institucionesFaltantes=data;
       console.log(this.institucionesFaltantes)
     });
+
+  })
+ 
+  
 
    // this.listarExamenesdeArea()
   }

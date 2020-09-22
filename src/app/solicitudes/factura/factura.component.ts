@@ -27,14 +27,15 @@ fechita:string;
     this.costo_total_en_letras=''
     this.datetime=new Date();
     this.fechita=this.datePipe.transform(new Date(),"dd-MM-yyyy HH:mm")
-  
-
-    this.solicitud=JSON.parse(localStorage.getItem('solicitudfacturar'))
-    console.log(this.solicitud)
+  this.solicitudesService.obtenerSolicitud(localStorage.getItem('cod_solicitud')).subscribe(data=>{
+    this.solicitud=data
+    //console.log(this.form)
     let letras;
+    console.log(this.solicitud.factura.cod_factura);
+    
     if(this.solicitud.factura.cod_factura==0)
     {
-    this.solicitudesService.generarFactura(this.solicitud).subscribe(data=>{
+      this.solicitudesService.generarFactura(this.solicitud).subscribe(data=>{
       console.log(data)
       this.form=data;
       this.codigoQr=this.form.factura.dosificacion.nit+this.form.factura.cod_factura+this.form.factura.dosificacion.autorizacion+this.form.factura.dosificacion.fecha_limite_emision+this.form.costoTotal+this.form.factura.cod_control+this.form.paciente.cedula
@@ -43,16 +44,17 @@ fechita:string;
        singular: "BOLIVIANO",
        centPlural: "CENTAVOS",
        centSingular: "CENTAVO"
-   });
+      });
      
-   this.costo_total_en_letras=letras
+        this.costo_total_en_letras=letras
     
     })
     
   }
   else{
 
-    this.form=JSON.parse(localStorage.getItem('solicitudfacturar'));
+
+    this.form=this.solicitud
     this.codigoQr=this.form.factura.dosificacion.nit+this.form.factura.cod_factura+this.form.factura.dosificacion.autorizacion+this.form.factura.dosificacion.fecha_limite_emision+this.form.costoTotal+this.form.factura.cod_control+this.form.paciente.cedula
     letras = this.u.numeroALetras(this.solicitud.costoTotal, {
      plural: "BOLIVIANOS",
@@ -63,6 +65,9 @@ fechita:string;
  
  this.costo_total_en_letras=letras
   }
+  })
+
+ 
 
  
 

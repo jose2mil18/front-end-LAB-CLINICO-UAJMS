@@ -3,12 +3,11 @@
 
 @import "~@ng-select/ng-select/themes/default.theme.css";
 
-
-@import "~assets/plugins/primeng/theme/nova-light/theme.css";
-
 /*
+@import "~assets/plugins/primeng/theme/nova-light/theme.css";
+*/
 
-@import "~primeng/resources/themes/cupertino/theme.css";*/
+@import "~primeng/resources/themes/omega/theme.css";
 html, body { height: 100%;
  }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif;

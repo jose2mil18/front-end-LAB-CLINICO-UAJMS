@@ -6,6 +6,7 @@ import {FormControl, FormBuilder, FormGroup, Validators, NgForm } from '@angular
 import { DatePipe,  TitleCasePipe, UpperCasePipe } from '@angular/common';
 import { PacientesService } from '../pacientes.service';
 declare const validatefechas:any;
+declare const cerrarModal:any;
 import {debounceTime} from 'rxjs/operators'
 @Component({
   selector: 'app-historial-clinico',
@@ -82,7 +83,6 @@ this.solicitudesService.getAllAreas().subscribe(data=>{
   validatefechas()
     if(formu.valid && ($('#fecha_inicio').val() <=$('#fecha_fin').val()) )
     {
-    $('#addevent').removeClass('show');
     //$('#myModal').modal('hide');
     console.log(this.form.estado_solicitud)
     console.log("fechainicio"+this.form.fecha_inicio)
@@ -129,5 +129,9 @@ this.solicitudesService.getAllAreas().subscribe(data=>{
      this.examenes_solicitados=data
    })
  
+ }
+ cerrarModalsito(){
+   console.log("klkkñ")
+   cerrarModal();
  }
 }

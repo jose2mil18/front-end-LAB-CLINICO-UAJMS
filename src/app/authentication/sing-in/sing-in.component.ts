@@ -72,7 +72,7 @@ export class SingInComponent implements OnInit {
 
 
  
-  validaruser(formu : NgForm) {
+  validarUser(formu : NgForm) {
 
     console.log(this.form.login+" "+this.form.password)
 if(formu.valid)

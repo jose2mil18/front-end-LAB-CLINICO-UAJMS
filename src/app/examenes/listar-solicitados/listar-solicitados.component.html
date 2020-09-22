@@ -243,7 +243,7 @@
         <tr>
           <th></th>
           <th></th>
-          <th>   <input pInputText  [formControl]="control" name="caracter_nombre_examen" type="text"placeholder="">
+          <th>   <input pInputText  [formControl]="control" name="caracter_nombre_examen" type="text" placeholder="">
           </th>
           <th>
             <ng-select   placeholder="Selecciona un area"   [(ngModel)]="form.nombre_area" class="" (ngModelChange)="filtro_completo(formulario)"   name="area" required>
@@ -333,8 +333,6 @@
       
   </p-table>
  
-
-  
   
   
   
@@ -393,7 +391,7 @@
       <!-- #END# Exportable Table -->
     </div>
   </section>
-  <div class="modal fade" id="addevent" tabindex="-1" role="dialog">
+  <div class="modal fade" id="addevent" #modal tabindex="-1" role="dialog">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
@@ -408,7 +406,7 @@
               </div>
               
     <div class="col-lg-8">
-              <input id="fecha_inicio" class="form-control" [(ngModel)]="form.fecha_inicio" name="fecha_inicio" type="date" placeholder="fecha_inicio" required max="form.fecha_fin">
+              <input id="fecha_inicio" class="form-control" [(ngModel)]="form.fecha_inicio" name="fecha_inicio" type="date" placeholder="fecha_inicio" required [max]="form.fecha_fin">
           
                     </div>
   
@@ -417,12 +415,12 @@
                         </div>
                         
               <div class="col-lg-8">
-                        <input id="fecha_fin" class="form-control" [(ngModel)]="form.fecha_fin"  name="fecha_fin" type="date"  placeholder="fecha_final" required>
+                        <input id="fecha_fin" class="form-control" [(ngModel)]="form.fecha_fin"  name="fecha_fin" type="date"  [min]="form.fecha_inicio" placeholder="fecha_final" required>
                     
                               </div>
                 </div>
         <div class="modal-footer">
-          <button type="submit" (click)="filtro_completo(formulario)" id="a" class="btn btn-primary btn-round waves-effect" >Guardar</button>
+          <button type="submit" (click)="ab()" (click)="filtro_completo(formulario)" id="a" class="btn btn-primary btn-round waves-effect" >Guardar</button>
           <button type="button" class="btn btn-simple btn-round waves-effect" data-dismiss="modal">Salir</button>
         </div>
         </form>

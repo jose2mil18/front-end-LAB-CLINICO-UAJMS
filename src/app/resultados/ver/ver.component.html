@@ -141,6 +141,14 @@
                         <button  rel="tooltip" data-placement="top" title="Modificar" (click)="modificar(solicitud)" routerLink="/resultados/modificar"  class="btn btn-warning btn-pequeño  btn-icon-mini btn-round">
                           <i class="zmdi zmdi-edit col-white" style="color:white; font-size:17px"></i></button>
                       </div>
+
+                      <div class="col-md-1" >
+            
+                        <ng-container  *ngIf="solicitud.estado=='Registrado'">
+                        <button rel="tooltip" data-placement="top" title="Enviar mensaje por correo" (click)="enviarEmail(solicitud)"  class="btn btn-primary btn-pequeño  btn-icon-mini btn-round"><i class="zmdi zmdi-email col-white" style="color:white; font-size:17px"></i></button>
+                      </ng-container>
+                   
+                        </div>
                       <!--   
                       <div class="col-md-1">
                         <button rel="tooltip" data-placement="top" title="Ver historial clinico" (click)="verhistorialclinico(paciente)" routerLink="/pacientes/ver-historial-clinico" class="btn btn-secondary btn-pequeño  btn-icon-mini btn-round"><i class="zmdi zmdi-assignment col-white" style="color:white; font-size:17px"></i></button>
@@ -250,7 +258,7 @@
               </div>
               
     <div class="col-lg-8">
-              <input id="fecha_inicio" class="form-control" [(ngModel)]="form.fecha_inicio" name="fech" type="date" placeholder="fecha_inicio">
+              <input id="fecha_inicio" class="form-control" [(ngModel)]="form.fecha_inicio" [max]="form.fecha_fin" name="fech" type="date" placeholder="fecha_inicio">
           
                     </div>
   
@@ -259,12 +267,12 @@
                         </div>
                         
               <div class="col-lg-8">
-                        <input id="fecha_fin" class="form-control" [(ngModel)]="form.fecha_fin"  name="fech" type="date"  placeholder="fecha_inicio">
+                        <input id="fecha_fin" class="form-control" [(ngModel)]="form.fecha_fin"  [min]="form.fecha_inicio" name="fech" type="date"  placeholder="fecha_inicio">
                     
                               </div>
                 </div>
         <div class="modal-footer">
-          <button type="button" (click)="filtro_completo()" id="a" class="btn btn-primary btn-round waves-effect" data-dismiss="modal">Guardar</button>
+          <button type="button" (click)="filtro_completo()" (click)="a()" id="a" class="btn btn-primary btn-round waves-effect" data-dismiss="modal">Guardar</button>
           <button type="button" class="btn btn-simple btn-round waves-effect" data-dismiss="modal">Salir</button>
         </div>
       </div>

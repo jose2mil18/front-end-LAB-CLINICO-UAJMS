@@ -312,6 +312,26 @@
                             </ng-container>
                         
                         </div>
+
+                        <ng-container  *ngFor="let ex of solicitud.examenes_solicitados">
+                          <ng-container *ngIf="ex.precio_examen.examen.cod_examen ==48">
+                        <div class="row">
+                             
+                          <div class="col-md-1" *ngIf="ex.nota != ''">
+                            <strong>Nota:</strong>
+                            </div>
+                            <div class="col-md-11">
+                              <div  *ngFor="let ex of solicitud.examenes_solicitados">
+                                {{ex.nota}}
+                              
+                         
+                        
+                        
+                              </div>
+                            </div>
+                        </div>
+                        </ng-container>
+                        </ng-container>
                         
 
 

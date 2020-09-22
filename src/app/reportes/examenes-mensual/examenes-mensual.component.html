@@ -41,7 +41,7 @@
             <div class="container">
               <div class="row">
                 <div class="col-md-2">
-                    <ng-select  placeholder="institucion"  name="instiucion"  [(ngModel)]="reporte.institucion" (ngModelChange)="insti($event)"   >
+                    <ng-select  placeholder="institucion"  name="instiucion"  [(ngModel)]="reporte.institucion" (ngModelChange)="insti()"   >
                      
                         <ng-option *ngFor="let i of instituciones" [value]="i">{{i.nombre}}</ng-option>
                       
@@ -140,6 +140,7 @@
                       <th>Nro. prestaciones</th>
                         <th>Costo unitario</th>
                         <TH>Costo total</TH>
+                        <TH>Institucion</TH>
                         
                     </tr>
                   
@@ -155,6 +156,7 @@
                  <td>{{r.precio_examen.costo.toFixed(1)}}</td>
                       <td>{{r.costo_total_examen.toFixed(1)}}</td>
                      
+                      <td>{{r.institucion.nombre}}</td>
                   </tr>
               </ng-template>
               <ng-template pTemplate="footer" let-columns>
@@ -165,6 +167,7 @@
                   <td>{{reportes_mensual.nro_prestaciones}}</td>
                   <td><strong>Total</strong></td>
                   <td class="font-weight-normal">{{reportes_mensual.monto.toFixed(1)}} Bs.</td>
+                  <td></td>
                 </tr>
               
             </ng-template>

@@ -23,15 +23,20 @@ constructor(public reportesService :ReportesService) {
 
   this.currentUser = JSON.parse(localStorage.getItem('currentUser'));
  this.reporte=new Reporte_mensual();
+ console.log(this.reporte)
 
   this.reportes_mensual= new Reporte_mensual();
 
   this.reportesService.getInstitucionesConPrecio().subscribe(i=> {
     this.instituciones=i
         })
+
+
+        
   }
 
   ngOnInit() {
+    this.insti();
   }
   vermes(m){
     console.log(this.reporte)
@@ -47,10 +52,15 @@ constructor(public reportesService :ReportesService) {
     })
           
   }
-  insti(m){
-    console.log(this.reporte)
+  insti(){
+    console.log(this.reporte.institucion)
+    if(this.reporte.institucion==null)
+    {
+      this.reporte=new Reporte_mensual();
+      this.reporte.institucion.cod_institucion="";
+    }
     this.reportesService.getReportesMensuales(this.reporte).subscribe(reportes => {
-    
+    console.log(reportes)
       this.reportes_mensual=reportes;
       
       if(this.reportes_mensual.mes==null)
