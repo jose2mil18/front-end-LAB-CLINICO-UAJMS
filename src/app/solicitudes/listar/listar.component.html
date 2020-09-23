@@ -204,7 +204,7 @@ from solicitud s, pacientes pa, persona pe where s.cedula_paciente=pa.cedula and
           <td pEditableColumn>
             <p-cellEditor>
                 <ng-template pTemplate="input">
-                  <ng-select   placeholder=""  [(ngModel)]="solicitud.estado_solicitud" class="" (ngModelChange)="cambiar_estado(solicitud,i)"   name="estado" required>
+                  <ng-select   placeholder=""  [(ngModel)]="solicitud.estado_solicitud" class="" (ngModelChange)="cambiar_estado(solicitud)"   name="estado" required>
                     <ng-option  *ngFor=" let rol of brands2" [value]="rol.value" >{{rol.label}}</ng-option>
                    
                    </ng-select>
@@ -402,7 +402,7 @@ from solicitud s, pacientes pa, persona pe where s.cedula_paciente=pa.cedula and
 <div class="row">
   <div class="col ">
       <p class="font-weight-bold">Fecha de entrega:  
-          <span  class="font-weight-normal" ><input  style="width: 140px;" type="date" id="fecha_entregas" [(ngModel)]="fecha_entregas" (change)="cambiar_estado(solicitud)"></span>
+          <span  class="font-weight-normal" ><input  style="width: 140px;" type="date" id="fecha_entregas" [(ngModel)]="fecha_entregas" (change)="cambiar_fecha_entrega(solicitud)"></span>
       </p>
   </div>
 </div>

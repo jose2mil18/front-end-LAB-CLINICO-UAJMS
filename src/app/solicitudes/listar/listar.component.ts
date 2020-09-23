@@ -643,20 +643,32 @@ keyPressHandler(e) {
 }
 fecha_entregas:string=""
 today;
-cambiar_estado(solicitud,i){
+cambiar_estado(solicitud){
 
+  
 this.solicitudesService.actualizarEstado(solicitud).subscribe(data=>{
-  console.log(data[i].estado_solicitud)
-  this.fecha_entregas=data[i].fecha_entrega
-this.solicitud=data[i]
- this.listar()
+  
+this.solicitud=solicitud
+ this.filtro_completo2()
 })
 
 
 
+
+
+}
+cambiar_fecha_entrega(solicitud){
+
+  solicitud.fecha_entrega=this.datePipe.transform($('#fecha_entregas').val(),'dd-MM-yyyy')
+  
+this.solicitudesService.actualizarEstado(solicitud).subscribe(data=>{
+  
+this.solicitud=solicitud
+ this.filtro_completo2()
+})
 }
 cerrar(){
- this.listar()
+ this.filtro_completo2()
 }
 cerrarModalsito(){
   cerrarModal()

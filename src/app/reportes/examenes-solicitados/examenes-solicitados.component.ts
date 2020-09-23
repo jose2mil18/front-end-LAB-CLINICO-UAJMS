@@ -116,12 +116,11 @@ this.solicitudesService.getAllAreas().subscribe(data=>{
     this.form.nombre_area=""
   }
   
-     console.log(this.form.estado_solicitud)
+     console.log(this.form.fech)
      validatefechas()
      if(formu.valid && ($('#fecha_inicio').val() <=$('#fecha_fin').val()) )
      {
        
-    cerrarModal()
     if(this.form.nombre_area==null)
     {
       this.form.nombre_area=""
