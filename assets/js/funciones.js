@@ -2,6 +2,32 @@ console.log("hola")
 function fun(e){
 	alert(e)
 }
+function enviarResultados(correo){
+	console.log(correo)
+	Email.send({
+		Host : "smtp.gmail.com",
+		Username : "joseflores59849@gmail.com",
+		Password : "S1nclave",
+		To : correo,
+		From : "joseflores59849@gmail.com",
+		Subject : "Informe de resultados",
+		Body : "PUede pasar a recoger sus examenes"
+		/*,
+		Attachments : [
+			{
+				name : "smtpjs.png",
+				path:"https://networkprogramming.files.wordpress.com/2017/11/smtpjs.png"
+			}]*/
+
+	}).then(
+	  message => alert(message)
+	);
+}
+function cerrarModal(){
+	console.log("cerrando ventana modal")
+	
+	$("#addevent").modal("hide");
+}
 $('form').attr('autocomplete','off');
 
 $('input').attr('autocomplete','off');
